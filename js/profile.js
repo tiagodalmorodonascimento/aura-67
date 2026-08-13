@@ -1,6 +1,7 @@
 let currentProfile;
 const accountPopover = document.querySelector('#accountPopover');
 const designBackdrop = document.querySelector('#designBackdrop');
+const profileEditorBackdrop = document.querySelector('#profileEditorBackdrop');
 const AURA_CLASSES = [
   { name: 'Centelha', min: 0, icon: '✦', unlock: 'Perfil e avatar' },
   { name: 'Despertar', min: 100, icon: '◉', unlock: 'Detalhes especiais no perfil' },
@@ -100,6 +101,7 @@ async function loadProfile(session) {
   document.querySelector('#designUsername').value = currentProfile.username || '';
   document.querySelector('#designBio').value = currentProfile.bio || '';
   document.querySelector('#designColor').value = currentProfile.theme_color || '#7657ec';
+  document.querySelectorAll('#themeSwatches button').forEach((item) => item.classList.toggle('selected', item.dataset.color === document.querySelector('#designColor').value.toLowerCase()));
   updatePreview();
 }
 
@@ -159,7 +161,10 @@ if (window.AURA_SESSION) loadProfile(window.AURA_SESSION);
 document.querySelector('#profileMenuButton').addEventListener('click', () => { accountPopover.hidden = !accountPopover.hidden; });
 document.querySelector('#mobileProfileButton').addEventListener('click', () => { accountPopover.hidden = !accountPopover.hidden; });
 document.querySelector('#openDesignButton').addEventListener('click', () => { accountPopover.hidden = true; designBackdrop.hidden = false; document.body.style.overflow = 'hidden'; });
+document.querySelector('#openProfileEditorButton').addEventListener('click', () => { accountPopover.hidden = true; profileEditorBackdrop.hidden = false; document.body.style.overflow = 'hidden'; updatePreview(); });
+document.querySelector('#accountMenuClose').addEventListener('click', () => { accountPopover.hidden = true; });
 document.querySelector('#designClose').addEventListener('click', () => { applyGlobalTheme(currentProfile?.theme_color || '#7657ec'); designBackdrop.hidden = true; document.body.style.overflow = ''; });
+document.querySelector('#profileEditorClose').addEventListener('click', () => { profileEditorBackdrop.hidden = true; document.body.style.overflow = ''; });
 document.querySelector('#publicProfileClose').addEventListener('click', () => { document.querySelector('#publicProfileBackdrop').hidden = true; document.body.style.overflow = ''; });
 document.querySelector('#publicProfileBackdrop').addEventListener('click', (event) => { if (event.target.id === 'publicProfileBackdrop') document.querySelector('#publicProfileClose').click(); });
 document.querySelector('#inspireButton').addEventListener('click', () => { document.querySelector('#inspireButton').textContent = 'Inspiração enviada ✓'; });
@@ -167,7 +172,29 @@ document.querySelector('#evolutionDetailsButton').addEventListener('click', () =
 document.querySelector('#journeyClose').addEventListener('click', () => { document.querySelector('#journeyBackdrop').hidden = true; document.body.style.overflow = ''; });
 document.querySelector('#journeyBackdrop').addEventListener('click', (event) => { if (event.target.id === 'journeyBackdrop') document.querySelector('#journeyClose').click(); });
 designBackdrop.addEventListener('click', (event) => { if (event.target === designBackdrop) document.querySelector('#designClose').click(); });
+profileEditorBackdrop.addEventListener('click', (event) => { if (event.target === profileEditorBackdrop) document.querySelector('#profileEditorClose').click(); });
 ['designName','designUsername','designBio','designColor'].forEach((id) => document.querySelector(`#${id}`).addEventListener('input', updatePreview));
+document.querySelectorAll('#themeSwatches button').forEach((button) => button.addEventListener('click', () => {
+  document.querySelector('#designColor').value = button.dataset.color;
+  document.querySelectorAll('#themeSwatches button').forEach((item) => item.classList.toggle('selected', item === button));
+  applyGlobalTheme(button.dataset.color);
+}));
+document.querySelector('#designColor').addEventListener('input', (event) => {
+  document.querySelectorAll('#themeSwatches button').forEach((item) => item.classList.toggle('selected', item.dataset.color === event.target.value.toLowerCase()));
+});
+
+function validateUsername() {
+  const input = document.querySelector('#designUsername');
+  const error = document.querySelector('#usernameError');
+  const value = input.value.trim();
+  let message = '';
+  if (value.length < 3) message = 'O nome de usuário precisa ter pelo menos 3 caracteres.';
+  else if (!/^[a-z0-9._]+$/.test(value)) message = 'Use somente letras minúsculas sem acento, números, ponto ou _.';
+  input.setCustomValidity(message);
+  error.textContent = message;
+  return !message;
+}
+document.querySelector('#designUsername').addEventListener('input', validateUsername);
 
 function maskEmail(email){const[local,domain]=email.split('@');const visible=local.slice(0,Math.min(2,local.length));return `${visible}${'•'.repeat(Math.max(3,local.length-visible.length))}@${domain}`;}
 function emailProviderUrl(email){const domain=email.split('@')[1]?.toLowerCase();if(domain?.includes('gmail'))return'https://mail.google.com/';if(domain?.includes('outlook')||domain?.includes('hotmail')||domain?.includes('live'))return'https://outlook.live.com/mail/';if(domain?.includes('yahoo'))return'https://mail.yahoo.com/';if(domain?.includes('icloud'))return'https://www.icloud.com/mail/';return'mailto:';}
@@ -183,20 +210,36 @@ document.querySelector('#logoutButton').addEventListener('click', async () => { 
 document.querySelector('#designForm').addEventListener('submit', async (event) => {
   event.preventDefault();
   const message = document.querySelector('#designMessage');
-  message.textContent = 'Salvando seu espaço…';
+  message.textContent = 'Salvando suas cores…';
   try {
-    const avatar = await uploadProfileFile(document.querySelector('#avatarUpload'), 'avatar');
-    const cover = await uploadProfileFile(document.querySelector('#coverUpload'), 'cover');
-    const updates = { full_name: document.querySelector('#designName').value.trim(), username: document.querySelector('#designUsername').value.trim().toLowerCase(), bio: document.querySelector('#designBio').value.trim(), theme_color: document.querySelector('#designColor').value, updated_at: new Date().toISOString() };
-    if (avatar) updates.avatar_url = avatar;
-    if (cover) updates.cover_url = cover;
+    const updates = { theme_color: document.querySelector('#designColor').value, updated_at: new Date().toISOString() };
     const { error } = await window.auraSupabase.from('profiles').update(updates).eq('id', window.AURA_SESSION.user.id);
     if (error) throw error;
     currentProfile = { ...currentProfile, ...updates };
     applyGlobalTheme(updates.theme_color);
-    updatePreview();
+    message.style.color = '#318361'; message.textContent = 'Suas cores foram salvas.';
+  } catch (error) { message.style.color = '#b44'; message.textContent = error.message; }
+});
+
+document.querySelector('#profileForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  if (!validateUsername()) { document.querySelector('#designUsername').reportValidity(); return; }
+  const message = document.querySelector('#profileMessage');
+  message.textContent = 'Salvando seu perfil…';
+  try {
+    const avatar = await uploadProfileFile(document.querySelector('#avatarUpload'), 'avatar');
+    const cover = await uploadProfileFile(document.querySelector('#coverUpload'), 'cover');
+    const updates = { full_name: document.querySelector('#designName').value.trim(), username: document.querySelector('#designUsername').value.trim().toLowerCase(), bio: document.querySelector('#designBio').value.trim(), updated_at: new Date().toISOString() };
+    if (avatar) updates.avatar_url = avatar;
+    if (cover) updates.cover_url = cover;
+    const { error } = await window.auraSupabase.from('profiles').update(updates).eq('id', window.AURA_SESSION.user.id);
+    if (error) {
+      if (/duplicate|unique|username/i.test(error.message)) throw new Error('Este nome de usuário já está sendo usado. Escolha outro.');
+      throw error;
+    }
+    currentProfile = { ...currentProfile, ...updates };
     await loadProfile(window.AURA_SESSION);
-    message.style.color = '#318361'; message.textContent = 'Seu design foi salvo com sucesso.';
+    message.style.color = '#318361'; message.textContent = 'Seu perfil foi salvo com sucesso.';
   } catch (error) { message.style.color = '#b44'; message.textContent = error.message; }
 });
 
