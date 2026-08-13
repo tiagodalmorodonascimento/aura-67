@@ -88,7 +88,8 @@
   .design-studio h2{font-size:29px}
   .preview-cover{height:130px}
   .design-studio input:not([type=color]),.design-studio textarea,.username-field{font-size:16px}
-  .account-popover{inset:0!important;width:100%!important;height:100dvh;border:0!important;border-radius:0!important;padding:28px 20px 110px!important;overflow:auto;z-index:100;background:#faf9fc!important}
+  html.account-menu-open,body.account-menu-open{overflow:hidden!important;overscroll-behavior:none;touch-action:none}
+  .account-popover{position:fixed!important;inset:0!important;top:0!important;right:0!important;bottom:0!important;left:0!important;width:100vw!important;height:100dvh!important;min-height:100dvh!important;max-height:none!important;margin:0!important;border:0!important;border-radius:0!important;padding:28px 20px calc(32px + env(safe-area-inset-bottom))!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;z-index:250!important;background:#faf9fc!important}
   .account-mobile-close{display:grid!important;place-items:center;position:absolute;right:18px;top:18px;width:44px!important;height:44px;border-radius:14px!important;background:#eeebf1!important;font-size:24px!important;padding:0!important}
   .account-head{padding:58px 8px 26px!important;margin-bottom:16px}
   .account-head .avatar{width:62px;height:62px;border-radius:18px;font-size:18px}

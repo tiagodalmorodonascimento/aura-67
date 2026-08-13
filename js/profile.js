@@ -158,11 +158,16 @@ async function uploadProfileFile(input, folder) {
 
 document.addEventListener('aura:session-ready', (event) => loadProfile(event.detail));
 if (window.AURA_SESSION) loadProfile(window.AURA_SESSION);
-document.querySelector('#profileMenuButton').addEventListener('click', () => { accountPopover.hidden = !accountPopover.hidden; });
-document.querySelector('#mobileProfileButton').addEventListener('click', () => { accountPopover.hidden = !accountPopover.hidden; });
-document.querySelector('#openDesignButton').addEventListener('click', () => { accountPopover.hidden = true; designBackdrop.hidden = false; document.body.style.overflow = 'hidden'; });
-document.querySelector('#openProfileEditorButton').addEventListener('click', () => { accountPopover.hidden = true; profileEditorBackdrop.hidden = false; document.body.style.overflow = 'hidden'; updatePreview(); });
-document.querySelector('#accountMenuClose').addEventListener('click', () => { accountPopover.hidden = true; });
+function setAccountMenu(open) {
+  accountPopover.hidden = !open;
+  document.documentElement.classList.toggle('account-menu-open', open);
+  document.body.classList.toggle('account-menu-open', open);
+}
+document.querySelector('#profileMenuButton').addEventListener('click', () => setAccountMenu(accountPopover.hidden));
+document.querySelector('#mobileProfileButton').addEventListener('click', () => setAccountMenu(accountPopover.hidden));
+document.querySelector('#openDesignButton').addEventListener('click', () => { setAccountMenu(false); designBackdrop.hidden = false; document.body.style.overflow = 'hidden'; });
+document.querySelector('#openProfileEditorButton').addEventListener('click', () => { setAccountMenu(false); profileEditorBackdrop.hidden = false; document.body.style.overflow = 'hidden'; updatePreview(); });
+document.querySelector('#accountMenuClose').addEventListener('click', () => setAccountMenu(false));
 document.querySelector('#designClose').addEventListener('click', () => { applyGlobalTheme(currentProfile?.theme_color || '#7657ec'); designBackdrop.hidden = true; document.body.style.overflow = ''; });
 document.querySelector('#profileEditorClose').addEventListener('click', () => { profileEditorBackdrop.hidden = true; document.body.style.overflow = ''; });
 document.querySelector('#publicProfileClose').addEventListener('click', () => { document.querySelector('#publicProfileBackdrop').hidden = true; document.body.style.overflow = ''; });
