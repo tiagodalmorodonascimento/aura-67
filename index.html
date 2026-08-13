@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#17131f">
+  <meta name="description" content="Aura 67 — transforme boas ações em evolução, reconhecimento e impacto.">
+  <title>Aura 67 — Sua energia transforma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="Aura 67, início"><span class="brand-mark"><i></i><i></i></span><strong>Aura <b>67</b></strong></a>
+    <nav aria-label="Navegação principal"><a href="#como-funciona">Como funciona</a><a href="#comunidade">Comunidade</a></nav>
+    <a class="header-login" id="sessionAction" href="login.html">Entrar</a>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <span class="eyebrow"><i></i> UMA NOVA FORMA DE EVOLUIR</span>
+        <h1>Sua energia<br><em>transforma.</em></h1>
+        <p>Registre ações positivas, fortaleça sua aura e evolua junto com uma comunidade que transforma intenção em impacto.</p>
+        <div class="hero-actions"><a class="primary-cta" href="cadastro.html">Começar agora <span>→</span></a><button class="install-cta" id="installButton" type="button" hidden>Instalar aplicativo</button></div>
+        <div class="trust-row"><span class="avatar-stack"><i>✦</i><i>67</i><i>+</i></span><span><strong>Comunidade em construção</strong><small>faça parte do começo da Aura 67</small></span></div>
+      </div>
+      <div class="phone-stage" aria-label="Prévia do aplicativo Aura 67">
+        <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+        <div class="phone">
+          <div class="phone-top"><span>9:41</span><i></i><b>● ◒</b></div>
+          <div class="phone-content">
+            <div class="mobile-head"><span><small>Bom dia,</small><strong>Alex ✦</strong></span><i>AR</i></div>
+            <article class="aura-score"><small>SUA AURA HOJE</small><strong>1.940</strong><span>pontos</span><div class="aura-ring"><i>✦</i></div><p>↑ 120 nesta semana</p></article>
+            <div class="mini-title"><strong>Seu progresso</strong><span>Ver tudo</span></div>
+            <div class="progress-cards"><article><b>🔥 7</b><small>dias seguidos</small></article><article><b>🏆 3º</b><small>no ranking</small></article></div>
+            <button class="phone-action" type="button">＋ Registrar boa ação</button>
+          </div>
+          <div class="phone-nav"><span class="active">⌂<small>Início</small></span><span>★<small>Ranking</small></span><span>＋</span><span>◇<small>Jornada</small></span><span>○<small>Perfil</small></span></div>
+        </div>
+        <span class="floating-card card-rank">🏆 <b>Você subiu!</b><small>Agora está em 3º lugar</small></span>
+        <span class="floating-card card-streak">🔥 <b>7 dias</b><small>Continue assim</small></span>
+      </div>
+    </section>
+
+    <section class="manifesto" id="como-funciona">
+      <span>PEQUENAS AÇÕES. GRANDE ENERGIA.</span>
+      <h2>Uma plataforma para tornar visível<br>o melhor que existe em nós.</h2>
+      <div class="benefits">
+        <article><i>01</i><span>✦</span><h3>Faça o bem</h3><p>Registre atitudes positivas e desafios concluídos no seu dia.</p></article>
+        <article><i>02</i><span>↗</span><h3>Evolua sempre</h3><p>Ganhe pontos, mantenha sequências e acompanhe sua jornada.</p></article>
+        <article><i>03</i><span>◎</span><h3>Inspire pessoas</h3><p>Compartilhe impacto e cresça com uma comunidade positiva.</p></article>
+      </div>
+    </section>
+
+    <section class="community" id="comunidade">
+      <div><span class="eyebrow"><i></i> A COMUNIDADE ESTÁ CRESCENDO</span><h2>O movimento começa<br>com pessoas como você.</h2><p>Entre na primeira geração da Aura 67 e ajude a construir uma comunidade em que evolução pessoal e impacto coletivo caminham juntos.</p></div>
+      <form class="waitlist" id="waitlistForm"><label for="waitlistEmail">Receba novidades do lançamento</label><div><input id="waitlistEmail" type="email" placeholder="Seu melhor e-mail" required><button type="submit">Quero participar →</button></div><small id="waitlistMessage">Sem spam. Você poderá sair quando quiser.</small></form>
+    </section>
+  </main>
+
+  <footer><a class="brand" href="#inicio"><span class="brand-mark"><i></i><i></i></span><strong>Aura <b>67</b></strong></a><p>Energia que transforma.</p><span>© 2026 Aura 67</span></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config/environments.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/landing.js"></script>
+</body>
+</html>

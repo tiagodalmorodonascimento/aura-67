@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aura 67 — template inicial de aplicação web.">
+  <title>Aura 67 — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=10">
+  <link rel="stylesheet" href="css/profile.css?v=10">
+  <link rel="stylesheet" href="css/profile-extra.css?v=10">
+  <link rel="stylesheet" href="css/profile-menu-v2.css?v=15">
+  <link rel="stylesheet" href="css/theme-v3.css?v=10">
+  <link rel="stylesheet" href="css/progression.css?v=10">
+  <link rel="stylesheet" href="css/progression-extra.css?v=10">
+  <link rel="stylesheet" href="css/habits.css?v=11">
+  <link rel="stylesheet" href="css/proof.css?v=12">
+  <link rel="stylesheet" href="css/email-check.css?v=16">
+  <link rel="stylesheet" href="css/ranking-real.css?v=17">
+  <link rel="stylesheet" href="css/large-ui.css?v=19">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+      <a class="brand" href="app.html" aria-label="Aura 67 — painel">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+        <span class="brand-copy"><strong>Aura</strong><small>67</small></span>
+      </a>
+
+      <nav class="main-nav">
+        <p class="nav-label">Menu</p>
+        <a class="nav-item active" href="#dashboard" data-page="Visão geral">
+          <span class="nav-icon">⌂</span><span>Visão geral</span>
+        </a>
+        <a class="nav-item" href="#ranking" data-page="Ranking" data-view="ranking">
+          <span class="nav-icon">★</span><span>Ranking</span><span class="nav-count ranking-nav-count">3º</span>
+        </a>
+        <a class="nav-item" href="#projetos" data-page="Projetos">
+          <span class="nav-icon">◇</span><span>Projetos</span><span class="nav-count">4</span>
+        </a>
+        <a class="nav-item" href="#biblioteca" data-page="Biblioteca">
+          <span class="nav-icon">▦</span><span>Biblioteca</span>
+        </a>
+        <a class="nav-item" href="#habitos" data-page="Atividade" data-view="habits">
+          <span class="nav-icon">↗</span><span>Atividade</span>
+        </a>
+
+        <p class="nav-label nav-label-spaced">Espaço</p>
+        <a class="nav-item" href="#equipe" data-page="Equipe">
+          <span class="nav-icon">○</span><span>Equipe</span>
+        </a>
+        <a class="nav-item" href="#configuracoes" data-page="Configurações">
+          <span class="nav-icon">⚙</span><span>Configurações</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-card">
+        <span class="mini-orbit">✦</span>
+        <strong>Seu espaço, seu ritmo.</strong>
+        <p>Personalize este template e transforme ideias em experiências.</p>
+        <a href="#personalizar">Personalizar <span>→</span></a>
+      </div>
+
+      <button class="sidebar-profile" id="profileMenuButton" type="button" aria-expanded="false">
+        <span class="avatar">AR</span>
+        <span><strong>Carregando perfil…</strong><small>Membro Aura</small></span>
+        <span class="more">•••</span>
+      </button>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-button menu-button" id="menuButton" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
+          <div>
+            <p class="eyebrow">Quinta-feira, 13 de agosto</p>
+            <h1 id="pageTitle">Visão geral</h1>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button class="search-button" id="searchButton" type="button" aria-label="Buscar">
+            <span>⌕</span><span class="search-text">Buscar...</span><kbd>⌘ K</kbd>
+          </button>
+          <button class="icon-button notification" type="button" aria-label="Notificações">♢<i></i></button>
+          <button class="primary-button" id="newItemButton" type="button"><span>＋</span> Novo item</button>
+        </div>
+      </header>
+
+      <div class="content" id="dashboard">
+        <section class="welcome-panel">
+          <div>
+            <span class="section-kicker">SEU PAINEL</span>
+            <h2>Olá, <span id="welcomeName">pessoa Aura</span>. <em>Vamos criar?</em></h2>
+            <p>Este é o ponto de partida do seu novo espaço digital. Organize, experimente e dê forma ao que vem a seguir.</p>
+          </div>
+          <div class="welcome-visual" aria-hidden="true">
+            <span class="orbit orbit-a"></span><span class="orbit orbit-b"></span>
+            <span class="orb orb-main"></span><span class="orb orb-small"></span>
+            <span class="spark spark-a">✦</span><span class="spark spark-b">✦</span>
+          </div>
+        </section>
+
+        <section class="metrics-grid" aria-label="Resumo">
+          <article class="metric-card">
+            <div class="metric-top"><span class="metric-icon lavender">◇</span><span class="trend positive">↗ 12%</span></div>
+            <p>Projetos ativos</p><strong>04</strong><small>2 atualizados hoje</small>
+          </article>
+          <article class="metric-card">
+            <div class="metric-top"><span class="metric-icon mint">✓</span><span class="trend positive">↗ 8%</span></div>
+            <p>Tarefas concluídas</p><strong>28</strong><small>Esta semana</small>
+          </article>
+          <article class="metric-card">
+            <div class="metric-top"><span class="metric-icon peach">◷</span><span class="trend">− 0%</span></div>
+            <p>Horas dedicadas</p><strong>16.5</strong><small>Nos últimos 7 dias</small>
+          </article>
+          <article class="metric-card accent-card">
+            <div class="metric-top"><span class="metric-icon dark">✦</span><span class="status-pill">Em alta</span></div>
+            <p>Ritmo criativo</p><strong>87%</strong><small>Seu melhor resultado</small>
+          </article>
+        </section>
+
+        <section class="evolution-panel" aria-label="Sua evolução na Aura"><div class="evolution-head"><div><span class="section-kicker">SUA EVOLUÇÃO</span><h3><span id="currentClassIcon">✦</span> Classe <strong id="currentClassName">Centelha</strong></h3><p id="classMessage">Toda grande aura começa com uma primeira luz.</p></div><div class="evolution-actions"><span class="founder-chip" id="founderChip" hidden>🏆 Um Bom Início · Fundador #<b id="founderNumber"></b></span><button class="evolution-link" id="evolutionDetailsButton" type="button">Ver jornada completa →</button></div></div><div class="evolution-track"><div class="evolution-progress"><i id="evolutionProgress"></i></div><div class="evolution-labels"><span><b id="currentPoints">0</b> pontos</span><span>Próxima: <b id="nextClassName">Despertar</b> · <strong id="pointsToNext">100</strong> pts</span></div></div><div class="unlock-preview"><span>PRÓXIMO DESBLOQUEIO</span><strong id="nextUnlock">Novos detalhes do perfil</strong></div></section>
+
+        <section class="dashboard-grid">
+          <article class="panel activity-panel">
+            <div class="panel-heading">
+              <div><h3>Atividade recente</h3><p>Seu progresso nos últimos 7 dias</p></div>
+              <button class="text-button" type="button">Ver relatório <span>→</span></button>
+            </div>
+            <div class="chart-wrap">
+              <div class="chart-scale"><span>8h</span><span>6h</span><span>4h</span><span>2h</span><span>0h</span></div>
+              <div class="chart" aria-label="Gráfico de horas por dia">
+                <div class="chart-grid"><i></i><i></i><i></i><i></i><i></i></div>
+                <svg viewBox="0 0 700 180" preserveAspectRatio="none" role="img" aria-label="Atividade crescente durante a semana">
+                  <defs><linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7559ef" stop-opacity=".28"/><stop offset="1" stop-color="#7559ef" stop-opacity="0"/></linearGradient></defs>
+                  <path class="area" d="M0,140 C65,130 80,80 140,100 S235,130 280,93 S360,45 420,72 S500,120 560,66 S630,40 700,20 L700,180 L0,180 Z"/>
+                  <path class="line" d="M0,140 C65,130 80,80 140,100 S235,130 280,93 S360,45 420,72 S500,120 560,66 S630,40 700,20"/>
+                  <circle cx="700" cy="20" r="6" class="chart-dot"/>
+                </svg>
+                <div class="chart-days"><span>Sex</span><span>Sáb</span><span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel projects-panel">
+            <div class="panel-heading"><div><h3>Projetos recentes</h3><p>Continue de onde parou</p></div><button class="round-button" type="button" aria-label="Mais opções">•••</button></div>
+            <div class="project-list">
+              <button class="project-row" type="button"><span class="project-thumb thumb-one">A</span><span class="project-info"><strong>Identidade visual</strong><small>Atualizado há 2h</small></span><span class="progress-ring p75">75%</span></button>
+              <button class="project-row" type="button"><span class="project-thumb thumb-two">N</span><span class="project-info"><strong>Nova experiência</strong><small>Atualizado ontem</small></span><span class="progress-ring p52">52%</span></button>
+              <button class="project-row" type="button"><span class="project-thumb thumb-three">E</span><span class="project-info"><strong>Exploração criativa</strong><small>Atualizado há 3 dias</small></span><span class="progress-ring p31">31%</span></button>
+            </div>
+            <button class="full-link" type="button">Ver todos os projetos <span>→</span></button>
+          </article>
+        </section>
+
+        <section class="quick-section">
+          <div class="section-heading"><div><h3>Acesso rápido</h3><p>Atalhos para começar</p></div></div>
+          <div class="quick-grid">
+            <button class="quick-card" type="button"><span class="quick-icon">＋</span><span><strong>Novo projeto</strong><small>Comece algo incrível</small></span><b>→</b></button>
+            <button class="quick-card" type="button"><span class="quick-icon">▦</span><span><strong>Explorar biblioteca</strong><small>Encontre seus recursos</small></span><b>→</b></button>
+            <button class="quick-card" type="button"><span class="quick-icon">○</span><span><strong>Convidar pessoas</strong><small>Crie em colaboração</small></span><b>→</b></button>
+          </div>
+        </section>
+      </div>
+
+      <div class="content ranking-page" id="ranking" hidden>
+        <section class="ranking-hero">
+          <div><span class="section-kicker">DESAFIO AURA</span><h2>Quem vai chegar ao <em>topo?</em></h2><p>Conquiste pontos, mantenha sua sequência e ultrapasse quem está à sua frente.</p></div>
+          <div class="ranking-countdown"><span>Temporada encerra em</span><strong>04d : 18h : 32m</strong><small>Os 3 primeiros ganham uma insígnia exclusiva</small></div>
+        </section>
+        <section class="ranking-toolbar" aria-label="Controles do ranking"><div><strong>Ranking geral</strong><small>Pontuação Aura acumulada</small></div><span class="ranking-updated"><i></i> Dados reais do Supabase</span></section>
+        <section class="podium" id="realPodium" aria-label="Pódio dos três primeiros colocados"><div class="ranking-loading">Carregando membros reais…</div></section>
+        <section class="ranking-layout">
+          <article class="panel leaderboard-panel">
+            <div class="panel-heading"><div><h3>Classificação geral</h3><p>Somente pessoas cadastradas na Aura 67</p></div><span class="participants" id="realParticipants">0 participantes</span></div>
+            <div class="leaderboard" id="leaderboard"><div class="ranking-loading">Buscando classificação…</div></div>
+          </article>
+          <aside class="ranking-side">
+            <article class="panel chase-card"><span class="chase-icon">⚡</span><p>Faltam apenas</p><strong id="pointsGap">240 pontos</strong><small>para você alcançar o próximo lugar</small><div class="gap-progress"><i></i></div><button class="primary-button" type="button" id="earnPointsButton">Ganhar pontos</button></article>
+            <article class="panel ways-card"><div class="panel-heading"><div><h3>Como pontuar hoje</h3><p>Ações reais da sua Jornada</p></div></div><ul><li><span class="way-icon lavender">✓</span><span><strong>Concluir uma ação</strong><small>O XP depende da dificuldade</small></span><b>+5–30</b></li><li><span class="way-icon mint">⚡</span><span><strong>Completar um combo</strong><small>A cada 3 ações no dia</small></span><b>+15</b></li><li><span class="way-icon peach">📷</span><span><strong>Validar uma missão</strong><small>XP após aprovação da prova</small></span><b>XP</b></li></ul></article>
+          </aside>
+        </section>
+      </div>
+      <div class="content habits-page" id="habits" hidden>
+        <section class="habits-hero"><div><span class="section-kicker">AÇÕES DE HOJE</span><h2>Pequenos passos.<br><em>Uma Aura maior.</em></h2><p>Escolha uma ação, conclua no seu ritmo e transforme constância em evolução.</p></div><div class="today-score"><span>HOJE</span><strong><b id="todayCompleted">0</b> ações</strong><small><span id="todayXp">0</span> XP conquistados</small><div><i id="dailyProgress"></i></div></div></section>
+        <section class="mission-strip"><div><span class="mission-bolt">⚡</span><span><small>MISSÃO SURPRESA</small><strong id="surpriseTitle">Descubra uma ação para agora</strong></span></div><button id="surpriseButton" type="button">Sortear missão</button></section>
+        <section class="habits-toolbar"><div class="habit-search"><span>⌕</span><input id="habitSearch" type="search" placeholder="Buscar uma ação..."></div><div class="habit-status"><span>🔥 <b id="habitStreak">0</b> dias</span><span>⚡ Combo <b id="comboCount">0/3</b></span></div></section>
+        <nav class="category-tabs" id="categoryTabs" aria-label="Categorias"><button class="active" data-category="all">✦ Todas</button><button data-category="health">💧 Saúde</button><button data-category="mental">🧠 Mental</button><button data-category="home">🧹 Casa</button><button data-category="finance">💰 Finanças</button><button data-category="productivity">🚀 Produtividade</button><button data-category="social">🤝 Social</button><button data-category="special">🔥 Especiais</button></nav>
+        <section class="habits-section"><div class="habits-heading"><div><h3 id="habitsHeading">Todas as ações</h3><p id="habitsCount">Carregando catálogo…</p></div><button id="onlyPendingButton" type="button">Mostrar pendentes</button></div><div class="habits-grid" id="habitsGrid"><div class="habits-loading">Preparando suas próximas conquistas…</div></div></section>
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" aria-label="Navegação mobile">
+    <button class="active" type="button" data-mobile-page="Visão geral"><span>⌂</span><small>Início</small></button>
+    <button type="button" data-mobile-page="Ranking"><span>★</span><small>Ranking</small></button>
+    <button class="mobile-create" type="button" id="mobileCreateButton" aria-label="Criar novo item"><span>＋</span></button>
+    <button type="button" data-mobile-page="Atividade"><span>↗</span><small>Jornada</small></button>
+    <button type="button" id="mobileProfileButton"><span>○</span><small>Perfil</small></button>
+  </nav>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" type="button" aria-label="Fechar">×</button>
+      <span class="modal-icon">✦</span><h2 id="modalTitle">Criar novo item</h2>
+      <p>Use este espaço como ponto de partida para um novo módulo.</p>
+      <label>Nome do item<input id="itemName" type="text" placeholder="Ex.: Meu novo projeto"></label>
+      <button class="primary-button modal-submit" id="modalSubmit" type="button">Criar item</button>
+    </div>
+  </div>
+
+  <div class="search-overlay" id="searchOverlay" hidden>
+    <div class="search-box"><div class="search-dialog"><span>⌕</span><input id="searchInput" type="search" placeholder="Busque pessoas por nome ou @usuário..." aria-label="Buscar pessoas"><kbd>ESC</kbd></div><div class="people-results" id="peopleResults"><p>Digite pelo menos 2 caracteres para encontrar pessoas.</p></div></div>
+  </div>
+
+  <div class="account-popover" id="accountPopover" hidden>
+    <div class="account-head"><span class="avatar" id="accountAvatar">EU</span><span><strong id="accountName">Carregando perfil…</strong><small id="accountEmail">Carregando…</small></span></div>
+    <button type="button" id="openDesignButton"><span>✦</span><span><strong>Meu design</strong><small>Personalizar perfil</small></span></button>
+    <button type="button" id="changePasswordButton"><span>⌁</span><span><strong>Trocar senha</strong><small>Confirmar pelo e-mail cadastrado</small></span></button>
+    <button class="logout-button" type="button" id="logoutButton"><span>↪</span><span><strong>Sair da conta</strong><small>Encerrar sessão</small></span></button>
+  </div>
+
+  <div class="design-backdrop" id="designBackdrop" hidden><section class="design-studio" role="dialog" aria-modal="true" aria-labelledby="designTitle"><button class="modal-close" id="designClose" type="button">×</button><span class="section-kicker">SEU ESPAÇO</span><h2 id="designTitle">Crie a sua presença.</h2><p>Escolha como as pessoas verão seu perfil na comunidade Aura.</p><div class="profile-preview" id="profilePreview"><div class="preview-cover" id="previewCover"><span class="preview-avatar" id="previewAvatar">EU</span></div><div><strong id="previewName">Seu nome</strong><small id="previewUsername">@seuusuario</small><p id="previewBio">Transformando intenção em impacto.</p><b><span id="previewScore">0</span> pontos de Aura</b></div></div><form id="designForm"><div class="design-grid"><label>Nome público<input id="designName" maxlength="80" required></label><label>Nome de usuário<span class="username-field">@<input id="designUsername" maxlength="30" pattern="[a-z0-9._]+"></span></label></div><label>Bio<textarea id="designBio" maxlength="280" placeholder="Conte um pouco sobre sua energia..."></textarea></label><div class="design-grid"><label>Cor principal<input id="designColor" type="color" value="#7657ec"></label><label>Foto do perfil<input id="avatarUpload" type="file" accept="image/png,image/jpeg,image/webp"></label></div><label>Imagem de capa<input id="coverUpload" type="file" accept="image/png,image/jpeg,image/webp"></label><small class="upload-help">JPG, PNG ou WebP. Máximo de 5 MB.</small><button class="primary-button design-save" type="submit">Salvar meu design</button><div class="form-message" id="designMessage"></div></form></section></div>
+
+  <div class="public-profile-backdrop" id="publicProfileBackdrop" hidden><article class="public-profile" role="dialog" aria-modal="true" aria-labelledby="publicProfileName"><button class="profile-close" id="publicProfileClose" type="button">×</button><div class="public-profile-cover" id="publicProfileCover"><span class="public-profile-avatar" id="publicProfileAvatar"></span></div><div class="public-profile-body"><span class="public-profile-kicker">PERFIL AURA</span><h2 id="publicProfileName"></h2><strong id="publicProfileUsername"></strong><p id="publicProfileBio"></p><div class="public-profile-class"><span id="publicClassIcon">✦</span><p><small>CLASSE ATUAL</small><strong id="publicClassName">Centelha</strong></p><i id="publicFounderBadge" hidden>🏆 Fundador</i></div><div class="public-profile-stats"><article><b id="publicProfileScore">0</b><small>pontos de Aura</small></article><article><b id="publicProfilePosition">—</b><small>posição atual</small></article><article><b id="publicMemberNumber">—</b><small>membro Aura</small></article></div><button class="primary-button" id="inspireButton" type="button">Enviar inspiração ✦</button></div></article></div>
+
+  <div class="journey-backdrop" id="journeyBackdrop" hidden><section class="journey-modal"><button class="modal-close" id="journeyClose" type="button">×</button><span class="section-kicker">CAMINHO DA AURA</span><h2>Uma evolução que pode ser vista.</h2><p>Cada classe representa sua constância e libera novas formas de expressar sua presença.</p><div class="class-road" id="classRoad"></div></section></div>
+
+  <div class="proof-backdrop" id="proofBackdrop" hidden><section class="proof-modal" role="dialog" aria-modal="true" aria-labelledby="proofTitle"><button class="modal-close" id="proofClose" type="button">×</button><span class="section-kicker">COMPROVAR AÇÃO</span><h2 id="proofTitle">Mostre sua conquista.</h2><p id="proofDescription">Envie uma foto clara do resultado. Ela ficará privada e será usada apenas para validar esta ação.</p><div class="privacy-notice">🔒 Sua foto não aparecerá no perfil nem na comunidade.</div><label class="proof-drop" id="proofDrop"><input id="proofFile" type="file" accept="image/jpeg,image/png,image/webp" capture="environment"><span id="proofPlaceholder"><b>📷</b><strong>Tirar foto ou escolher da galeria</strong><small>JPG, PNG ou WebP · até 8 MB</small></span><img id="proofPreview" alt="Prévia da comprovação" hidden></label><label class="proof-note">Observação opcional<textarea id="proofNote" maxlength="280" placeholder="Conte brevemente o que você realizou..."></textarea></label><button class="primary-button proof-submit" id="proofSubmit" type="button">Enviar para validação</button><div class="proof-message" id="proofMessage" role="status"></div></section></div>
+
+  <div class="email-check-backdrop" id="emailCheckBackdrop" hidden><section class="email-check-modal" role="dialog" aria-modal="true" aria-labelledby="emailCheckTitle"><button class="email-check-close" id="emailCheckClose" type="button">×</button><div class="email-illustration"><span>✉</span><i>✓</i><b>✦</b></div><span class="email-check-kicker">LINK DE SEGURANÇA ENVIADO</span><h2 id="emailCheckTitle">Confira seu e-mail</h2><p>Enviamos um link seguro para redefinir sua senha:</p><strong class="masked-email" id="passwordMaskedEmail"></strong><div class="email-check-steps"><span>1</span><p><b>Abra sua caixa de entrada</b><small>Procure uma mensagem enviada pelo Supabase/Aura 67.</small></p><span>2</span><p><b>Toque no link de redefinição</b><small>Você voltará para uma página segura da Aura.</small></p><span>3</span><p><b>Crie sua nova senha</b><small>O link é temporário e deve ser usado somente por você.</small></p></div><a class="primary-button open-mail-button" id="openEmailProvider" href="#" target="_blank" rel="noopener">Abrir meu e-mail <span>→</span></a><button class="resend-email-button" id="resendPasswordEmail" type="button">Reenviar e-mail</button><small class="email-delivery-tip">Não encontrou? Verifique a caixa de spam ou lixo eletrônico.</small><div class="email-check-message" id="emailCheckMessage" role="status"></div></section></div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Item criado com sucesso.</div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config/environments.js?v=10"></script>
+  <script src="js/supabase-client.js?v=10"></script>
+  <script src="js/app-auth.js?v=10"></script>
+  <script src="js/profile.js?v=16"></script>
+  <script src="js/ranking.js?v=17"></script>
+  <script src="js/habits.js?v=12"></script>
+  <script src="script.js?v=17"></script>
+</body>
+</html>

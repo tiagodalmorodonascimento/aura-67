@@ -1,0 +1,24 @@
+# Configurações locais e segredos
+.env
+.env.*
+!.env.example
+*.local
+
+# Dependências, builds e ferramentas
+node_modules/
+dist/
+.vercel/
+.netlify/
+.wrangler/
+
+# Backups locais não pertencem ao código publicado
+backups/
+
+# Arquivos temporários e do sistema
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

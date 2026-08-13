@@ -1,0 +1,219 @@
+let currentProfile;
+const accountPopover = document.querySelector('#accountPopover');
+const designBackdrop = document.querySelector('#designBackdrop');
+const AURA_CLASSES = [
+  { name: 'Centelha', min: 0, icon: '✦', unlock: 'Perfil e avatar' },
+  { name: 'Despertar', min: 100, icon: '◉', unlock: 'Detalhes especiais no perfil' },
+  { name: 'Explorador', min: 500, icon: '◇', unlock: 'Cores e degradês personalizados' },
+  { name: 'Influenciador', min: 1500, icon: '↗', unlock: 'Imagem de capa personalizada' },
+  { name: 'Guardião', min: 3500, icon: '⬡', unlock: 'Layouts exclusivos' },
+  { name: 'Luminar', min: 7000, icon: '☼', unlock: 'Efeitos visuais especiais' },
+  { name: 'Aura 67', min: 15000, icon: '♛', unlock: 'Identidade lendária Aura 67' }
+];
+
+function initials(name = 'Pessoa Aura') { return name.split(/\s+/).slice(0, 2).map((part) => part[0]).join('').toUpperCase(); }
+function mediaUrl(path) { return path ? window.auraSupabase.storage.from('profile-media').getPublicUrl(path).data.publicUrl : ''; }
+function safeText(value = '') { const node = document.createElement('span'); node.textContent = value; return node.innerHTML; }
+function shiftColor(hex, amount) {
+  const value = hex.replace('#', '');
+  const channels = [0, 2, 4].map((index) => Math.max(0, Math.min(255, parseInt(value.slice(index, index + 2), 16) + amount)));
+  return `#${channels.map((channel) => channel.toString(16).padStart(2, '0')).join('')}`;
+}
+
+function applyGlobalTheme(color = '#7657ec') {
+  const dark = shiftColor(color, -70);
+  const light = shiftColor(color, 115);
+  const soft = `${color}1f`;
+  const root = document.documentElement.style;
+  root.setProperty('--purple', color);
+  root.setProperty('--purple-dark', dark);
+  root.setProperty('--theme-dark', dark);
+  root.setProperty('--theme-soft', soft);
+  root.setProperty('--app-background', `linear-gradient(145deg,${light}33,#f5f3f7 42%,${color}12)`);
+  root.setProperty('--hero-gradient', `linear-gradient(115deg,${light}aa 0%,${color}25 52%,#e9f7f3 100%)`);
+  root.setProperty('--accent-gradient', `linear-gradient(135deg,${light},${color}66)`);
+  root.setProperty('--dark-gradient', `radial-gradient(circle at 75% 20%,${light}55,transparent 28%),linear-gradient(120deg,${dark},${shiftColor(color,-35)} 62%,${color})`);
+}
+
+function classFor(points = 0) { return [...AURA_CLASSES].reverse().find((level) => points >= level.min) || AURA_CLASSES[0]; }
+
+function renderProgression(points = 0) {
+  const currentIndex = AURA_CLASSES.findIndex((level) => level === classFor(points));
+  const current = AURA_CLASSES[currentIndex];
+  const next = AURA_CLASSES[currentIndex + 1];
+  const progress = next ? ((points - current.min) / (next.min - current.min)) * 100 : 100;
+  document.querySelector('#currentClassIcon').textContent = current.icon;
+  document.querySelector('#currentClassName').textContent = `${current.name} · Nível ${Math.floor(points / 100) + 1}`;
+  document.querySelector('#currentPoints').textContent = points.toLocaleString('pt-BR');
+  document.querySelector('#evolutionProgress').style.width = `${Math.max(0, Math.min(100, progress))}%`;
+  document.querySelector('#nextClassName').textContent = next?.name || 'Classe máxima';
+  document.querySelector('#pointsToNext').textContent = next ? (next.min - points).toLocaleString('pt-BR') : '0';
+  document.querySelector('#nextUnlock').textContent = next?.unlock || 'Você desbloqueou toda a jornada';
+  document.querySelector('#classMessage').textContent = next ? `Continue evoluindo para alcançar ${next.name}.` : 'Sua Aura alcançou uma presença lendária.';
+  document.querySelector('#classRoad').innerHTML = AURA_CLASSES.map((level, index) => `<article class="class-step ${index === currentIndex ? 'reached' : index > currentIndex ? 'locked' : ''}"><span>${level.icon}</span><p><strong>${level.name}</strong><small>${level.unlock}</small></p><b>${level.min.toLocaleString('pt-BR')} pts ${index <= currentIndex ? '✓' : '🔒'}</b></article>`).join('');
+}
+
+function applyDesignLocks(points = 0, founder = false) {
+  const locks = [
+    { input: document.querySelector('#designColor'), min: founder ? 0 : 500, text: 'Liberado na classe Explorador · 500 pontos' },
+    { input: document.querySelector('#coverUpload'), min: 1500, text: 'Liberado na classe Influenciador · 1.500 pontos' }
+  ];
+  locks.forEach(({ input, min, text }) => {
+    input.disabled = points < min;
+    const label = input.closest('label');
+    label.classList.toggle('locked-control', points < min);
+    if (points < min) label.dataset.lock = `🔒 ${text}`; else delete label.dataset.lock;
+  });
+}
+
+async function loadProfile(session) {
+  const fallbackName = session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'Pessoa Aura';
+  let { data, error } = await window.auraSupabase.from('profiles').select('full_name,username,bio,avatar_url,cover_url,theme_color,aura_points,member_number').eq('id', session.user.id).maybeSingle();
+  if (error && /member_number/i.test(error.message)) {
+    ({ data, error } = await window.auraSupabase.from('profiles').select('full_name,username,bio,avatar_url,cover_url,theme_color,aura_points').eq('id', session.user.id).maybeSingle());
+  }
+  if (error && /(cover_url|theme_color|aura_points)/i.test(error.message)) {
+    ({ data, error } = await window.auraSupabase.from('profiles').select('full_name,username,bio,avatar_url').eq('id', session.user.id).maybeSingle());
+  }
+  currentProfile = { full_name: fallbackName, username: '', bio: '', avatar_url: '', cover_url: '', aura_points: 0, member_number: null, theme_color: '#7657ec', ...(data || {}) };
+  if (error) console.error('Aura 67: não foi possível carregar todos os campos do perfil.', error.message);
+  applyGlobalTheme(currentProfile.theme_color);
+  renderProgression(currentProfile.aura_points || 0);
+  const isFounder = currentProfile.member_number && currentProfile.member_number <= 1000;
+  applyDesignLocks(currentProfile.aura_points || 0, isFounder);
+  document.querySelector('#founderChip').hidden = !isFounder;
+  if (isFounder) document.querySelector('#founderNumber').textContent = currentProfile.member_number;
+  document.querySelector('#accountName').textContent = currentProfile.full_name;
+  document.querySelector('#accountEmail').textContent = session.user.email;
+  document.querySelector('#accountAvatar').textContent = initials(currentProfile.full_name);
+  document.querySelectorAll('.sidebar-profile strong').forEach((element) => { element.textContent = currentProfile.full_name; });
+  document.querySelectorAll('.sidebar-profile .avatar').forEach((element) => { element.textContent = initials(currentProfile.full_name); });
+  document.querySelector('#welcomeName').textContent = currentProfile.full_name.split(/\s+/)[0];
+  document.querySelectorAll('.current-user .member strong').forEach((element) => { element.innerHTML = `${safeText(currentProfile.full_name)} <b>Você</b>`; });
+  document.querySelectorAll('.podium-card.is-you>strong').forEach((element) => { element.innerHTML = `${safeText(currentProfile.full_name)} <b>Você</b>`; });
+  document.querySelectorAll('.current-user-name').forEach((element) => { element.textContent = currentProfile.full_name; });
+  document.querySelectorAll('.current-user-points').forEach((element) => { element.textContent = (currentProfile.aura_points || 0).toLocaleString('pt-BR'); });
+  document.querySelectorAll('.current-user .member-avatar,.podium-card.is-you .podium-avatar').forEach((element) => { element.textContent = initials(currentProfile.full_name); });
+  const currentRow = document.querySelector('.leader-row.current-user');
+  if (currentRow) { currentRow.dataset.week = String(currentProfile.aura_points || 0); currentRow.dataset.month = String(currentProfile.aura_points || 0); }
+  document.querySelector('#designName').value = currentProfile.full_name || '';
+  document.querySelector('#designUsername').value = currentProfile.username || '';
+  document.querySelector('#designBio').value = currentProfile.bio || '';
+  document.querySelector('#designColor').value = currentProfile.theme_color || '#7657ec';
+  updatePreview();
+}
+
+function updatePreview() {
+  const name = document.querySelector('#designName').value || currentProfile?.full_name || 'Pessoa Aura';
+  const color = document.querySelector('#designColor').value;
+  applyGlobalTheme(color);
+  document.querySelector('#previewName').textContent = name;
+  document.querySelector('#previewUsername').textContent = `@${document.querySelector('#designUsername').value || 'seuusuario'}`;
+  document.querySelector('#previewBio').textContent = document.querySelector('#designBio').value || 'Transformando intenção em impacto.';
+  document.querySelector('#previewScore').textContent = (currentProfile?.aura_points || 0).toLocaleString('pt-BR');
+  document.querySelector('#previewAvatar').textContent = initials(name);
+  document.querySelector('#previewCover').style.background = currentProfile?.cover_url ? `linear-gradient(90deg,${color}55,${color}22),url('${mediaUrl(currentProfile.cover_url)}') center/cover` : `linear-gradient(120deg,#2d2537,${color})`;
+  if (currentProfile?.avatar_url) { document.querySelector('#previewAvatar').style.backgroundImage = `url('${mediaUrl(currentProfile.avatar_url)}')`; document.querySelector('#previewAvatar').textContent = ''; }
+}
+
+async function openPublicProfile(person) {
+  const color = person.theme_color || '#7657ec';
+  const dark = shiftColor(color, -65);
+  const backdrop = document.querySelector('#publicProfileBackdrop');
+  const cover = document.querySelector('#publicProfileCover');
+  backdrop.style.setProperty('--viewed-color', color);
+  backdrop.style.setProperty('--viewed-dark', dark);
+  backdrop.style.setProperty('--viewed-gradient', `linear-gradient(120deg,${dark},${color})`);
+  cover.style.background = person.cover_url ? `linear-gradient(90deg,${dark}88,${color}44),url('${mediaUrl(person.cover_url)}') center/cover` : `linear-gradient(120deg,${dark},${color})`;
+  const avatar = document.querySelector('#publicProfileAvatar');
+  avatar.style.backgroundImage = person.avatar_url ? `url('${mediaUrl(person.avatar_url)}')` : '';
+  avatar.textContent = person.avatar_url ? '' : initials(person.full_name);
+  document.querySelector('#publicProfileName').textContent = person.full_name;
+  document.querySelector('#publicProfileUsername').textContent = `@${person.username || 'perfil-aura'}`;
+  document.querySelector('#publicProfileBio').textContent = person.bio || 'Esta pessoa está construindo sua jornada Aura.';
+  document.querySelector('#publicProfileScore').textContent = (person.aura_points || 0).toLocaleString('pt-BR');
+  const viewedClass = classFor(person.aura_points || 0);
+  document.querySelector('#publicClassIcon').textContent = viewedClass.icon;
+  document.querySelector('#publicClassName').textContent = viewedClass.name;
+  document.querySelector('#publicMemberNumber').textContent = person.member_number ? `#${person.member_number}` : '—';
+  document.querySelector('#publicFounderBadge').hidden = !(person.member_number && person.member_number <= 1000);
+  const { count } = await window.auraSupabase.from('profiles').select('id', { count: 'exact', head: true }).gt('aura_points', person.aura_points || 0);
+  document.querySelector('#publicProfilePosition').textContent = count == null ? '—' : `${count + 1}º`;
+  backdrop.hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+
+async function uploadProfileFile(input, folder) {
+  const file = input.files[0];
+  if (!file) return null;
+  if (file.size > 5 * 1024 * 1024) throw new Error('A imagem deve ter no máximo 5 MB.');
+  const extension = file.name.split('.').pop().toLowerCase();
+  const path = `${window.AURA_SESSION.user.id}/${folder}-${Date.now()}.${extension}`;
+  const { error } = await window.auraSupabase.storage.from('profile-media').upload(path, file, { upsert: true });
+  if (error) throw error;
+  return path;
+}
+
+document.addEventListener('aura:session-ready', (event) => loadProfile(event.detail));
+if (window.AURA_SESSION) loadProfile(window.AURA_SESSION);
+document.querySelector('#profileMenuButton').addEventListener('click', () => { accountPopover.hidden = !accountPopover.hidden; });
+document.querySelector('#mobileProfileButton').addEventListener('click', () => { accountPopover.hidden = !accountPopover.hidden; });
+document.querySelector('#openDesignButton').addEventListener('click', () => { accountPopover.hidden = true; designBackdrop.hidden = false; document.body.style.overflow = 'hidden'; });
+document.querySelector('#designClose').addEventListener('click', () => { applyGlobalTheme(currentProfile?.theme_color || '#7657ec'); designBackdrop.hidden = true; document.body.style.overflow = ''; });
+document.querySelector('#publicProfileClose').addEventListener('click', () => { document.querySelector('#publicProfileBackdrop').hidden = true; document.body.style.overflow = ''; });
+document.querySelector('#publicProfileBackdrop').addEventListener('click', (event) => { if (event.target.id === 'publicProfileBackdrop') document.querySelector('#publicProfileClose').click(); });
+document.querySelector('#inspireButton').addEventListener('click', () => { document.querySelector('#inspireButton').textContent = 'Inspiração enviada ✓'; });
+document.querySelector('#evolutionDetailsButton').addEventListener('click', () => { document.querySelector('#journeyBackdrop').hidden = false; document.body.style.overflow = 'hidden'; });
+document.querySelector('#journeyClose').addEventListener('click', () => { document.querySelector('#journeyBackdrop').hidden = true; document.body.style.overflow = ''; });
+document.querySelector('#journeyBackdrop').addEventListener('click', (event) => { if (event.target.id === 'journeyBackdrop') document.querySelector('#journeyClose').click(); });
+designBackdrop.addEventListener('click', (event) => { if (event.target === designBackdrop) document.querySelector('#designClose').click(); });
+['designName','designUsername','designBio','designColor'].forEach((id) => document.querySelector(`#${id}`).addEventListener('input', updatePreview));
+
+function maskEmail(email){const[local,domain]=email.split('@');const visible=local.slice(0,Math.min(2,local.length));return `${visible}${'•'.repeat(Math.max(3,local.length-visible.length))}@${domain}`;}
+function emailProviderUrl(email){const domain=email.split('@')[1]?.toLowerCase();if(domain?.includes('gmail'))return'https://mail.google.com/';if(domain?.includes('outlook')||domain?.includes('hotmail')||domain?.includes('live'))return'https://outlook.live.com/mail/';if(domain?.includes('yahoo'))return'https://mail.yahoo.com/';if(domain?.includes('icloud'))return'https://www.icloud.com/mail/';return'mailto:';}
+let passwordResendTimer;
+async function sendPasswordEmail(){const email=window.AURA_SESSION.user.email;const button=document.querySelector('#changePasswordButton');const message=document.querySelector('#emailCheckMessage');button.disabled=true;message.className='email-check-message';message.textContent='Enviando link de segurança…';const{error}=await window.auraSupabase.auth.resetPasswordForEmail(email,{redirectTo:`${window.location.origin}/redefinir-senha.html`});button.disabled=false;if(error){message.textContent=error.message;return false;}document.querySelector('#passwordMaskedEmail').textContent=maskEmail(email);document.querySelector('#openEmailProvider').href=emailProviderUrl(email);document.querySelector('#accountPopover').hidden=true;document.querySelector('#emailCheckBackdrop').hidden=false;document.body.style.overflow='hidden';message.classList.add('success');message.textContent='E-mail enviado com sucesso.';return true;}
+function startPasswordResendCountdown(){clearInterval(passwordResendTimer);const button=document.querySelector('#resendPasswordEmail');let seconds=30;button.disabled=true;button.textContent=`Reenviar em ${seconds}s`;passwordResendTimer=setInterval(()=>{seconds-=1;button.textContent=seconds?`Reenviar em ${seconds}s`:'Reenviar e-mail';if(!seconds){clearInterval(passwordResendTimer);button.disabled=false;}},1000);}
+document.querySelector('#changePasswordButton').addEventListener('click',async()=>{if(await sendPasswordEmail())startPasswordResendCountdown();});
+document.querySelector('#resendPasswordEmail').addEventListener('click',async()=>{if(await sendPasswordEmail())startPasswordResendCountdown();});
+document.querySelector('#emailCheckClose').addEventListener('click',()=>{document.querySelector('#emailCheckBackdrop').hidden=true;document.body.style.overflow='';});
+document.querySelector('#emailCheckBackdrop').addEventListener('click',(event)=>{if(event.target.id==='emailCheckBackdrop')document.querySelector('#emailCheckClose').click();});
+document.querySelector('#logoutButton').addEventListener('click', async () => { await window.auraSupabase.auth.signOut(); window.location.replace('login.html'); });
+
+document.querySelector('#designForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const message = document.querySelector('#designMessage');
+  message.textContent = 'Salvando seu espaço…';
+  try {
+    const avatar = await uploadProfileFile(document.querySelector('#avatarUpload'), 'avatar');
+    const cover = await uploadProfileFile(document.querySelector('#coverUpload'), 'cover');
+    const updates = { full_name: document.querySelector('#designName').value.trim(), username: document.querySelector('#designUsername').value.trim().toLowerCase(), bio: document.querySelector('#designBio').value.trim(), theme_color: document.querySelector('#designColor').value, updated_at: new Date().toISOString() };
+    if (avatar) updates.avatar_url = avatar;
+    if (cover) updates.cover_url = cover;
+    const { error } = await window.auraSupabase.from('profiles').update(updates).eq('id', window.AURA_SESSION.user.id);
+    if (error) throw error;
+    currentProfile = { ...currentProfile, ...updates };
+    applyGlobalTheme(updates.theme_color);
+    updatePreview();
+    await loadProfile(window.AURA_SESSION);
+    message.style.color = '#318361'; message.textContent = 'Seu design foi salvo com sucesso.';
+  } catch (error) { message.style.color = '#b44'; message.textContent = error.message; }
+});
+
+let searchTimer;
+document.querySelector('#searchInput').addEventListener('input', (event) => {
+  clearTimeout(searchTimer);
+  const term = event.target.value.trim().replace(/[%_,]/g, '');
+  if (term.length < 2) { document.querySelector('#peopleResults').innerHTML = '<p>Digite pelo menos 2 caracteres para encontrar pessoas.</p>'; return; }
+  searchTimer = setTimeout(async () => {
+    const { data, error } = await window.auraSupabase.from('profiles').select('id,full_name,username,bio,avatar_url,cover_url,theme_color,aura_points,member_number').or(`full_name.ilike.%${term}%,username.ilike.%${term}%`).limit(12);
+    const results = document.querySelector('#peopleResults');
+    if (error || !data?.length) { results.innerHTML = '<p>Nenhuma pessoa encontrada.</p>'; return; }
+    results.innerHTML = data.map((person, index) => `<article class="person-result" data-result-index="${index}" tabindex="0"><span class="person-result-avatar"${person.avatar_url ? ` style="background-image:url('${mediaUrl(person.avatar_url)}')"` : ''}>${person.avatar_url ? '' : safeText(initials(person.full_name))}</span><span><strong>${safeText(person.full_name)}</strong><small>@${safeText(person.username || 'perfil-aura')} · ${safeText(person.bio || 'Construindo sua jornada.')}</small></span><b>✦ ${(person.aura_points || 0).toLocaleString('pt-BR')}</b></article>`).join('');
+    results.querySelectorAll('.person-result').forEach((element) => {
+      const open = () => { document.querySelector('#searchOverlay').hidden = true; openPublicProfile(data[Number(element.dataset.resultIndex)]); };
+      element.addEventListener('click', open);
+      element.addEventListener('keydown', (keyboardEvent) => { if (keyboardEvent.key === 'Enter') open(); });
+    });
+  }, 300);
+});
