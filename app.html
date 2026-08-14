@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="css/email-check.css?v=16">
   <link rel="stylesheet" href="css/ranking-real.css?v=17">
   <link rel="stylesheet" href="css/large-ui.css?v=22">
+  <link rel="stylesheet" href="css/identity-profile.css?v=23">
 </head>
 <body>
   <div class="ambient ambient-one"></div>
@@ -195,6 +196,27 @@
         <nav class="category-tabs" id="categoryTabs" aria-label="Categorias"><button class="active" data-category="all">✦ Todas</button><button data-category="health">💧 Saúde</button><button data-category="mental">🧠 Mental</button><button data-category="home">🧹 Casa</button><button data-category="finance">💰 Finanças</button><button data-category="productivity">🚀 Produtividade</button><button data-category="social">🤝 Social</button><button data-category="special">🔥 Especiais</button></nav>
         <section class="habits-section"><div class="habits-heading"><div><h3 id="habitsHeading">Todas as ações</h3><p id="habitsCount">Carregando catálogo…</p></div><button id="onlyPendingButton" type="button">Mostrar pendentes</button></div><div class="habits-grid" id="habitsGrid"><div class="habits-loading">Preparando suas próximas conquistas…</div></div></section>
       </div>
+      <div class="content identity-page" id="identityProfile" hidden>
+        <section class="identity-hero" id="identityHero">
+          <div class="identity-cover" id="identityCover"></div>
+          <button class="identity-settings" id="identitySettingsButton" type="button" aria-label="Abrir configurações">⚙</button>
+          <div class="identity-person">
+            <div class="identity-avatar-frame" id="identityAvatarFrame"><span class="identity-avatar" id="identityAvatar">EU</span><i id="identityHonorMark">✦</i></div>
+            <div class="identity-copy"><span class="section-kicker">IDENTIDADE AURA</span><h2 id="identityName">Seu perfil</h2><strong id="identityUsername">@seuusuario</strong><p id="identityBio">Sua evolução começa aqui.</p></div>
+          </div>
+          <div class="identity-stats">
+            <article><span>✦</span><strong id="identityAuraPoints">0</strong><small>Pontos de Aura</small></article>
+            <article><span>◆</span><strong id="identityHonorPoints">0</strong><small>Pontos de Honra</small></article>
+            <article><span>◉</span><strong id="identityVisits">0</strong><small>Visitas ao perfil</small></article>
+            <article><span>№</span><strong id="identityMember">—</strong><small>Membro Aura</small></article>
+          </div>
+        </section>
+        <section class="identity-grid">
+          <article class="identity-card identity-level-card"><span class="identity-card-kicker">EVOLUÇÃO</span><h3 id="identityAuraClass">Classe Centelha</h3><p>Seu nível de Aura cresce com ações, missões e constância comprovadas.</p><div class="identity-level-track"><i id="identityAuraProgress"></i></div><small id="identityNextAura">Próxima classe em 100 pontos</small></article>
+          <article class="identity-card identity-honor-card"><span class="identity-card-kicker">REPUTAÇÃO</span><h3 id="identityHonorLevel">Honra Inicial</h3><p>Sua moldura evolui quando a comunidade reconhece atitudes positivas.</p><div class="honor-mini-list" id="identityHonorCategories"><span>Nenhuma Honra recebida ainda.</span></div></article>
+        </section>
+        <section class="identity-card identity-trophies"><div class="identity-section-head"><div><span class="identity-card-kicker">CONQUISTAS</span><h3>Minha galeria de troféus</h3></div><span id="identityTrophyCount">0 conquistados</span></div><div class="trophy-gallery" id="identityTrophies"><p>Suas conquistas aparecerão aqui.</p></div></section>
+      </div>
     </main>
   </div>
 
@@ -246,9 +268,9 @@
   <script src="config/environments.js?v=10"></script>
   <script src="js/supabase-client.js?v=10"></script>
   <script src="js/app-auth.js?v=10"></script>
-  <script src="js/profile.js?v=22"></script>
+  <script src="js/profile.js?v=23"></script>
   <script src="js/ranking.js?v=17"></script>
   <script src="js/habits.js?v=12"></script>
-  <script src="script.js?v=17"></script>
+  <script src="script.js?v=23"></script>
 </body>
 </html>

@@ -156,6 +156,62 @@ async function uploadProfileFile(input, folder) {
   return path;
 }
 
+function honorFrameClass(points = 0) {
+  if (points >= 500) return 'honor-legendary';
+  if (points >= 200) return 'honor-exemplary';
+  if (points >= 75) return 'honor-elevated';
+  if (points >= 20) return 'honor-recognized';
+  return '';
+}
+
+async function loadIdentityProfile() {
+  if (!window.AURA_SESSION) return;
+  const { data, error } = await window.auraSupabase.rpc('public_profile_identity', { p_profile_id: window.AURA_SESSION.user.id });
+  if (error) { showToast('Não foi possível carregar a identidade. Verifique a migration 007.'); return; }
+  const profile = data?.profile || currentProfile;
+  if (!profile) return;
+  const color = profile.theme_color || '#7657ec';
+  const hero = document.querySelector('#identityProfile');
+  hero.style.setProperty('--identity-color', color);
+  hero.style.setProperty('--identity-dark', shiftColor(color, -70));
+  document.querySelector('#identityCover').style.background = profile.cover_url ? `linear-gradient(90deg,${shiftColor(color,-70)}99,${color}44),url('${mediaUrl(profile.cover_url)}') center/cover` : `linear-gradient(120deg,${shiftColor(color,-70)},${color})`;
+  const avatar = document.querySelector('#identityAvatar');
+  avatar.style.backgroundImage = profile.avatar_url ? `url('${mediaUrl(profile.avatar_url)}')` : '';
+  avatar.textContent = profile.avatar_url ? '' : initials(profile.full_name);
+  const frame = document.querySelector('#identityAvatarFrame');
+  frame.className = `identity-avatar-frame ${honorFrameClass(profile.honor_points || 0)}`;
+  document.querySelector('#identityName').textContent = profile.full_name;
+  document.querySelector('#identityUsername').textContent = `@${profile.username || 'defina-seu-usuario'}`;
+  document.querySelector('#identityBio').textContent = profile.bio || 'Sua evolução começa aqui.';
+  document.querySelector('#identityAuraPoints').textContent = (profile.aura_points || 0).toLocaleString('pt-BR');
+  document.querySelector('#identityHonorPoints').textContent = (profile.honor_points || 0).toLocaleString('pt-BR');
+  document.querySelector('#identityVisits').textContent = (profile.profile_visit_count || 0).toLocaleString('pt-BR');
+  document.querySelector('#identityMember').textContent = profile.member_number ? `#${profile.member_number}` : '—';
+  document.querySelector('#identityHonorLevel').textContent = profile.honor_level || 'Honra Inicial';
+  const level = classFor(profile.aura_points || 0);
+  const levelIndex = AURA_CLASSES.findIndex((item) => item.name === level.name);
+  const next = AURA_CLASSES[levelIndex + 1];
+  const progress = next ? ((profile.aura_points - level.min) / (next.min - level.min)) * 100 : 100;
+  document.querySelector('#identityAuraClass').textContent = `Classe ${level.name}`;
+  document.querySelector('#identityAuraProgress').style.width = `${Math.max(0, Math.min(100, progress))}%`;
+  document.querySelector('#identityNextAura').textContent = next ? `Próxima classe em ${(next.min - profile.aura_points).toLocaleString('pt-BR')} pontos` : 'Classe máxima alcançada';
+  const honors = data?.honors || [];
+  document.querySelector('#identityHonorCategories').innerHTML = honors.length ? honors.map((honor) => `<span>${safeText(honor.icon)} ${safeText(honor.name)} <b>${honor.count}</b></span>`).join('') : '<span>Nenhuma Honra recebida ainda.</span>';
+  const trophies = data?.achievements || [];
+  document.querySelector('#identityTrophyCount').textContent = `${trophies.length} ${trophies.length === 1 ? 'conquistado' : 'conquistados'}`;
+  document.querySelector('#identityTrophies').innerHTML = trophies.length ? trophies.map((trophy) => `<article class="trophy-item"><span>${safeText(trophy.icon)}</span><div><strong>${safeText(trophy.name)}</strong><small>${safeText(trophy.description)}</small></div></article>`).join('') : '<p>Suas conquistas aparecerão aqui.</p>';
+}
+
+function openOwnProfile() {
+  ['dashboard','ranking','habits'].forEach((id) => { document.querySelector(`#${id}`).hidden = true; });
+  document.querySelector('#identityProfile').hidden = false;
+  document.querySelector('#pageTitle').textContent = 'Meu perfil';
+  document.querySelectorAll('.nav-item').forEach((item) => item.classList.remove('active'));
+  document.querySelectorAll('[data-mobile-page],#mobileProfileButton').forEach((item) => item.classList.toggle('active', item.id === 'mobileProfileButton'));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  loadIdentityProfile();
+}
+
 document.addEventListener('aura:session-ready', (event) => loadProfile(event.detail));
 if (window.AURA_SESSION) loadProfile(window.AURA_SESSION);
 function setAccountMenu(open) {
@@ -163,8 +219,9 @@ function setAccountMenu(open) {
   document.documentElement.classList.toggle('account-menu-open', open);
   document.body.classList.toggle('account-menu-open', open);
 }
-document.querySelector('#profileMenuButton').addEventListener('click', () => setAccountMenu(accountPopover.hidden));
-document.querySelector('#mobileProfileButton').addEventListener('click', () => setAccountMenu(accountPopover.hidden));
+document.querySelector('#profileMenuButton').addEventListener('click', openOwnProfile);
+document.querySelector('#mobileProfileButton').addEventListener('click', openOwnProfile);
+document.querySelector('#identitySettingsButton').addEventListener('click', () => setAccountMenu(true));
 document.querySelector('#openDesignButton').addEventListener('click', () => { setAccountMenu(false); designBackdrop.hidden = false; document.body.style.overflow = 'hidden'; });
 document.querySelector('#openProfileEditorButton').addEventListener('click', () => { setAccountMenu(false); profileEditorBackdrop.hidden = false; document.body.style.overflow = 'hidden'; updatePreview(); });
 document.querySelector('#accountMenuClose').addEventListener('click', () => setAccountMenu(false));

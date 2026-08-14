@@ -26,6 +26,7 @@ navItems.forEach((item) => item.addEventListener('click', (event) => {
   toggleMenu(false);
   const isRanking = item.dataset.view === 'ranking';
   const isHabits = item.dataset.view === 'habits';
+  document.querySelector('#identityProfile').hidden = true;
   document.querySelector('#dashboard').hidden = isRanking || isHabits;
   document.querySelector('#ranking').hidden = !isRanking;
   document.querySelector('#habits').hidden = !isHabits;
@@ -96,6 +97,7 @@ function showToast(message) {
 }
 
 document.querySelectorAll('[data-mobile-page]').forEach((button) => button.addEventListener('click', () => {
+  document.querySelector('#mobileProfileButton').classList.remove('active');
   document.querySelectorAll('[data-mobile-page]').forEach((item) => item.classList.toggle('active', item === button));
   const target = [...navItems].find((item) => item.dataset.page === button.dataset.mobilePage);
   target?.click();
