@@ -136,6 +136,7 @@ function updatePreview() {
 }
 
 async function openPublicProfile(person) {
+  if (person.lifetime_points != null) person = { ...person, aura_points: person.lifetime_points };
   const color = person.theme_color || '#7657ec';
   const dark = shiftColor(color, -65);
   const backdrop = document.querySelector('#publicProfileBackdrop');
