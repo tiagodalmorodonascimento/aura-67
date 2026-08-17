@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/action-feedback.css?v=36">
   <link rel="stylesheet" href="css/feedback-cleanup.css?v=36">
   <link rel="stylesheet" href="css/dashboard-live.css?v=39">
+  <link rel="stylesheet" href="css/chat.css?v=42">
   <link rel="stylesheet" href="css/profile.css?v=10">
   <link rel="stylesheet" href="css/profile-extra.css?v=10">
   <link rel="stylesheet" href="css/profile-menu-v2.css?v=15">
@@ -52,8 +53,8 @@
         <a class="nav-item" href="#projetos" data-page="Projetos">
           <span class="nav-icon">◇</span><span>Projetos</span>
         </a>
-        <a class="nav-item" href="#biblioteca" data-page="Biblioteca">
-          <span class="nav-icon">▦</span><span>Biblioteca</span>
+        <a class="nav-item" href="#conversas" data-page="Conversas" id="openChatNav">
+          <span class="nav-icon">◌</span><span>Conversas</span><span class="nav-count" id="chatUnread" hidden>1</span>
         </a>
         <a class="nav-item" href="#habitos" data-page="Atividade" data-view="habits">
           <span class="nav-icon">↗</span><span>Atividade</span>
@@ -90,6 +91,7 @@
           <button class="search-button" id="searchButton" type="button" aria-label="Buscar">
             <span>⌕</span><span class="search-text">Buscar...</span><kbd>⌘ K</kbd>
           </button>
+          <button class="icon-button chat-top-button" id="openChatButton" type="button" aria-label="Conversas">◌</button>
           <button class="icon-button notification" id="notificationButton" type="button" aria-label="Notificações">◇<i id="notificationDot"></i></button>
         </div>
       </header>
@@ -240,6 +242,7 @@
     <div class="search-box"><div class="search-dialog"><span>⌕</span><input id="searchInput" type="search" placeholder="Busque pessoas por nome ou @usuário..." aria-label="Buscar pessoas"><kbd>ESC</kbd></div><div class="people-results" id="peopleResults"><p>Digite pelo menos 2 caracteres para encontrar pessoas.</p></div></div>
   </div>
   <div class="notification-backdrop" id="notificationBackdrop" hidden><aside class="notification-panel" role="dialog" aria-modal="true" aria-labelledby="notificationTitle"><button class="modal-close" id="notificationClose" type="button">×</button><span class="section-kicker">ATUALIZAÇÕES</span><div class="notification-heading"><h2 id="notificationTitle">Notificações</h2><button id="clearNotifications" type="button">Apagar todas</button></div><div id="notificationList"><p class="dashboard-empty">Carregando suas atualizações…</p></div></aside></div>
+  <div class="chat-backdrop" id="chatBackdrop" hidden><section class="chat-shell" role="dialog" aria-modal="true" aria-labelledby="chatTitle"><aside class="chat-contacts"><div><span class="section-kicker">CONVERSAS</span><h2>Mensagens</h2></div><button class="chat-contact active" type="button"><span class="chat-avatar">AT</span><span><strong>Aura Tester</strong><small>Contato oficial para testes</small></span><i></i></button></aside><div class="chat-conversation"><header><button class="chat-back" id="chatClose" type="button" aria-label="Fechar">‹</button><span class="chat-avatar">AT</span><span><strong id="chatTitle">Aura Tester</strong><small><i></i> disponível agora</small></span></header><div class="chat-messages" id="chatMessages"><p class="dashboard-empty">Carregando conversa…</p></div><form class="chat-composer" id="chatForm"><input id="chatInput" maxlength="1000" autocomplete="off" placeholder="Escreva uma mensagem…" aria-label="Mensagem"><button type="submit" aria-label="Enviar">➤</button></form></div></section></div>
 
   <div class="account-popover" id="accountPopover" hidden>
     <button class="account-mobile-close" id="accountMenuClose" type="button" aria-label="Fechar menu">×</button>
@@ -276,5 +279,6 @@
   <script src="js/habits.js?v=36"></script>
   <script src="script.js?v=39"></script>
   <script src="js/dashboard.js?v=41"></script>
+  <script src="js/chat.js?v=42"></script>
 </body>
 </html>

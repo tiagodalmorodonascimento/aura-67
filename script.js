@@ -33,7 +33,7 @@ navItems.forEach((item) => item.addEventListener('click', (event) => {
   if (item.dataset.page === 'Visão geral') document.querySelector('#dashboard').hidden = false;
   if (isHabits && typeof loadHabits === 'function') loadHabits();
   if (isRanking && typeof loadRealRanking === 'function') loadRealRanking();
-  if (item.dataset.page !== 'Visão geral' && !isRanking && !isHabits) showToast(`${item.dataset.page}: módulo pronto para você editar.`);
+  if (!['Visão geral','Conversas'].includes(item.dataset.page) && !isRanking && !isHabits) showToast(`${item.dataset.page}: módulo pronto para você editar.`);
 }));
 
 document.querySelector('#earnPointsButton').addEventListener('click', () => {
