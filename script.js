@@ -37,8 +37,9 @@ navItems.forEach((item) => item.addEventListener('click', (event) => {
 }));
 
 document.querySelector('#earnPointsButton').addEventListener('click', () => {
-  showToast('Complete uma das ações abaixo e suba no ranking!');
-  document.querySelector('.ways-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  const activityNav = [...navItems].find((item) => item.dataset.view === 'habits');
+  activityNav?.click();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 function openModal() {

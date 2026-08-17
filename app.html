@@ -49,7 +49,7 @@
           <span class="nav-icon">⌂</span><span>Visão geral</span>
         </a>
         <a class="nav-item" href="#ranking" data-page="Ranking" data-view="ranking">
-          <span class="nav-icon">★</span><span>Ranking</span><span class="nav-count ranking-nav-count">3º</span>
+          <span class="nav-icon">★</span><span>Ranking</span>
         </a>
         <a class="nav-item" href="#projetos" data-page="Projetos">
           <span class="nav-icon">◇</span><span>Projetos</span>
@@ -173,9 +173,8 @@
       <div class="content ranking-page" id="ranking" hidden>
         <section class="ranking-hero">
           <div><span class="section-kicker">DESAFIO AURA</span><h2>Quem vai chegar ao <em>topo?</em></h2><p>Conquiste pontos, mantenha sua sequência e ultrapasse quem está à sua frente.</p></div>
-          <div class="ranking-countdown"><span>Temporada encerra em</span><strong>04d : 18h : 32m</strong><small>Os 3 primeiros ganham uma insígnia exclusiva</small></div>
         </section>
-        <section class="ranking-toolbar" aria-label="Controles do ranking"><div><strong>Ranking geral</strong><small>Pontuação Aura acumulada</small></div><span class="ranking-updated"><i></i> Dados reais do Supabase</span></section>
+        <section class="ranking-toolbar" aria-label="Controles do ranking"><div><strong>Ranking geral</strong><small>Pontuação Aura acumulada</small></div></section>
         <section class="podium" id="realPodium" aria-label="Pódio dos três primeiros colocados"><div class="ranking-loading">Carregando membros reais…</div></section>
         <section class="ranking-layout">
           <article class="panel leaderboard-panel">
@@ -183,7 +182,7 @@
             <div class="leaderboard" id="leaderboard"><div class="ranking-loading">Buscando classificação…</div></div>
           </article>
           <aside class="ranking-side">
-            <article class="panel chase-card"><span class="chase-icon">⚡</span><p>Faltam apenas</p><strong id="pointsGap">240 pontos</strong><small>para você alcançar o próximo lugar</small><div class="gap-progress"><i></i></div><button class="primary-button" type="button" id="earnPointsButton">Ganhar pontos</button></article>
+            <article class="panel chase-card"><span class="chase-icon">⚡</span><p>Faltam apenas</p><strong id="pointsGap">—</strong><small>Calculando sua posição</small><div class="gap-progress"><i></i></div><button class="primary-button" type="button" id="earnPointsButton">Ganhar pontos</button></article>
             <article class="panel ways-card"><div class="panel-heading"><div><h3>Como pontuar hoje</h3><p>Ações reais da sua Jornada</p></div></div><ul><li><span class="way-icon lavender">✓</span><span><strong>Concluir uma ação</strong><small>O XP depende da dificuldade</small></span><b>+5–30</b></li><li><span class="way-icon mint">⚡</span><span><strong>Completar um combo</strong><small>A cada 3 ações no dia</small></span><b>+15</b></li><li><span class="way-icon peach">📷</span><span><strong>Validar uma missão</strong><small>XP após aprovação da prova</small></span><b>XP</b></li></ul></article>
           </aside>
         </section>
@@ -278,7 +277,7 @@
   <script src="js/reminders.js?v=36"></script>
   <script src="js/ranking.js?v=17"></script>
   <script src="js/habits.js?v=36"></script>
-  <script src="script.js?v=39"></script>
+  <script src="script.js?v=44"></script>
   <script src="js/dashboard.js?v=41"></script>
   <script src="js/chat.js?v=43"></script>
 </body>
