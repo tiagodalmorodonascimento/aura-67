@@ -1,4 +1,7 @@
 let currentProfile;
+let draftAvatarUrl = '';
+let draftCoverUrl = '';
+let themeSaveTimer;
 const accountPopover = document.querySelector('#accountPopover');
 const designBackdrop = document.querySelector('#designBackdrop');
 const profileEditorBackdrop = document.querySelector('#profileEditorBackdrop');
@@ -137,8 +140,11 @@ function updatePreview() {
   document.querySelector('#previewBio').textContent = document.querySelector('#designBio').value || 'Transformando intenção em impacto.';
   document.querySelector('#previewScore').textContent = (currentProfile?.aura_points || 0).toLocaleString('pt-BR');
   document.querySelector('#previewAvatar').textContent = initials(name);
-  document.querySelector('#previewCover').style.background = currentProfile?.cover_url ? `linear-gradient(90deg,${color}55,${color}22),url('${mediaUrl(currentProfile.cover_url)}') center/cover` : `linear-gradient(120deg,#2d2537,${color})`;
-  if (currentProfile?.avatar_url) { document.querySelector('#previewAvatar').style.backgroundImage = `url('${mediaUrl(currentProfile.avatar_url)}')`; document.querySelector('#previewAvatar').textContent = ''; }
+  const coverUrl = draftCoverUrl || (currentProfile?.cover_url ? mediaUrl(currentProfile.cover_url) : '');
+  const avatarUrl = draftAvatarUrl || (currentProfile?.avatar_url ? mediaUrl(currentProfile.avatar_url) : '');
+  document.querySelector('#previewCover').style.background = coverUrl ? `linear-gradient(90deg,${color}55,${color}22),url('${coverUrl}') center/cover` : `linear-gradient(120deg,#2d2537,${color})`;
+  document.querySelector('#previewAvatar').style.backgroundImage = avatarUrl ? `url('${avatarUrl}')` : '';
+  if (avatarUrl) document.querySelector('#previewAvatar').textContent = '';
 }
 
 async function openPublicProfile(person) {
@@ -264,10 +270,33 @@ document.querySelectorAll('#themeSwatches button').forEach((button) => button.ad
   document.querySelector('#designColor').value = button.dataset.color;
   document.querySelectorAll('#themeSwatches button').forEach((item) => item.classList.toggle('selected', item === button));
   applyGlobalTheme(button.dataset.color);
+  scheduleThemeSave();
 }));
 document.querySelector('#designColor').addEventListener('input', (event) => {
   document.querySelectorAll('#themeSwatches button').forEach((item) => item.classList.toggle('selected', item.dataset.color === event.target.value.toLowerCase()));
+  scheduleThemeSave();
 });
+
+function scheduleThemeSave(){
+  clearTimeout(themeSaveTimer);
+  const message=document.querySelector('#designMessage');
+  message.style.color='#7d7684';message.textContent='Salvando automaticamente…';
+  themeSaveTimer=setTimeout(async()=>{
+    const theme_color=document.querySelector('#designColor').value;
+    const{error}=await window.auraSupabase.from('profiles').update({theme_color,updated_at:new Date().toISOString()}).eq('id',window.AURA_SESSION.user.id);
+    if(error){message.style.color='#b44';message.textContent='Não foi possível salvar automaticamente.';return}
+    currentProfile={...currentProfile,theme_color};cacheProfile(window.AURA_SESSION.user.id,currentProfile);message.style.color='#318361';message.textContent='Design atualizado automaticamente ✓';
+  },650);
+}
+function previewProfileFile(input,type){
+  const file=input.files?.[0];if(!file)return;
+  if(type==='avatar'&&draftAvatarUrl)URL.revokeObjectURL(draftAvatarUrl);
+  if(type==='cover'&&draftCoverUrl)URL.revokeObjectURL(draftCoverUrl);
+  if(type==='avatar')draftAvatarUrl=URL.createObjectURL(file);else draftCoverUrl=URL.createObjectURL(file);
+  updatePreview();
+}
+document.querySelector('#avatarUpload').addEventListener('change',event=>previewProfileFile(event.target,'avatar'));
+document.querySelector('#coverUpload').addEventListener('change',event=>previewProfileFile(event.target,'cover'));
 
 function validateUsername() {
   const input = document.querySelector('#designUsername');
@@ -326,6 +355,7 @@ document.querySelector('#profileForm').addEventListener('submit', async (event) 
       throw error;
     }
     currentProfile = { ...currentProfile, ...updates };
+    if(draftAvatarUrl)URL.revokeObjectURL(draftAvatarUrl);if(draftCoverUrl)URL.revokeObjectURL(draftCoverUrl);draftAvatarUrl='';draftCoverUrl='';
     await loadProfile(window.AURA_SESSION);
     message.style.color = '#318361'; message.textContent = 'Seu perfil foi salvo com sucesso.';
     showToast('Suas informações e imagens foram atualizadas.','success','Perfil atualizado');
