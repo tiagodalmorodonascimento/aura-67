@@ -141,7 +141,7 @@ document.querySelector('#loginForm')?.addEventListener('submit', async (event) =
     setMessage('Entrando…', true);
     const { error } = await supabaseClient.auth.signInWithPassword({ email: email.value.trim().toLowerCase(), password: password.value });
     submit.disabled = false;
-    if (error) { setMessage(''); showAuthFeedback('Não foi possível entrar','Confira seu e-mail e sua senha. Se a conta for nova, confirme também o e-mail recebido.','error'); return; }
+    if (error) { setMessage(''); showAuthFeedback('Não foi possível entrar','Confira o e-mail e a senha informados.','error'); return; }
     setMessage('');
     showAuthFeedback('Login confirmado','Bem-vindo de volta. Sua jornada está pronta.');
     setTimeout(() => window.location.replace(postLoginDestination()), 1100);
