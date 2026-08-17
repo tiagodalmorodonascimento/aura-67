@@ -26,14 +26,17 @@ navItems.forEach((item) => item.addEventListener('click', (event) => {
   toggleMenu(false);
   const isRanking = item.dataset.view === 'ranking';
   const isHabits = item.dataset.view === 'habits';
+  const isProjects = item.dataset.view === 'projects';
   document.querySelector('#identityProfile').hidden = true;
-  document.querySelector('#dashboard').hidden = isRanking || isHabits;
+  document.querySelector('#dashboard').hidden = isRanking || isHabits || isProjects;
   document.querySelector('#ranking').hidden = !isRanking;
   document.querySelector('#habits').hidden = !isHabits;
+  document.querySelector('#projects').hidden = !isProjects;
   if (item.dataset.page === 'Visão geral') document.querySelector('#dashboard').hidden = false;
   if (isHabits && typeof loadHabits === 'function') loadHabits();
   if (isRanking && typeof loadRealRanking === 'function') loadRealRanking();
-  if (!['Visão geral','Conversas'].includes(item.dataset.page) && !isRanking && !isHabits) showToast(`${item.dataset.page}: módulo pronto para você editar.`);
+  if (isProjects && typeof loadProjects === 'function') loadProjects();
+  if (!['Visão geral','Conversas'].includes(item.dataset.page) && !isRanking && !isHabits && !isProjects) showToast(`${item.dataset.page}: módulo pronto para você editar.`);
 }));
 
 document.querySelector('#earnPointsButton').addEventListener('click', () => {

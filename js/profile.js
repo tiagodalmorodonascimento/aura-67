@@ -68,6 +68,7 @@ function renderProgression(points = 0) {
   document.querySelector('#nextUnlock').textContent = next?.unlock || 'Você desbloqueou toda a jornada';
   document.querySelector('#classMessage').textContent = next ? `Continue evoluindo para alcançar ${next.name}.` : 'Sua Aura alcançou uma presença lendária.';
   document.querySelector('#classRoad').innerHTML = AURA_CLASSES.map((level, index) => `<article class="class-step ${index === currentIndex ? 'reached' : index > currentIndex ? 'locked' : ''}"><span>${level.icon}</span><p><strong>${level.name}</strong><small>${level.unlock}</small></p><b>${level.min.toLocaleString('pt-BR')} pts ${index <= currentIndex ? '✓' : '🔒'}</b></article>`).join('');
+  document.querySelector('#overviewTrajectory').innerHTML = AURA_CLASSES.map((level,index)=>`<article class="${index<currentIndex?'passed':index===currentIndex?'current':'locked'}"><span>${level.icon}</span><div><strong>${level.name}</strong><small>${level.min.toLocaleString('pt-BR')} pontos</small></div>${index<=currentIndex?'<b>✓</b>':'<b>○</b>'}</article>`).join('');
 }
 
 function applyDesignLocks(points = 0, founder = false) {
@@ -236,7 +237,7 @@ async function loadIdentityProfile() {
 }
 
 function openOwnProfile() {
-  ['dashboard','ranking','habits'].forEach((id) => { document.querySelector(`#${id}`).hidden = true; });
+  ['dashboard','ranking','habits','projects'].forEach((id) => { document.querySelector(`#${id}`).hidden = true; });
   document.querySelector('#identityProfile').hidden = false;
   document.querySelector('#pageTitle').textContent = 'Meu perfil';
   document.querySelectorAll('.nav-item').forEach((item) => item.classList.remove('active'));
@@ -264,6 +265,7 @@ document.querySelector('#publicProfileClose').addEventListener('click', () => { 
 document.querySelector('#publicProfileBackdrop').addEventListener('click', (event) => { if (event.target.id === 'publicProfileBackdrop') document.querySelector('#publicProfileClose').click(); });
 document.querySelector('#inspireButton').addEventListener('click', () => { document.querySelector('#inspireButton').textContent = 'Inspiração enviada ✓'; });
 document.querySelector('#evolutionDetailsButton').addEventListener('click', () => { document.querySelector('#journeyBackdrop').hidden = false; document.body.style.overflow = 'hidden'; });
+document.querySelector('#overviewJourneyButton').addEventListener('click', () => document.querySelector('#evolutionDetailsButton').click());
 document.querySelector('#journeyClose').addEventListener('click', () => { document.querySelector('#journeyBackdrop').hidden = true; document.body.style.overflow = ''; });
 document.querySelector('#journeyBackdrop').addEventListener('click', (event) => { if (event.target.id === 'journeyBackdrop') document.querySelector('#journeyClose').click(); });
 designBackdrop.addEventListener('click', (event) => { if (event.target === designBackdrop) document.querySelector('#designClose').click(); });

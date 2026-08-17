@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="css/action-feedback.css?v=36">
   <link rel="stylesheet" href="css/feedback-cleanup.css?v=36">
   <link rel="stylesheet" href="css/dashboard-live.css?v=46">
-  <link rel="stylesheet" href="css/projects.css?v=48">
+  <link rel="stylesheet" href="css/projects.css?v=51">
   <link rel="stylesheet" href="css/chat.css?v=43">
   <link rel="stylesheet" href="css/chat-button.css?v=43">
   <link rel="stylesheet" href="css/profile.css?v=10">
@@ -52,7 +52,7 @@
         <a class="nav-item" href="#ranking" data-page="Ranking" data-view="ranking">
           <span class="nav-icon">★</span><span>Ranking</span>
         </a>
-        <a class="nav-item" href="#projetos" data-page="Projetos">
+        <a class="nav-item" href="#projetos" data-page="Projetos" data-view="projects">
           <span class="nav-icon">◇</span><span>Projetos</span>
         </a>
         <a class="nav-item" href="#conversas" data-page="Conversas" id="openChatNav">
@@ -154,21 +154,20 @@
             </div>
           </article>
 
-          <article class="panel projects-panel">
-            <div class="panel-heading"><div><h3>Projetos recentes</h3><p>Continue de onde parou</p></div><button class="round-button" type="button" aria-label="Mais opções">•••</button></div>
-            <div class="project-list" id="projectList"><p class="dashboard-empty">Nenhum projeto criado ainda.</p></div>
-            <button class="full-link" id="openProjectButton" type="button">Criar meu primeiro projeto <span>→</span></button>
+          <article class="panel aura-trajectory-panel">
+            <div class="panel-heading"><div><h3>Sua trajetória Aura</h3><p>As classes que formam sua evolução</p></div><button class="round-button" id="overviewJourneyButton" type="button" aria-label="Ver jornada completa">↗</button></div>
+            <div class="overview-trajectory" id="overviewTrajectory"></div>
           </article>
         </section>
 
-        <section class="quick-section">
-          <div class="section-heading"><div><h3>Acesso rápido</h3><p>Atalhos para começar</p></div></div>
-          <div class="quick-grid">
-            <button class="quick-card" id="quickProjectButton" type="button"><span class="quick-icon">＋</span><span><strong>Novo projeto</strong><small>Transforme uma ideia em próximos passos</small></span><b>→</b></button>
-            <button class="quick-card" type="button"><span class="quick-icon">▦</span><span><strong>Explorar biblioteca</strong><small>Encontre seus recursos</small></span><b>→</b></button>
-            <button class="quick-card" type="button"><span class="quick-icon">○</span><span><strong>Convidar pessoas</strong><small>Crie em colaboração</small></span><b>→</b></button>
-          </div>
+        <section class="trajectory-message">
+          <span>✦</span><div><strong>Cada ação constrói sua Aura.</strong><p>A visão geral reúne sua evolução, constância e caminho até o nível máximo.</p></div>
         </section>
+      </div>
+
+      <div class="content projects-page" id="projects" hidden>
+        <section class="projects-hero"><div><span class="section-kicker">SEUS CAMINHOS</span><h2>Projetos com propósito.<br><em>Progresso no seu ritmo.</em></h2><p>Seus projetos são privados. Avance por etapas e transforme constância em pontos de Aura.</p></div><button class="primary-button" id="quickProjectButton" type="button">＋ Criar novo projeto</button></section>
+        <section class="panel projects-workspace"><div class="panel-heading"><div><h3>Meus projetos</h3><p>Edite, continue e acompanhe cada avanço</p></div></div><div class="project-list" id="projectList"><p class="dashboard-empty">Nenhum projeto criado ainda.</p></div><button class="full-link" id="openProjectButton" type="button">Criar meu primeiro projeto <span>→</span></button></section>
       </div>
 
       <div class="content ranking-page" id="ranking" hidden>
@@ -278,11 +277,11 @@
   <script src="config/environments.js?v=10"></script>
   <script src="js/supabase-client.js?v=10"></script>
   <script src="js/app-auth.js?v=31"></script>
-  <script src="js/profile.js?v=50"></script>
+  <script src="js/profile.js?v=51"></script>
   <script src="js/reminders.js?v=36"></script>
   <script src="js/ranking.js?v=45"></script>
   <script src="js/habits.js?v=36"></script>
-  <script src="script.js?v=44"></script>
+  <script src="script.js?v=51"></script>
   <script src="js/dashboard.js?v=48"></script>
   <script src="js/chat.js?v=43"></script>
 </body>
