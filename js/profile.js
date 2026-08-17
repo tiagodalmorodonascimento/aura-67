@@ -14,6 +14,8 @@ const AURA_CLASSES = [
   { name: 'Luminar', min: 7000, icon: '☼', unlock: 'Efeitos visuais especiais' },
   { name: 'Aura 67', min: 15000, icon: '♛', unlock: 'Identidade lendária Aura 67' }
 ];
+const MAX_AURA_LEVEL = 67;
+const MAX_AURA_CLASS_POINTS = 15000;
 
 function initials(name = 'Pessoa Aura') { return name.split(/\s+/).slice(0, 2).map((part) => part[0]).join('').toUpperCase(); }
 function mediaUrl(path) { return path ? window.auraSupabase.storage.from('profile-media').getPublicUrl(path).data.publicUrl : ''; }
@@ -50,6 +52,7 @@ function preloadProfileMedia(profile) {
 }
 
 function classFor(points = 0) { return [...AURA_CLASSES].reverse().find((level) => points >= level.min) || AURA_CLASSES[0]; }
+function auraLevelFor(points = 0) { return Math.min(MAX_AURA_LEVEL, Math.floor((Math.max(0, points) / MAX_AURA_CLASS_POINTS) * (MAX_AURA_LEVEL - 1)) + 1); }
 
 function renderProgression(points = 0) {
   const currentIndex = AURA_CLASSES.findIndex((level) => level === classFor(points));
@@ -57,7 +60,7 @@ function renderProgression(points = 0) {
   const next = AURA_CLASSES[currentIndex + 1];
   const progress = next ? ((points - current.min) / (next.min - current.min)) * 100 : 100;
   document.querySelector('#currentClassIcon').textContent = current.icon;
-  document.querySelector('#currentClassName').textContent = `${current.name} · Nível ${Math.floor(points / 100) + 1}`;
+  document.querySelector('#currentClassName').textContent = `${current.name} · Nível ${auraLevelFor(points)}`;
   document.querySelector('#currentPoints').textContent = points.toLocaleString('pt-BR');
   document.querySelector('#evolutionProgress').style.width = `${Math.max(0, Math.min(100, progress))}%`;
   document.querySelector('#nextClassName').textContent = next?.name || 'Classe máxima';
@@ -222,7 +225,7 @@ async function loadIdentityProfile() {
   const levelIndex = AURA_CLASSES.findIndex((item) => item.name === level.name);
   const next = AURA_CLASSES[levelIndex + 1];
   const progress = next ? ((profile.aura_points - level.min) / (next.min - level.min)) * 100 : 100;
-  document.querySelector('#identityAuraClass').textContent = `Classe ${level.name}`;
+  document.querySelector('#identityAuraClass').textContent = `Classe ${level.name} · Nível ${auraLevelFor(profile.aura_points || 0)}`;
   document.querySelector('#identityAuraProgress').style.width = `${Math.max(0, Math.min(100, progress))}%`;
   document.querySelector('#identityNextAura').textContent = next ? `Próxima classe em ${(next.min - profile.aura_points).toLocaleString('pt-BR')} pontos` : 'Classe máxima alcançada';
   const honors = data?.honors || [];
