@@ -52,16 +52,9 @@ function closeModal() {
   document.body.style.overflow = '';
 }
 
-document.querySelector('#newItemButton').addEventListener('click', openModal);
 document.querySelector('#mobileCreateButton')?.addEventListener('click', openModal);
 document.querySelector('#modalClose').addEventListener('click', closeModal);
 modalBackdrop.addEventListener('click', (event) => { if (event.target === modalBackdrop) closeModal(); });
-document.querySelector('#modalSubmit').addEventListener('click', () => {
-  const name = itemName.value.trim() || 'Novo item';
-  closeModal();
-  itemName.value = '';
-  showToast(`“${name}” foi criado com sucesso.`);
-});
 
 function toggleSearch(open, fromHistory = false) {
   searchOverlay.hidden = !open;
@@ -88,7 +81,7 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-document.querySelectorAll('.quick-card, .project-row, .full-link, .text-button').forEach((button) => {
+document.querySelectorAll('.quick-card:not(#quickProjectButton), .text-button').forEach((button) => {
   button.addEventListener('click', () => showToast('Este atalho está pronto para receber sua próxima funcionalidade.'));
 });
 

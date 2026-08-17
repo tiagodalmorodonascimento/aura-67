@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="css/app-boot.css?v=31">
   <link rel="stylesheet" href="css/action-feedback.css?v=36">
   <link rel="stylesheet" href="css/feedback-cleanup.css?v=36">
+  <link rel="stylesheet" href="css/dashboard-live.css?v=39">
   <link rel="stylesheet" href="css/profile.css?v=10">
   <link rel="stylesheet" href="css/profile-extra.css?v=10">
   <link rel="stylesheet" href="css/profile-menu-v2.css?v=15">
@@ -67,13 +68,6 @@
         </a>
       </nav>
 
-      <div class="sidebar-card">
-        <span class="mini-orbit">✦</span>
-        <strong>Seu espaço, seu ritmo.</strong>
-        <p>Personalize este template e transforme ideias em experiências.</p>
-        <a href="#personalizar">Personalizar <span>→</span></a>
-      </div>
-
       <button class="sidebar-profile" id="profileMenuButton" type="button" aria-expanded="false">
         <span class="avatar">AR</span>
         <span><strong>Carregando perfil…</strong><small>Membro Aura</small></span>
@@ -96,8 +90,7 @@
           <button class="search-button" id="searchButton" type="button" aria-label="Buscar">
             <span>⌕</span><span class="search-text">Buscar...</span><kbd>⌘ K</kbd>
           </button>
-          <button class="icon-button notification" type="button" aria-label="Notificações">♢<i></i></button>
-          <button class="primary-button" id="newItemButton" type="button"><span>＋</span> Novo item</button>
+          <button class="icon-button notification" id="notificationButton" type="button" aria-label="Notificações">◇<i id="notificationDot"></i></button>
         </div>
       </header>
 
@@ -118,19 +111,19 @@
         <section class="metrics-grid" aria-label="Resumo">
           <article class="metric-card">
             <div class="metric-top"><span class="metric-icon lavender">◇</span><span class="trend positive">↗ 12%</span></div>
-            <p>Projetos ativos</p><strong>04</strong><small>2 atualizados hoje</small>
+            <p>Ações nos últimos 7 dias</p><strong id="weekActions">0</strong><small>Concluídas por você</small>
           </article>
           <article class="metric-card">
             <div class="metric-top"><span class="metric-icon mint">✓</span><span class="trend positive">↗ 8%</span></div>
-            <p>Tarefas concluídas</p><strong>28</strong><small>Esta semana</small>
+            <p>XP conquistado</p><strong id="weekXp">0</strong><small>Nos últimos 7 dias</small>
           </article>
           <article class="metric-card">
             <div class="metric-top"><span class="metric-icon peach">◷</span><span class="trend">− 0%</span></div>
-            <p>Horas dedicadas</p><strong>16.5</strong><small>Nos últimos 7 dias</small>
+            <p>Dias ativos</p><strong id="activeDays">0</strong><small>Nos últimos 7 dias</small>
           </article>
           <article class="metric-card accent-card">
             <div class="metric-top"><span class="metric-icon dark">✦</span><span class="status-pill">Em alta</span></div>
-            <p>Ritmo criativo</p><strong>87%</strong><small>Seu melhor resultado</small>
+            <p>Constância semanal</p><strong id="weekConsistency">0%</strong><small>Baseada em ações reais</small>
           </article>
         </section>
 
@@ -139,39 +132,35 @@
         <section class="dashboard-grid">
           <article class="panel activity-panel">
             <div class="panel-heading">
-              <div><h3>Atividade recente</h3><p>Seu progresso nos últimos 7 dias</p></div>
+              <div><h3>Atividade recente</h3><p>Suas ações concluídas nos últimos 7 dias</p></div>
               <button class="text-button" type="button">Ver relatório <span>→</span></button>
             </div>
             <div class="chart-wrap">
-              <div class="chart-scale"><span>8h</span><span>6h</span><span>4h</span><span>2h</span><span>0h</span></div>
+              <div class="chart-scale" id="activityScale"><span>0</span><span>0</span><span>0</span><span>0</span><span>0</span></div>
               <div class="chart" aria-label="Gráfico de horas por dia">
                 <div class="chart-grid"><i></i><i></i><i></i><i></i><i></i></div>
                 <svg viewBox="0 0 700 180" preserveAspectRatio="none" role="img" aria-label="Atividade crescente durante a semana">
                   <defs><linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7559ef" stop-opacity=".28"/><stop offset="1" stop-color="#7559ef" stop-opacity="0"/></linearGradient></defs>
-                  <path class="area" d="M0,140 C65,130 80,80 140,100 S235,130 280,93 S360,45 420,72 S500,120 560,66 S630,40 700,20 L700,180 L0,180 Z"/>
-                  <path class="line" d="M0,140 C65,130 80,80 140,100 S235,130 280,93 S360,45 420,72 S500,120 560,66 S630,40 700,20"/>
-                  <circle cx="700" cy="20" r="6" class="chart-dot"/>
+                  <path class="area" id="activityArea" d="M0,180 L700,180 Z"/>
+                  <path class="line" id="activityLine" d="M0,180 L700,180"/>
+                  <circle id="activityDot" cx="700" cy="180" r="6" class="chart-dot"/>
                 </svg>
-                <div class="chart-days"><span>Sex</span><span>Sáb</span><span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span></div>
+                <div class="chart-days" id="activityDays"></div>
               </div>
             </div>
           </article>
 
           <article class="panel projects-panel">
             <div class="panel-heading"><div><h3>Projetos recentes</h3><p>Continue de onde parou</p></div><button class="round-button" type="button" aria-label="Mais opções">•••</button></div>
-            <div class="project-list">
-              <button class="project-row" type="button"><span class="project-thumb thumb-one">A</span><span class="project-info"><strong>Identidade visual</strong><small>Atualizado há 2h</small></span><span class="progress-ring p75">75%</span></button>
-              <button class="project-row" type="button"><span class="project-thumb thumb-two">N</span><span class="project-info"><strong>Nova experiência</strong><small>Atualizado ontem</small></span><span class="progress-ring p52">52%</span></button>
-              <button class="project-row" type="button"><span class="project-thumb thumb-three">E</span><span class="project-info"><strong>Exploração criativa</strong><small>Atualizado há 3 dias</small></span><span class="progress-ring p31">31%</span></button>
-            </div>
-            <button class="full-link" type="button">Ver todos os projetos <span>→</span></button>
+            <div class="project-list" id="projectList"><p class="dashboard-empty">Nenhum projeto criado ainda.</p></div>
+            <button class="full-link" id="openProjectButton" type="button">Criar meu primeiro projeto <span>→</span></button>
           </article>
         </section>
 
         <section class="quick-section">
           <div class="section-heading"><div><h3>Acesso rápido</h3><p>Atalhos para começar</p></div></div>
           <div class="quick-grid">
-            <button class="quick-card" type="button"><span class="quick-icon">＋</span><span><strong>Novo projeto</strong><small>Comece algo incrível</small></span><b>→</b></button>
+            <button class="quick-card" id="quickProjectButton" type="button"><span class="quick-icon">＋</span><span><strong>Novo projeto</strong><small>Transforme uma ideia em próximos passos</small></span><b>→</b></button>
             <button class="quick-card" type="button"><span class="quick-icon">▦</span><span><strong>Explorar biblioteca</strong><small>Encontre seus recursos</small></span><b>→</b></button>
             <button class="quick-card" type="button"><span class="quick-icon">○</span><span><strong>Convidar pessoas</strong><small>Crie em colaboração</small></span><b>→</b></button>
           </div>
@@ -230,7 +219,7 @@
   <nav class="mobile-bottom-nav" aria-label="Navegação mobile">
     <button class="active" type="button" data-mobile-page="Visão geral"><span>⌂</span><small>Início</small></button>
     <button type="button" data-mobile-page="Ranking"><span>★</span><small>Ranking</small></button>
-    <button class="mobile-create" type="button" id="mobileCreateButton" aria-label="Criar novo item"><span>＋</span></button>
+    <button class="mobile-create mobile-notification" type="button" id="mobileNotificationButton" aria-label="Notificações"><span>◇</span><i></i></button>
     <button type="button" data-mobile-page="Atividade"><span>↗</span><small>Jornada</small></button>
     <button type="button" id="mobileProfileButton"><span>○</span><small>Perfil</small></button>
   </nav>
@@ -238,16 +227,19 @@
   <div class="modal-backdrop" id="modalBackdrop" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button class="modal-close" id="modalClose" type="button" aria-label="Fechar">×</button>
-      <span class="modal-icon">✦</span><h2 id="modalTitle">Criar novo item</h2>
-      <p>Use este espaço como ponto de partida para um novo módulo.</p>
-      <label>Nome do item<input id="itemName" type="text" placeholder="Ex.: Meu novo projeto"></label>
-      <button class="primary-button modal-submit" id="modalSubmit" type="button">Criar item</button>
+      <span class="modal-icon">✦</span><h2 id="modalTitle">Criar um projeto</h2>
+      <p>Dê clareza à ideia: defina o resultado desejado e o primeiro passo possível.</p>
+      <label>Nome do projeto<input id="itemName" type="text" maxlength="80" placeholder="Ex.: Lançar meu portfólio"></label>
+      <label>O que você quer alcançar?<input id="projectGoal" type="text" maxlength="180" placeholder="Ex.: Publicar uma apresentação profissional"></label>
+      <label>Qual é o próximo passo?<input id="projectNextStep" type="text" maxlength="180" placeholder="Ex.: Escolher meus cinco melhores trabalhos"></label>
+      <button class="primary-button modal-submit" id="modalSubmit" type="button">Criar projeto</button>
     </div>
   </div>
 
   <div class="search-overlay" id="searchOverlay" hidden>
     <div class="search-box"><div class="search-dialog"><span>⌕</span><input id="searchInput" type="search" placeholder="Busque pessoas por nome ou @usuário..." aria-label="Buscar pessoas"><kbd>ESC</kbd></div><div class="people-results" id="peopleResults"><p>Digite pelo menos 2 caracteres para encontrar pessoas.</p></div></div>
   </div>
+  <div class="notification-backdrop" id="notificationBackdrop" hidden><aside class="notification-panel" role="dialog" aria-modal="true" aria-labelledby="notificationTitle"><button class="modal-close" id="notificationClose" type="button">×</button><span class="section-kicker">ATUALIZAÇÕES</span><h2 id="notificationTitle">Notificações</h2><div id="notificationList"><p class="dashboard-empty">Carregando suas atualizações…</p></div></aside></div>
 
   <div class="account-popover" id="accountPopover" hidden>
     <button class="account-mobile-close" id="accountMenuClose" type="button" aria-label="Fechar menu">×</button>
@@ -282,6 +274,7 @@
   <script src="js/reminders.js?v=36"></script>
   <script src="js/ranking.js?v=17"></script>
   <script src="js/habits.js?v=36"></script>
-  <script src="script.js?v=38"></script>
+  <script src="script.js?v=39"></script>
+  <script src="js/dashboard.js?v=39"></script>
 </body>
 </html>
