@@ -2,9 +2,11 @@
   "name": "Aura 67",
   "short_name": "Aura 67",
   "description": "Energia que transforma.",
-  "start_url": "./index.html",
+  "id": "./app.html",
+  "start_url": "./app.html#dashboard",
   "scope": "./",
   "display": "standalone",
+  "launch_handler": { "client_mode": "navigate-existing" },
   "background_color": "#faf8fc",
   "theme_color": "#17131f",
   "icons": [
