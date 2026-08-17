@@ -89,11 +89,15 @@ document.querySelectorAll('.quick-card, .project-row, .full-link, .text-button')
 });
 
 let toastTimer;
-function showToast(message) {
+function showToast(message, kind = 'success', title = kind === 'error' ? 'Algo deu errado' : 'Tudo certo') {
   clearTimeout(toastTimer);
-  toast.textContent = message;
+  toast.className = `toast action-feedback ${kind}`;
+  toast.innerHTML = `<span class="action-feedback-icon">${kind === 'error' ? '!' : '✓'}</span><span><strong></strong><small></small></span><button class="action-feedback-close" type="button" aria-label="Fechar">×</button>`;
+  toast.querySelector('strong').textContent = title;
+  toast.querySelector('small').textContent = message;
+  toast.querySelector('button').onclick = () => toast.classList.remove('show');
   toast.classList.add('show');
-  toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 4200);
 }
 
 document.querySelectorAll('[data-mobile-page]').forEach((button) => button.addEventListener('click', () => {

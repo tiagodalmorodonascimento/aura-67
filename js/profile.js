@@ -298,6 +298,7 @@ document.querySelector('#designForm').addEventListener('submit', async (event) =
     cacheProfile(window.AURA_SESSION.user.id, currentProfile);
     applyGlobalTheme(updates.theme_color);
     message.style.color = '#318361'; message.textContent = 'Suas cores foram salvas.';
+    showToast('As novas cores já estão aplicadas ao seu espaço.','success','Design atualizado');
   } catch (error) { message.style.color = '#b44'; message.textContent = error.message; }
 });
 
@@ -320,6 +321,7 @@ document.querySelector('#profileForm').addEventListener('submit', async (event) 
     currentProfile = { ...currentProfile, ...updates };
     await loadProfile(window.AURA_SESSION);
     message.style.color = '#318361'; message.textContent = 'Seu perfil foi salvo com sucesso.';
+    showToast('Suas informações e imagens foram atualizadas.','success','Perfil atualizado');
   } catch (error) { message.style.color = '#b44'; message.textContent = error.message; }
 });
 

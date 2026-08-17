@@ -4,6 +4,13 @@ const environmentNote = document.querySelector('#environmentNote');
 let pendingEmail = '';
 let pendingPassword = '';
 
+const feedbackStyles = document.createElement('link');
+feedbackStyles.rel = 'stylesheet'; feedbackStyles.href = 'css/action-feedback.css?v=34'; document.head.appendChild(feedbackStyles);
+document.body.insertAdjacentHTML('beforeend','<div class="action-confirm-backdrop" id="resetConfirmBackdrop" hidden><section class="action-confirm" role="dialog" aria-modal="true" aria-labelledby="resetConfirmTitle"><div class="action-confirm-icon">✉</div><h2 id="resetConfirmTitle">Enviar link de recuperação?</h2><p>Enviaremos um e-mail seguro para você criar uma nova senha.</p><strong class="action-confirm-email" id="resetConfirmEmail"></strong><div class="action-confirm-buttons"><button type="button" id="resetConfirmCancel">Cancelar</button><button class="action-confirm-primary" type="button" id="resetConfirmSend">Sim, enviar link</button></div></section></div><div class="action-feedback" id="authFeedback" role="status" aria-live="polite"></div>');
+let authFeedbackTimer;
+function showAuthFeedback(title,message,kind='success'){const panel=document.querySelector('#authFeedback');clearTimeout(authFeedbackTimer);panel.className=`action-feedback ${kind}`;panel.innerHTML=`<span class="action-feedback-icon">${kind==='error'?'!':'✓'}</span><span><strong></strong><small></small></span><button class="action-feedback-close" type="button" aria-label="Fechar">×</button>`;panel.querySelector('strong').textContent=title;panel.querySelector('small').textContent=message;panel.querySelector('button').onclick=()=>panel.classList.remove('show');requestAnimationFrame(()=>panel.classList.add('show'));authFeedbackTimer=setTimeout(()=>panel.classList.remove('show'),4200)}
+function confirmPasswordReset(email){return new Promise((resolve)=>{const backdrop=document.querySelector('#resetConfirmBackdrop');document.querySelector('#resetConfirmEmail').textContent=email;backdrop.hidden=false;const finish=(answer)=>{backdrop.hidden=true;resolve(answer)};document.querySelector('#resetConfirmCancel').onclick=()=>finish(false);document.querySelector('#resetConfirmSend').onclick=()=>finish(true);backdrop.onclick=(event)=>{if(event.target===backdrop)finish(false)};document.querySelector('#resetConfirmSend').focus()})}
+
 async function skipEntryWhenAuthenticated() {
   if (!supabaseClient) return;
   const { data } = await supabaseClient.auth.getSession();
@@ -133,7 +140,8 @@ document.querySelector('#loginForm')?.addEventListener('submit', async (event) =
     submit.disabled = false;
     if (error) { setMessage('E-mail ou senha incorretos, ou conta ainda não confirmada.'); return; }
     setMessage('Login realizado. Abrindo sua Aura…', true);
-    setTimeout(() => window.location.replace(postLoginDestination()), 500);
+    showAuthFeedback('Login confirmado','Bem-vindo de volta. Sua jornada está pronta.');
+    setTimeout(() => window.location.replace(postLoginDestination()), 1100);
     return;
   }
   const users = JSON.parse(localStorage.getItem(AUTH_KEY) || '[]');
@@ -150,8 +158,11 @@ document.querySelector('#forgotLink')?.addEventListener('click', async (event) =
   if (!supabaseClient) { setMessage('Configure o Supabase para ativar a recuperação por e-mail.'); return; }
   const email = document.querySelector('#loginEmail');
   if (!email.validity.valid) { fieldError(email, 'Informe seu e-mail primeiro.'); return; }
+  if (!await confirmPasswordReset(email.value.trim().toLowerCase())) return;
+  setMessage('Enviando link de recuperação…', true);
   const { error } = await supabaseClient.auth.resetPasswordForEmail(email.value.trim().toLowerCase(), { redirectTo: redirectUrl('login.html') });
   setMessage(error ? error.message : 'Enviamos as instruções de recuperação para seu e-mail.', !error);
+  showAuthFeedback(error?'Não foi possível enviar':'E-mail enviado',error?error.message:'Confira sua caixa de entrada e também a pasta de spam.',error?'error':'success');
 });
 
 document.querySelector('#confirmedButton')?.addEventListener('click', async () => {
