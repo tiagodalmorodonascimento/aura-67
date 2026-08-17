@@ -63,11 +63,15 @@ document.querySelector('#modalSubmit').addEventListener('click', () => {
   showToast(`“${name}” foi criado com sucesso.`);
 });
 
-function toggleSearch(open) {
+function toggleSearch(open, fromHistory = false) {
   searchOverlay.hidden = !open;
   document.body.style.overflow = open ? 'hidden' : '';
+  if (open && history.state?.auraOverlay !== 'search') history.pushState({ ...(history.state || {}), auraOverlay: 'search' }, '', location.href);
+  if (!open && !fromHistory && history.state?.auraOverlay === 'search') history.back();
   if (open) setTimeout(() => searchInput.focus(), 50);
 }
+
+window.addEventListener('popstate', () => { if (!searchOverlay.hidden) toggleSearch(false, true); });
 
 document.querySelector('#searchButton').addEventListener('click', () => toggleSearch(true));
 searchOverlay.addEventListener('click', (event) => { if (event.target === searchOverlay) toggleSearch(false); });

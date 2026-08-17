@@ -1,4 +1,4 @@
-const CACHE = 'aura67-v37';
+const CACHE = 'aura67-v38';
 const FILES = ['./','./index.html','./login.html','./cadastro.html','./redefinir-senha.html','./app.html','./css/landing.css','./css/auth.css','./css/confirmation.css','./css/password-reset.css','./css/profile.css','./css/profile-extra.css','./css/profile-menu-v2.css','./css/email-check.css','./css/ranking-real.css','./css/theme-v3.css','./css/progression.css','./css/progression-extra.css','./css/habits.css','./css/proof.css','./css/large-ui.css','./css/identity-profile.css','./css/reminders.css','./css/push.css','./css/app-boot.css','./css/action-feedback.css','./css/feedback-cleanup.css','./styles.css','./js/landing.js','./js/auth.js','./js/password-reset.js','./js/supabase-client.js','./js/app-auth.js','./js/profile.js','./js/reminders.js','./js/ranking.js','./js/habits.js','./config/environments.js','./script.js','./manifest.json','./assets/icons/icon.svg'];
 self.addEventListener('install', (event) => { self.skipWaiting(); event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(FILES))); });
 self.addEventListener('activate', (event) => event.waitUntil(Promise.all([
