@@ -278,7 +278,7 @@ document.querySelector('#designUsername').addEventListener('input', validateUser
 function maskEmail(email){const[local,domain]=email.split('@');const visible=local.slice(0,Math.min(2,local.length));return `${visible}${'•'.repeat(Math.max(3,local.length-visible.length))}@${domain}`;}
 function emailProviderUrl(email){const domain=email.split('@')[1]?.toLowerCase();if(domain?.includes('gmail'))return'https://mail.google.com/';if(domain?.includes('outlook')||domain?.includes('hotmail')||domain?.includes('live'))return'https://outlook.live.com/mail/';if(domain?.includes('yahoo'))return'https://mail.yahoo.com/';if(domain?.includes('icloud'))return'https://www.icloud.com/mail/';return'mailto:';}
 let passwordResendTimer;
-async function sendPasswordEmail(){const email=window.AURA_SESSION.user.email;const button=document.querySelector('#changePasswordButton');const message=document.querySelector('#emailCheckMessage');button.disabled=true;message.className='email-check-message';message.textContent='Enviando link de segurança…';const{error}=await window.auraSupabase.auth.resetPasswordForEmail(email,{redirectTo:`${window.location.origin}/redefinir-senha.html`});button.disabled=false;if(error){message.textContent=error.message;return false;}document.querySelector('#passwordMaskedEmail').textContent=maskEmail(email);document.querySelector('#openEmailProvider').href=emailProviderUrl(email);document.querySelector('#accountPopover').hidden=true;document.querySelector('#emailCheckBackdrop').hidden=false;document.body.style.overflow='hidden';message.classList.add('success');message.textContent='E-mail enviado com sucesso.';return true;}
+async function sendPasswordEmail(){const email=window.AURA_SESSION.user.email;const button=document.querySelector('#changePasswordButton');button.disabled=true;const{error}=await window.auraSupabase.auth.resetPasswordForEmail(email,{redirectTo:`${window.location.origin}/redefinir-senha.html`});button.disabled=false;if(error){showToast(error.message,'error','Não foi possível enviar');return false;}document.querySelector('#passwordMaskedEmail').textContent=maskEmail(email);document.querySelector('#openEmailProvider').href=emailProviderUrl(email);document.querySelector('#accountPopover').hidden=true;document.querySelector('#emailCheckBackdrop').hidden=false;document.body.style.overflow='hidden';showToast('Confira sua caixa de entrada e a pasta de spam.','success','E-mail enviado');return true;}
 function startPasswordResendCountdown(){clearInterval(passwordResendTimer);const button=document.querySelector('#resendPasswordEmail');let seconds=30;button.disabled=true;button.textContent=`Reenviar em ${seconds}s`;passwordResendTimer=setInterval(()=>{seconds-=1;button.textContent=seconds?`Reenviar em ${seconds}s`:'Reenviar e-mail';if(!seconds){clearInterval(passwordResendTimer);button.disabled=false;}},1000);}
 document.querySelector('#changePasswordButton').addEventListener('click',async()=>{if(await sendPasswordEmail())startPasswordResendCountdown();});
 document.querySelector('#resendPasswordEmail').addEventListener('click',async()=>{if(await sendPasswordEmail())startPasswordResendCountdown();});
@@ -299,7 +299,7 @@ document.querySelector('#designForm').addEventListener('submit', async (event) =
     applyGlobalTheme(updates.theme_color);
     message.style.color = '#318361'; message.textContent = 'Suas cores foram salvas.';
     showToast('As novas cores já estão aplicadas ao seu espaço.','success','Design atualizado');
-  } catch (error) { message.style.color = '#b44'; message.textContent = error.message; }
+  } catch (error) { message.textContent = ''; showToast(error.message,'error','Não foi possível salvar'); }
 });
 
 document.querySelector('#profileForm').addEventListener('submit', async (event) => {
@@ -322,7 +322,7 @@ document.querySelector('#profileForm').addEventListener('submit', async (event) 
     await loadProfile(window.AURA_SESSION);
     message.style.color = '#318361'; message.textContent = 'Seu perfil foi salvo com sucesso.';
     showToast('Suas informações e imagens foram atualizadas.','success','Perfil atualizado');
-  } catch (error) { message.style.color = '#b44'; message.textContent = error.message; }
+  } catch (error) { message.textContent = ''; showToast(error.message,'error','Não foi possível salvar'); }
 });
 
 let searchTimer;

@@ -6,6 +6,7 @@ let pendingPassword = '';
 
 const feedbackStyles = document.createElement('link');
 feedbackStyles.rel = 'stylesheet'; feedbackStyles.href = 'css/action-feedback.css?v=35'; document.head.appendChild(feedbackStyles);
+const feedbackCleanupStyles=document.createElement('link');feedbackCleanupStyles.rel='stylesheet';feedbackCleanupStyles.href='css/feedback-cleanup.css?v=36';document.head.appendChild(feedbackCleanupStyles);
 document.body.insertAdjacentHTML('beforeend','<div class="action-confirm-backdrop" id="resetConfirmBackdrop" hidden><section class="action-confirm" role="dialog" aria-modal="true" aria-labelledby="resetConfirmTitle"><div class="action-confirm-icon">✉</div><h2 id="resetConfirmTitle">Enviar link de recuperação?</h2><p>Enviaremos um e-mail seguro para você criar uma nova senha.</p><strong class="action-confirm-email" id="resetConfirmEmail"></strong><div class="action-confirm-buttons"><button type="button" id="resetConfirmCancel">Cancelar</button><button class="action-confirm-primary" type="button" id="resetConfirmSend">Sim, enviar link</button></div></section></div><div class="action-feedback" id="authFeedback" role="status" aria-live="polite"></div>');
 let authFeedbackTimer;
 function showAuthFeedback(title,message,kind='success'){const panel=document.querySelector('#authFeedback');clearTimeout(authFeedbackTimer);panel.className=`action-feedback ${kind}`;panel.innerHTML=`<span class="action-feedback-icon">${kind==='error'?'!':'✓'}</span><span><strong></strong><small></small></span><button class="action-feedback-close" type="button" aria-label="Fechar">×</button>`;panel.querySelector('strong').textContent=title;panel.querySelector('small').textContent=message;panel.querySelector('button').onclick=()=>panel.classList.remove('show');requestAnimationFrame(()=>panel.classList.add('show'));authFeedbackTimer=setTimeout(()=>panel.classList.remove('show'),4200)}
@@ -66,8 +67,9 @@ async function demoHash(value) {
 function setMessage(message, success = false) {
   const box = document.querySelector('#formMessage');
   if (!box) return;
-  box.textContent = message;
-  box.classList.toggle('success', success);
+  box.textContent = '';
+  box.classList.remove('success');
+  if (message && !success) showAuthFeedback('Verifique os dados', message, 'error');
 }
 
 function fieldError(input, message = '') {
@@ -124,8 +126,9 @@ document.querySelector('#signupForm')?.addEventListener('submit', async (event) 
   users.push({ name: name.value.trim(), email: email.value.trim().toLowerCase(), demoPasswordHash: await demoHash(password.value) });
   localStorage.setItem(AUTH_KEY, JSON.stringify(users));
   sessionStorage.setItem('aura67_session', JSON.stringify({ name: name.value.trim(), email: email.value.trim().toLowerCase() }));
-  setMessage('Conta de demonstração criada. Abrindo sua Aura…', true);
-  setTimeout(() => window.location.replace('app.html'), 900);
+  setMessage('');
+  showAuthFeedback('Conta criada','Seu espaço Aura está pronto para começar.');
+  setTimeout(() => window.location.replace('app.html'), 1100);
 });
 
 document.querySelector('#loginForm')?.addEventListener('submit', async (event) => {
