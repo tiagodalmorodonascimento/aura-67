@@ -13,7 +13,8 @@
   <link rel="stylesheet" href="css/app-boot.css?v=31">
   <link rel="stylesheet" href="css/action-feedback.css?v=36">
   <link rel="stylesheet" href="css/feedback-cleanup.css?v=36">
-  <link rel="stylesheet" href="css/dashboard-live.css?v=39">
+  <link rel="stylesheet" href="css/dashboard-live.css?v=46">
+  <link rel="stylesheet" href="css/projects.css?v=46">
   <link rel="stylesheet" href="css/chat.css?v=43">
   <link rel="stylesheet" href="css/chat-button.css?v=43">
   <link rel="stylesheet" href="css/profile.css?v=10">
@@ -234,6 +235,10 @@
       <label>Nome do projeto<input id="itemName" type="text" maxlength="80" placeholder="Ex.: Lançar meu portfólio"></label>
       <label>O que você quer alcançar?<input id="projectGoal" type="text" maxlength="180" placeholder="Ex.: Publicar uma apresentação profissional"></label>
       <label>Qual é o próximo passo?<input id="projectNextStep" type="text" maxlength="180" placeholder="Ex.: Escolher meus cinco melhores trabalhos"></label>
+      <div class="project-edit-fields" id="projectEditFields" hidden>
+        <label>Progresso do projeto <span id="projectProgressValue">0%</span><input id="projectProgress" type="range" min="0" max="100" step="5" value="0"></label>
+        <label>Status<select id="projectStatus"><option value="active">Em andamento</option><option value="paused">Pausado</option><option value="completed">Concluído</option></select></label>
+      </div>
       <button class="primary-button modal-submit" id="modalSubmit" type="button">Criar projeto</button>
     </div>
   </div>
@@ -278,7 +283,7 @@
   <script src="js/ranking.js?v=45"></script>
   <script src="js/habits.js?v=36"></script>
   <script src="script.js?v=44"></script>
-  <script src="js/dashboard.js?v=41"></script>
+  <script src="js/dashboard.js?v=46"></script>
   <script src="js/chat.js?v=43"></script>
 </body>
 </html>

@@ -1,0 +1,12 @@
+.project-row{cursor:default;gap:10px}
+.project-info i{display:block;height:4px;background:#eeeaf1;border-radius:5px;margin-top:7px;overflow:hidden}
+.project-info i b{display:block;height:100%;background:var(--purple);border-radius:5px}
+.project-actions{display:flex;gap:5px;margin-left:4px}
+.project-actions button{border:0;border-radius:8px;padding:7px 9px;background:var(--theme-soft);color:var(--purple);font-size:9px;font-weight:800;cursor:pointer}
+.project-actions button:first-child{background:var(--purple);color:#fff}
+.project-edit-fields{display:grid;grid-template-columns:1.4fr 1fr;gap:12px}
+.project-edit-fields[hidden]{display:none}
+.project-edit-fields label span{float:right;color:var(--purple)}
+.project-edit-fields input[type=range]{padding:0;border:0;box-shadow:none}
+.project-edit-fields select{width:100%;height:44px;border:1px solid var(--line);border-radius:11px;padding:0 10px;margin-top:7px;background:#fff;outline:none}
+@media(max-width:600px){.project-row{display:grid;grid-template-columns:36px 1fr auto}.project-actions{grid-column:2/4;margin:0}.project-actions button{flex:1}.project-edit-fields{grid-template-columns:1fr}.modal{max-height:92vh;overflow:auto}}
