@@ -100,9 +100,15 @@ async function loadProfile(session) {
   if (isFounder) document.querySelector('#founderNumber').textContent = currentProfile.member_number;
   document.querySelector('#accountName').textContent = currentProfile.full_name;
   document.querySelector('#accountEmail').textContent = session.user.email;
-  document.querySelector('#accountAvatar').textContent = initials(currentProfile.full_name);
+  const profileAvatarUrl = currentProfile.avatar_url ? mediaUrl(currentProfile.avatar_url) : '';
+  const accountAvatar = document.querySelector('#accountAvatar');
+  accountAvatar.style.backgroundImage = profileAvatarUrl ? `url('${profileAvatarUrl}')` : '';
+  accountAvatar.textContent = profileAvatarUrl ? '' : initials(currentProfile.full_name);
   document.querySelectorAll('.sidebar-profile strong').forEach((element) => { element.textContent = currentProfile.full_name; });
-  document.querySelectorAll('.sidebar-profile .avatar').forEach((element) => { element.textContent = initials(currentProfile.full_name); });
+  document.querySelectorAll('.sidebar-profile .avatar').forEach((element) => {
+    element.style.backgroundImage = profileAvatarUrl ? `url('${profileAvatarUrl}')` : '';
+    element.textContent = profileAvatarUrl ? '' : initials(currentProfile.full_name);
+  });
   document.querySelector('#welcomeName').textContent = currentProfile.full_name.split(/\s+/)[0];
   document.querySelectorAll('.current-user .member strong').forEach((element) => { element.innerHTML = `${safeText(currentProfile.full_name)} <b>Você</b>`; });
   document.querySelectorAll('.podium-card.is-you>strong').forEach((element) => { element.innerHTML = `${safeText(currentProfile.full_name)} <b>Você</b>`; });
