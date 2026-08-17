@@ -5,7 +5,7 @@ let pendingEmail = '';
 let pendingPassword = '';
 
 const feedbackStyles = document.createElement('link');
-feedbackStyles.rel = 'stylesheet'; feedbackStyles.href = 'css/action-feedback.css?v=34'; document.head.appendChild(feedbackStyles);
+feedbackStyles.rel = 'stylesheet'; feedbackStyles.href = 'css/action-feedback.css?v=35'; document.head.appendChild(feedbackStyles);
 document.body.insertAdjacentHTML('beforeend','<div class="action-confirm-backdrop" id="resetConfirmBackdrop" hidden><section class="action-confirm" role="dialog" aria-modal="true" aria-labelledby="resetConfirmTitle"><div class="action-confirm-icon">✉</div><h2 id="resetConfirmTitle">Enviar link de recuperação?</h2><p>Enviaremos um e-mail seguro para você criar uma nova senha.</p><strong class="action-confirm-email" id="resetConfirmEmail"></strong><div class="action-confirm-buttons"><button type="button" id="resetConfirmCancel">Cancelar</button><button class="action-confirm-primary" type="button" id="resetConfirmSend">Sim, enviar link</button></div></section></div><div class="action-feedback" id="authFeedback" role="status" aria-live="polite"></div>');
 let authFeedbackTimer;
 function showAuthFeedback(title,message,kind='success'){const panel=document.querySelector('#authFeedback');clearTimeout(authFeedbackTimer);panel.className=`action-feedback ${kind}`;panel.innerHTML=`<span class="action-feedback-icon">${kind==='error'?'!':'✓'}</span><span><strong></strong><small></small></span><button class="action-feedback-close" type="button" aria-label="Fechar">×</button>`;panel.querySelector('strong').textContent=title;panel.querySelector('small').textContent=message;panel.querySelector('button').onclick=()=>panel.classList.remove('show');requestAnimationFrame(()=>panel.classList.add('show'));authFeedbackTimer=setTimeout(()=>panel.classList.remove('show'),4200)}
@@ -138,8 +138,8 @@ document.querySelector('#loginForm')?.addEventListener('submit', async (event) =
     setMessage('Entrando…', true);
     const { error } = await supabaseClient.auth.signInWithPassword({ email: email.value.trim().toLowerCase(), password: password.value });
     submit.disabled = false;
-    if (error) { setMessage('E-mail ou senha incorretos, ou conta ainda não confirmada.'); return; }
-    setMessage('Login realizado. Abrindo sua Aura…', true);
+    if (error) { setMessage(''); showAuthFeedback('Não foi possível entrar','Confira seu e-mail e sua senha. Se a conta for nova, confirme também o e-mail recebido.','error'); return; }
+    setMessage('');
     showAuthFeedback('Login confirmado','Bem-vindo de volta. Sua jornada está pronta.');
     setTimeout(() => window.location.replace(postLoginDestination()), 1100);
     return;
@@ -147,10 +147,11 @@ document.querySelector('#loginForm')?.addEventListener('submit', async (event) =
   const users = JSON.parse(localStorage.getItem(AUTH_KEY) || '[]');
   const passwordHash = await demoHash(password.value);
   const user = users.find((entry) => entry.email === email.value.trim().toLowerCase() && entry.demoPasswordHash === passwordHash);
-  if (!user) { setMessage('Conta não encontrada ou senha incorreta. Crie uma conta de demonstração primeiro.'); return; }
+  if (!user) { setMessage(''); showAuthFeedback('Não foi possível entrar','Conta não encontrada ou senha incorreta.','error'); return; }
   sessionStorage.setItem('aura67_session', JSON.stringify({ name: user.name, email: user.email }));
-  setMessage('Login realizado. Abrindo sua Aura…', true);
-  setTimeout(() => window.location.replace(postLoginDestination()), 700);
+  setMessage('');
+  showAuthFeedback('Login confirmado','Bem-vindo de volta. Sua jornada está pronta.');
+  setTimeout(() => window.location.replace(postLoginDestination()), 1100);
 });
 
 document.querySelector('#forgotLink')?.addEventListener('click', async (event) => {
@@ -161,7 +162,7 @@ document.querySelector('#forgotLink')?.addEventListener('click', async (event) =
   if (!await confirmPasswordReset(email.value.trim().toLowerCase())) return;
   setMessage('Enviando link de recuperação…', true);
   const { error } = await supabaseClient.auth.resetPasswordForEmail(email.value.trim().toLowerCase(), { redirectTo: redirectUrl('login.html') });
-  setMessage(error ? error.message : 'Enviamos as instruções de recuperação para seu e-mail.', !error);
+  setMessage('');
   showAuthFeedback(error?'Não foi possível enviar':'E-mail enviado',error?error.message:'Confira sua caixa de entrada e também a pasta de spam.',error?'error':'success');
 });
 
