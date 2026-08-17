@@ -33,6 +33,8 @@ async function reflectSession() {
   if (!window.auraSupabase) return;
   const { data } = await window.auraSupabase.auth.getSession();
   if (!data.session) return;
+  window.location.replace('app.html');
+  return;
   const action = document.querySelector('#sessionAction');
   action.textContent = 'Abrir minha Aura';
   action.href = 'app.html';
@@ -43,3 +45,4 @@ async function reflectSession() {
 }
 
 reflectSession();
+window.addEventListener('pageshow', reflectSession);

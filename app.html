@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Aura 67 — template inicial de aplicação web.">
   <title>Aura 67 — Dashboard</title>
+  <script>(function(){let c=localStorage.getItem('aura67_last_theme');if(!c){const k=Object.keys(localStorage).find(x=>x.startsWith('aura67_profile_'));try{c=JSON.parse(localStorage.getItem(k)||'null')?.theme_color}catch{}}if(!/^#[0-9a-f]{6}$/i.test(c||''))return;const s=(n)=>Math.max(0,Math.min(255,n));const h=(a)=>'#'+[0,2,4].map(i=>s(parseInt(a.slice(i+1,i+3),16)-70).toString(16).padStart(2,'0')).join('');const r=document.documentElement.style;r.setProperty('--purple',c);r.setProperty('--purple-dark',h(c));r.setProperty('--theme-dark',h(c));r.setProperty('--theme-soft',c+'1f');r.setProperty('--aura-boot-color',c);r.setProperty('--aura-boot-dark',h(c))})()</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=10">
+  <link rel="stylesheet" href="css/app-boot.css?v=31">
   <link rel="stylesheet" href="css/profile.css?v=10">
   <link rel="stylesheet" href="css/profile-extra.css?v=10">
   <link rel="stylesheet" href="css/profile-menu-v2.css?v=15">
@@ -24,7 +26,8 @@
   <link rel="stylesheet" href="css/reminders.css?v=25">
   <link rel="stylesheet" href="css/push.css?v=25">
 </head>
-<body>
+<body class="aura-booting">
+  <div class="aura-boot" id="auraBoot" role="status" aria-live="polite"><span class="aura-boot-mark">✦</span><strong>Aura 67</strong><small>Desbloqueando sua jornada…</small><i></i></div>
   <div class="ambient ambient-one"></div>
   <div class="ambient ambient-two"></div>
 
@@ -272,9 +275,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config/environments.js?v=10"></script>
   <script src="js/supabase-client.js?v=10"></script>
-  <script src="js/app-auth.js?v=10"></script>
-  <script src="js/profile.js?v=23"></script>
-  <script src="js/reminders.js?v=25"></script>
+  <script src="js/app-auth.js?v=31"></script>
+  <script src="js/profile.js?v=31"></script>
+  <script src="js/reminders.js?v=28"></script>
   <script src="js/ranking.js?v=17"></script>
   <script src="js/habits.js?v=12"></script>
   <script src="script.js?v=23"></script>

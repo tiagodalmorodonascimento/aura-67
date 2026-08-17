@@ -4,6 +4,15 @@ const environmentNote = document.querySelector('#environmentNote');
 let pendingEmail = '';
 let pendingPassword = '';
 
+async function skipEntryWhenAuthenticated() {
+  if (!supabaseClient) return;
+  const { data } = await supabaseClient.auth.getSession();
+  if (data.session) window.location.replace(postLoginDestination());
+}
+
+skipEntryWhenAuthenticated();
+window.addEventListener('pageshow', skipEntryWhenAuthenticated);
+
 if (document.querySelector('#confirmationWaiting')) {
   const confirmationStyles = document.createElement('link');
   confirmationStyles.rel = 'stylesheet';
@@ -109,7 +118,7 @@ document.querySelector('#signupForm')?.addEventListener('submit', async (event) 
   localStorage.setItem(AUTH_KEY, JSON.stringify(users));
   sessionStorage.setItem('aura67_session', JSON.stringify({ name: name.value.trim(), email: email.value.trim().toLowerCase() }));
   setMessage('Conta de demonstração criada. Abrindo sua Aura…', true);
-  setTimeout(() => window.location.href = 'app.html', 900);
+  setTimeout(() => window.location.replace('app.html'), 900);
 });
 
 document.querySelector('#loginForm')?.addEventListener('submit', async (event) => {
@@ -124,7 +133,7 @@ document.querySelector('#loginForm')?.addEventListener('submit', async (event) =
     submit.disabled = false;
     if (error) { setMessage('E-mail ou senha incorretos, ou conta ainda não confirmada.'); return; }
     setMessage('Login realizado. Abrindo sua Aura…', true);
-    setTimeout(() => window.location.href = postLoginDestination(), 500);
+    setTimeout(() => window.location.replace(postLoginDestination()), 500);
     return;
   }
   const users = JSON.parse(localStorage.getItem(AUTH_KEY) || '[]');
@@ -133,7 +142,7 @@ document.querySelector('#loginForm')?.addEventListener('submit', async (event) =
   if (!user) { setMessage('Conta não encontrada ou senha incorreta. Crie uma conta de demonstração primeiro.'); return; }
   sessionStorage.setItem('aura67_session', JSON.stringify({ name: user.name, email: user.email }));
   setMessage('Login realizado. Abrindo sua Aura…', true);
-  setTimeout(() => window.location.href = postLoginDestination(), 700);
+  setTimeout(() => window.location.replace(postLoginDestination()), 700);
 });
 
 document.querySelector('#forgotLink')?.addEventListener('click', async (event) => {

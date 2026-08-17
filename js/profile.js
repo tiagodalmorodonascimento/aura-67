@@ -22,6 +22,7 @@ function shiftColor(hex, amount) {
 }
 
 function applyGlobalTheme(color = '#7657ec') {
+  localStorage.setItem('aura67_last_theme', color);
   const dark = shiftColor(color, -70);
   const light = shiftColor(color, 115);
   const soft = `${color}1f`;
@@ -34,6 +35,15 @@ function applyGlobalTheme(color = '#7657ec') {
   root.setProperty('--hero-gradient', `linear-gradient(115deg,${light}aa 0%,${color}25 52%,#e9f7f3 100%)`);
   root.setProperty('--accent-gradient', `linear-gradient(135deg,${light},${color}66)`);
   root.setProperty('--dark-gradient', `radial-gradient(circle at 75% 20%,${light}55,transparent 28%),linear-gradient(120deg,${dark},${shiftColor(color,-35)} 62%,${color})`);
+}
+
+function profileCacheKey(userId) { return `aura67_profile_${userId}`; }
+function readCachedProfile(userId) { try { return JSON.parse(localStorage.getItem(profileCacheKey(userId)) || 'null'); } catch { return null; } }
+function cacheProfile(userId, profile) { localStorage.setItem(profileCacheKey(userId), JSON.stringify(profile)); }
+function preloadProfileMedia(profile) {
+  const urls = [profile.avatar_url, profile.cover_url].filter(Boolean).map(mediaUrl);
+  const preload = Promise.all(urls.map((url) => new Promise((resolve) => { const image = new Image(); image.onload = image.onerror = resolve; image.src = url; })));
+  return Promise.race([preload, new Promise((resolve) => setTimeout(resolve, 2000))]);
 }
 
 function classFor(points = 0) { return [...AURA_CLASSES].reverse().find((level) => points >= level.min) || AURA_CLASSES[0]; }
@@ -69,6 +79,8 @@ function applyDesignLocks(points = 0, founder = false) {
 
 async function loadProfile(session) {
   const fallbackName = session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'Pessoa Aura';
+  const cachedProfile = readCachedProfile(session.user.id);
+  if (cachedProfile?.theme_color) applyGlobalTheme(cachedProfile.theme_color);
   let { data, error } = await window.auraSupabase.from('profiles').select('full_name,username,bio,avatar_url,cover_url,theme_color,aura_points,member_number').eq('id', session.user.id).maybeSingle();
   if (error && /member_number/i.test(error.message)) {
     ({ data, error } = await window.auraSupabase.from('profiles').select('full_name,username,bio,avatar_url,cover_url,theme_color,aura_points').eq('id', session.user.id).maybeSingle());
@@ -76,8 +88,10 @@ async function loadProfile(session) {
   if (error && /(cover_url|theme_color|aura_points)/i.test(error.message)) {
     ({ data, error } = await window.auraSupabase.from('profiles').select('full_name,username,bio,avatar_url').eq('id', session.user.id).maybeSingle());
   }
-  currentProfile = { full_name: fallbackName, username: '', bio: '', avatar_url: '', cover_url: '', aura_points: 0, member_number: null, theme_color: '#7657ec', ...(data || {}) };
+  currentProfile = { full_name: fallbackName, username: '', bio: '', avatar_url: '', cover_url: '', aura_points: 0, member_number: null, theme_color: '#7657ec', ...(cachedProfile || {}), ...(data || {}) };
   if (error) console.error('Aura 67: não foi possível carregar todos os campos do perfil.', error.message);
+  cacheProfile(session.user.id, currentProfile);
+  await preloadProfileMedia(currentProfile);
   applyGlobalTheme(currentProfile.theme_color);
   renderProgression(currentProfile.aura_points || 0);
   const isFounder = currentProfile.member_number && currentProfile.member_number <= 1000;
@@ -103,6 +117,9 @@ async function loadProfile(session) {
   document.querySelector('#designColor').value = currentProfile.theme_color || '#7657ec';
   document.querySelectorAll('#themeSwatches button').forEach((item) => item.classList.toggle('selected', item.dataset.color === document.querySelector('#designColor').value.toLowerCase()));
   updatePreview();
+  document.body.classList.remove('aura-booting');
+  document.querySelector('#auraBoot')?.setAttribute('hidden', '');
+  document.dispatchEvent(new CustomEvent('aura:profile-ready', { detail: currentProfile }));
 }
 
 function updatePreview() {
@@ -267,7 +284,7 @@ document.querySelector('#changePasswordButton').addEventListener('click',async()
 document.querySelector('#resendPasswordEmail').addEventListener('click',async()=>{if(await sendPasswordEmail())startPasswordResendCountdown();});
 document.querySelector('#emailCheckClose').addEventListener('click',()=>{document.querySelector('#emailCheckBackdrop').hidden=true;document.body.style.overflow='';});
 document.querySelector('#emailCheckBackdrop').addEventListener('click',(event)=>{if(event.target.id==='emailCheckBackdrop')document.querySelector('#emailCheckClose').click();});
-document.querySelector('#logoutButton').addEventListener('click', async () => { await window.auraSupabase.auth.signOut(); window.location.replace('login.html'); });
+document.querySelector('#logoutButton').addEventListener('click', async () => { localStorage.removeItem(profileCacheKey(window.AURA_SESSION.user.id)); await window.auraSupabase.auth.signOut(); window.location.replace('login.html'); });
 
 document.querySelector('#designForm').addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -278,6 +295,7 @@ document.querySelector('#designForm').addEventListener('submit', async (event) =
     const { error } = await window.auraSupabase.from('profiles').update(updates).eq('id', window.AURA_SESSION.user.id);
     if (error) throw error;
     currentProfile = { ...currentProfile, ...updates };
+    cacheProfile(window.AURA_SESSION.user.id, currentProfile);
     applyGlobalTheme(updates.theme_color);
     message.style.color = '#318361'; message.textContent = 'Suas cores foram salvas.';
   } catch (error) { message.style.color = '#b44'; message.textContent = error.message; }
