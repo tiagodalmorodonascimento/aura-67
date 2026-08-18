@@ -1,58 +1,38 @@
 # Aura 67
 
-Template inicial de dashboard responsivo, criado com HTML, CSS e JavaScript puros.
+Aplicação web responsiva de evolução pessoal e social. A experiência combina atividades, projetos privados, planos comportamentais, temporadas mensais, perfis, Momentos e conversas privadas.
 
-## Como abrir
+## Execução
 
-Abra o arquivo `index.html` em qualquer navegador moderno. Não é necessário instalar dependências.
+O frontend usa HTML, CSS e JavaScript nativos e deve ser servido por HTTP. Abrir os arquivos diretamente não reproduz corretamente autenticação, service worker e redirecionamentos.
 
-## Estrutura
+- `index.html`: página pública do domínio.
+- `login.html` e `cadastro.html`: autenticação Supabase.
+- `app.html`: aplicação autenticada.
+- `admin.html`: moderação, protegida por função e papel no banco.
+- `service-worker.js` e `manifest.json`: instalação como PWA.
+- `supabase/`: esquema inicial e migrations incrementais.
 
-- `index.html` — estrutura e conteúdo da interface.
-- `styles.css` — aparência, cores, layout e responsividade.
-- `script.js` — menu móvel, navegação, busca, modal e avisos.
+## Banco de dados
 
-## Ranking
+O projeto usa Supabase Auth, Postgres, Storage e RPCs. Execute `supabase/schema.sql` em uma instalação nova e depois as migrations numeradas, em ordem. Em uma instalação já existente, execute somente as migrations ainda não aplicadas.
 
-O menu **Ranking** abre uma classificação gamificada com pódio, pontuação semanal e mensal, posição do usuário, sequências de atividade e sugestões para ganhar pontos. Os dados de demonstração usam os atributos `data-week` e `data-month` no `index.html`.
+A migration mais recente é `migration-029-integrity-guards.sql`. Ela remove pontos por mera criação de projeto, impede repetição diária do mínimo comportamental, adiciona limites antispam e otimiza consultas frequentes.
 
-## Estrutura mobile-first
+As tabelas privadas têm RLS e/ou acesso direto revogado; operações sensíveis passam por funções no banco. Buckets de comprovação e anexos de conversa são privados. Nunca publique a chave `service_role` no frontend.
 
-- `index.html` — landing page pública e lista de espera.
-- `cadastro.html` — criação de conta em modo de demonstração.
-- `login.html` — entrada em modo de demonstração.
-- `app.html` — dashboard e ranking preservados como área interna.
-- `manifest.json` e `service-worker.js` — instalação básica como PWA.
-- `css/` e `js/` — estilos e comportamentos das novas páginas.
+## Ambientes e publicação
 
-As contas atuais ficam apenas no navegador para validar a jornada. Antes de produção, a autenticação deverá ser substituída pelo Supabase Auth; nenhuma credencial local deve ser tratada como conta real.
+As chaves públicas e URLs são selecionadas em `config/environments.js`. O domínio atual na Vercel usa o ambiente de teste compartilhado. Antes da produção comercial, configure um projeto Supabase de produção separado e preencha os valores de produção sem substituir o ambiente de teste.
 
-## Supabase e ambientes
+O repositório é publicado pela Vercel após o push para a branch principal. O app permanece instalável como PWA; o empacotamento APK deve ser feito somente depois da validação funcional e da configuração definitiva do domínio.
 
-A camada de autenticação detecta automaticamente o ambiente em `config/environments.js`. Quando uma URL e uma chave pública válidas forem configuradas, cadastro, confirmação de e-mail, login, Google OAuth e recuperação passam a usar o Supabase. Sem configuração, o fluxo local continua disponível apenas para demonstração.
+## Validação antes de publicar
 
-Veja `ENVIRONMENTS.md` para configurar teste, produção, domínio e o primeiro esquema do banco.
+1. Verifique a sintaxe dos arquivos JavaScript com `node --check`.
+2. Execute a migration nova no Supabase SQL Editor e confirme que não há erro.
+3. Teste cadastro, confirmação de e-mail, login, recuperação de senha e logout.
+4. Teste pontuação, projetos, atividades, ranking, chat, anexos, bloqueio e denúncias com pelo menos duas contas.
+5. Confirme os fluxos mobile, tema claro/escuro, modo offline e permissões de notificações.
 
-## Perfis e design
-
-Depois do esquema inicial, execute `supabase/migration-002-public-profiles.sql` no ambiente de teste. Essa migration adiciona perfil público pesquisável, pontuação, cores, avatar, capa e o bucket de imagens. E-mails permanecem exclusivamente no Auth e nunca são exibidos na busca pública.
-
-## Hábitos e missões
-
-Execute `supabase/migration-004-habits-missions.sql` depois da migration 003. Ela instala 56 ações em sete categorias, conclusões diárias, XP processado no banco, bônus de combo e sequência. A tela fica disponível em **Atividade / Jornada**. O navegador nunca escolhe nem altera diretamente a quantidade de XP.
-
-## Comprovação de ações
-
-Execute `supabase/migration-005-photo-proof.sql` depois da migration 004. Ela adiciona modos de comprovação, bucket privado para fotos, XP pendente e funções de envio e revisão. Fotos exigidas não concedem XP até aprovação. Nunca exiba o bucket `action-proofs` publicamente.
-
-## Super Admin
-
-Execute `supabase/migration-006-super-admin.sql` depois da migration 005. A área separada fica em `admin.html` e valida o papel no banco. Para promover a primeira conta, use o comando comentado no final da migration trocando `SEU_EMAIL_AQUI`. Usuários comuns recebem acesso negado mesmo conhecendo a URL.
-
-## Padrão de tipografia
-
-Nenhum texto legível da interface deve usar menos de `8px`. Textos recorrentes devem preferir `9px` a `12px`, e títulos devem manter hierarquia superior. Ícones e elementos gráficos não seguem esse limite quando não representam texto.
-
-## Personalização rápida
-
-As principais cores ficam no início de `styles.css`, dentro de `:root`. Edite os textos e módulos diretamente no `index.html`. Use `script.js` para conectar os botões às funcionalidades futuras.
+Credenciais administrativas não devem ser registradas neste arquivo nem versionadas no Git.

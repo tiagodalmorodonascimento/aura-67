@@ -28,6 +28,11 @@ sidebarOverlay.addEventListener('click', () => toggleMenu(false));
 
 navItems.forEach((item) => item.addEventListener('click', (event) => {
   event.preventDefault();
+  if (item.dataset.page === 'Configurações') {
+    toggleMenu(false);
+    if (typeof setAccountMenu === 'function') setAccountMenu(true);
+    return;
+  }
   navItems.forEach((nav) => nav.classList.remove('active'));
   item.classList.add('active');
   pageTitle.textContent = item.dataset.page;
@@ -51,7 +56,6 @@ navItems.forEach((item) => item.addEventListener('click', (event) => {
   if (isChat && typeof loadChat === 'function') loadChat();
   if (isPeople && typeof loadAuraPeople === 'function') loadAuraPeople();
   resetPageScroll();
-  if (!['Visão geral','Conversas'].includes(item.dataset.page) && !isRanking && !isHabits && !isProjects && !isChat && !isPeople) showToast(`${item.dataset.page}: módulo pronto para você editar.`);
 }));
 
 document.querySelector('#earnPointsButton').addEventListener('click', async (event) => {
