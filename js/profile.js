@@ -175,6 +175,8 @@ async function openPublicProfile(person) {
   document.querySelector('#publicFounderBadge').hidden = !(person.member_number && person.member_number <= 1000);
   const { count } = await window.auraSupabase.from('profiles').select('id', { count: 'exact', head: true }).gt('aura_points', person.aura_points || 0);
   document.querySelector('#publicProfilePosition').textContent = count == null ? '—' : `${count + 1}º`;
+  window.AURA_VIEWED_PROFILE_ID = person.id;
+  document.dispatchEvent(new CustomEvent('aura:public-profile-opened', { detail: { profileId: person.id } }));
   backdrop.hidden = false;
   document.body.style.overflow = 'hidden';
 }
@@ -263,7 +265,6 @@ document.querySelector('#designClose').addEventListener('click', () => { applyGl
 document.querySelector('#profileEditorClose').addEventListener('click', () => { profileEditorBackdrop.hidden = true; document.body.style.overflow = ''; });
 document.querySelector('#publicProfileClose').addEventListener('click', () => { document.querySelector('#publicProfileBackdrop').hidden = true; document.body.style.overflow = ''; });
 document.querySelector('#publicProfileBackdrop').addEventListener('click', (event) => { if (event.target.id === 'publicProfileBackdrop') document.querySelector('#publicProfileClose').click(); });
-document.querySelector('#inspireButton').addEventListener('click', () => { document.querySelector('#inspireButton').textContent = 'Inspiração enviada ✓'; });
 document.querySelector('#evolutionDetailsButton').addEventListener('click', () => { document.querySelector('#journeyBackdrop').hidden = false; document.body.style.overflow = 'hidden'; });
 document.querySelector('#overviewJourneyButton').addEventListener('click', () => document.querySelector('#evolutionDetailsButton').click());
 document.querySelector('#journeyClose').addEventListener('click', () => { document.querySelector('#journeyBackdrop').hidden = true; document.body.style.overflow = ''; });
