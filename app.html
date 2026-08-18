@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="css/chat.css?v=43">
   <link rel="stylesheet" href="css/chat-button.css?v=43">
   <link rel="stylesheet" href="css/chat-page.css?v=53">
+  <link rel="stylesheet" href="css/chat-attachments.css?v=55">
   <link rel="stylesheet" href="css/profile.css?v=10">
   <link rel="stylesheet" href="css/profile-extra.css?v=10">
   <link rel="stylesheet" href="css/profile-menu-v2.css?v=15">
@@ -178,7 +179,7 @@
 
       <div class="content chat-page" id="chatPage" hidden>
         <section class="chat-page-head"><div><span class="section-kicker">CONEXÕES AURA</span><h2>Mensagens</h2><p>Converse, compartilhe progresso e encontre apoio para continuar evoluindo.</p></div></section>
-        <section class="chat-shell" aria-labelledby="chatTitle"><aside class="chat-contacts"><div><span class="section-kicker">CONVERSAS</span><h2>Mensagens</h2></div><button class="chat-contact active" type="button"><span class="chat-avatar">AT</span><span><strong>Aura Tester</strong><small>Contato oficial para testes</small></span><i></i></button></aside><div class="chat-conversation"><header><button class="chat-back" id="chatClose" type="button" aria-label="Voltar para visão geral">‹</button><span class="chat-avatar">AT</span><span><strong id="chatTitle">Aura Tester</strong><small><i></i> disponível agora</small></span></header><div class="chat-messages" id="chatMessages"><p class="dashboard-empty">Carregando conversa…</p></div><form class="chat-composer" id="chatForm"><input id="chatInput" maxlength="1000" autocomplete="off" placeholder="Escreva uma mensagem…" aria-label="Mensagem"><button type="submit" aria-label="Enviar">➤</button></form></div></section>
+        <section class="chat-shell" aria-labelledby="chatTitle"><aside class="chat-contacts"><div><span class="section-kicker">CONVERSAS</span><h2>Mensagens</h2></div><button class="chat-contact active" type="button"><span class="chat-avatar">AT</span><span><strong>Aura Tester</strong><small>Contato oficial para testes</small></span><i></i></button></aside><div class="chat-conversation"><header><button class="chat-back" id="chatClose" type="button" aria-label="Voltar para visão geral">‹</button><span class="chat-avatar">AT</span><span><strong id="chatTitle">Aura Tester</strong><small><i></i> disponível agora</small></span></header><div class="chat-messages" id="chatMessages"><p class="dashboard-empty">Carregando conversa…</p></div><div class="chat-attachment-preview" id="chatAttachmentPreview" hidden></div><small class="chat-privacy">🔒 Fotos e PDFs ficam privados. Evite enviar dados sensíveis desnecessários.</small><form class="chat-composer" id="chatForm"><input id="chatFile" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" hidden><button class="chat-attach" id="chatAttachButton" type="button" aria-label="Anexar foto ou PDF">＋</button><input id="chatInput" maxlength="1000" autocomplete="off" placeholder="Escreva uma mensagem…" aria-label="Mensagem"><button type="submit" aria-label="Enviar">➤</button></form></div></section>
       </div>
 
       <div class="content ranking-page" id="ranking" hidden>
@@ -309,6 +310,6 @@
   <script src="script.js?v=53"></script>
   <script src="js/dashboard.js?v=48"></script>
   <script src="js/behavior.js?v=52"></script>
-  <script src="js/chat.js?v=53"></script>
+  <script src="js/chat.js?v=55"></script>
 </body>
 </html>
