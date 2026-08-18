@@ -61,6 +61,12 @@ document.querySelector('#earnPointsButton').addEventListener('click', async (eve
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
+document.querySelector('#overviewActivitiesButton')?.addEventListener('click', () => {
+  const activityNav = [...navItems].find((item) => item.dataset.view === 'habits');
+  activityNav?.click();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
 function openModal() {
   modalBackdrop.hidden = false;
   document.body.style.overflow = 'hidden';

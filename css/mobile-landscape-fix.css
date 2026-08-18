@@ -1,0 +1,31 @@
+.overview-activities-button{margin-top:20px;background:var(--theme-dark);position:relative;z-index:3}
+
+@media (hover:none) and (pointer:coarse) and (orientation:landscape){
+  :root{--sidebar:250px}
+  .sidebar{transform:translateX(-100%);transition:transform .25s}
+  .sidebar.open{transform:none}
+  .sidebar-overlay{position:fixed;inset:0;background:rgba(24,20,31,.35);z-index:15}
+  .sidebar-overlay.show{display:block}
+  .main-area{margin-left:0;width:100%;padding-bottom:76px}
+  .menu-button{display:none}
+  .topbar{height:68px;padding:0 17px}
+  .topbar .primary-button{display:none}
+  .search-button{width:40px;padding:0;justify-content:center}
+  .search-text,.search-button kbd{display:none}
+  .mobile-bottom-nav{height:70px;padding:6px 12px max(6px,env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-around;position:fixed;z-index:40;left:0;right:0;bottom:0;background:rgba(255,255,255,.94);backdrop-filter:blur(18px);border-top:1px solid var(--line);box-shadow:0 -8px 30px rgba(34,25,56,.07)}
+  .mobile-bottom-nav button{width:54px;border:0;background:transparent;color:#a09aa7;display:grid;place-items:center;gap:2px;cursor:pointer}
+  .mobile-bottom-nav button>span{font-size:17px}
+  .mobile-bottom-nav small{font-size:8px}
+  .mobile-bottom-nav button.active{color:var(--purple);font-weight:700}
+  .mobile-bottom-nav .mobile-profile-center{width:48px;height:48px;border-radius:15px;background:var(--theme-dark);color:#fff;box-shadow:0 9px 23px rgba(40,29,70,.24);transform:translateY(-7px);display:grid;grid-template-rows:22px auto;align-content:center}
+  .mobile-profile-center>span{display:grid;place-items:center}
+  .mobile-profile-center svg{width:22px;height:22px}
+  .mobile-profile-center small{color:#fff;font-size:7px}
+  .mobile-bottom-nav .mobile-notification{position:relative}
+  .mobile-bottom-nav .mobile-notification i{position:absolute;width:7px;height:7px;border-radius:50%;background:#f05262;right:8px;top:4px;border:1px solid #fff}
+  .notification-backdrop{top:68px;bottom:70px;height:auto;z-index:35}
+  .notification-panel{top:0;bottom:0;height:auto}
+  .toast{bottom:85px;left:16px;right:16px;text-align:center}
+}
+
+@media(max-width:760px){.overview-activities-button{margin-top:18px}}
