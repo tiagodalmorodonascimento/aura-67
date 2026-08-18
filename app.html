@@ -223,7 +223,7 @@
       </div>
 
       <div class="content chat-page" id="chatPage" hidden>
-        <section class="chat-shell" aria-labelledby="chatTitle"><aside class="chat-contacts"><button class="chat-contact active" type="button"><span class="chat-avatar">AT</span><span><strong>Aura Tester</strong><small>Contato oficial para testes</small></span><i></i></button></aside><div class="chat-conversation"><header><button class="chat-back" id="chatClose" type="button" aria-label="Voltar para visão geral">‹</button><span class="chat-avatar">AT</span><span><strong id="chatTitle">Aura Tester</strong><small><i></i> disponível agora</small></span></header><div class="chat-messages" id="chatMessages"><p class="dashboard-empty">Carregando conversa…</p></div><div class="chat-attachment-preview" id="chatAttachmentPreview" hidden></div><small class="chat-privacy">🔒 Fotos e PDFs ficam privados. Evite enviar dados sensíveis desnecessários.</small><form class="chat-composer" id="chatForm"><input id="chatFile" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" hidden><button class="chat-attach" id="chatAttachButton" type="button" aria-label="Anexar foto ou PDF">＋</button><input id="chatInput" maxlength="1000" autocomplete="off" placeholder="Escreva uma mensagem…" aria-label="Mensagem"><button type="submit" aria-label="Enviar">➤</button></form></div></section>
+        <section class="chat-shell" aria-labelledby="chatTitle"><aside class="chat-contacts" id="chatContacts"><button class="chat-contact active" type="button" data-chat-kind="tester"><span class="chat-avatar">AT</span><span><strong>Aura Tester</strong><small>Contato oficial para testes</small></span><i></i></button></aside><div class="chat-conversation"><header><button class="chat-back" id="chatClose" type="button" aria-label="Ver todas as conversas">‹</button><span class="chat-avatar" id="chatHeaderAvatar">AT</span><span><strong id="chatTitle">Aura Tester</strong><small id="chatHeaderStatus"><i></i> disponível agora</small></span></header><div class="chat-messages" id="chatMessages"><p class="dashboard-empty">Carregando conversa…</p></div><div class="chat-attachment-preview" id="chatAttachmentPreview" hidden></div><small class="chat-privacy" id="chatPrivacy">🔒 Fotos e PDFs ficam privados. Evite enviar dados sensíveis desnecessários.</small><form class="chat-composer" id="chatForm"><input id="chatFile" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" hidden><button class="chat-attach" id="chatAttachButton" type="button" aria-label="Anexar foto ou PDF">＋</button><input id="chatInput" maxlength="1000" autocomplete="off" placeholder="Escreva uma mensagem…" aria-label="Mensagem"><button type="submit" aria-label="Enviar">➤</button></form></div></section>
       </div>
 
       <div class="content ranking-page" id="ranking" hidden>
@@ -366,12 +366,12 @@
   <script src="script.js?v=57"></script>
   <script src="js/dashboard.js?v=51"></script>
   <script src="js/behavior.js?v=53"></script>
-  <script src="js/chat.js?v=60"></script>
+  <script src="js/chat.js?v=61"></script>
   <script src="js/color-mode.js?v=1"></script>
   <script src="js/motion.js?v=2"></script>
   <script src="js/fireworks.js?v=1"></script>
   <script src="js/moments.js?v=2"></script>
   <script src="js/aura-foundation.js?v=1"></script>
-  <script src="js/people.js?v=1"></script>
+  <script src="js/people.js?v=2"></script>
 </body>
 </html>
