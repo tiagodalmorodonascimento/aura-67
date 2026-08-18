@@ -71,6 +71,7 @@ async function completeHabit(actionId) {
   document.querySelector('#dailyProgress').style.width=`${Math.min(100,(data.today_count/5)*100)}%`;
   const currentXp=Number(document.querySelector('#todayXp').textContent)||0; document.querySelector('#todayXp').textContent=currentXp+data.earned_xp+data.bonus_xp;
   renderHabits();
+  document.dispatchEvent(new CustomEvent('aura:action-completed',{detail:{actionId,result:data}}));
   if (typeof loadProfile==='function') await loadProfile(window.AURA_SESSION);
 }
 

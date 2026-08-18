@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/feedback-cleanup.css?v=36">
   <link rel="stylesheet" href="css/dashboard-live.css?v=46">
   <link rel="stylesheet" href="css/projects.css?v=51">
+  <link rel="stylesheet" href="css/behavior.css?v=52">
   <link rel="stylesheet" href="css/chat.css?v=43">
   <link rel="stylesheet" href="css/chat-button.css?v=43">
   <link rel="stylesheet" href="css/profile.css?v=10">
@@ -110,6 +111,10 @@
             <span class="orb orb-main"></span><span class="orb orb-small"></span>
             <span class="spark spark-a">✦</span><span class="spark spark-b">✦</span>
           </div>
+        </section>
+
+        <section class="next-victory" id="nextVictory" aria-labelledby="nextVictoryTitle">
+          <div class="victory-loading">Preparando sua próxima pequena vitória…</div>
         </section>
 
         <section class="metrics-grid" aria-label="Resumo">
@@ -242,6 +247,21 @@
     </div>
   </div>
 
+  <div class="behavior-backdrop" id="behaviorBackdrop" hidden>
+    <section class="behavior-modal" role="dialog" aria-modal="true" aria-labelledby="behaviorModalTitle">
+      <button class="modal-close" id="behaviorClose" type="button" aria-label="Fechar">×</button>
+      <span class="section-kicker">MEU PLANO DE EVOLUÇÃO</span><h2 id="behaviorModalTitle">Transforme intenção em ação.</h2><p>Escolha uma vitória pequena e ligue-a a um momento que já existe no seu dia.</p>
+      <form id="behaviorForm">
+        <label>A ação que quero praticar<select id="behaviorAction" required></select></label>
+        <label>A pessoa que quero me tornar<input id="behaviorIdentity" maxlength="80" required placeholder="Ex.: alguém que cuida da própria saúde"></label>
+        <label>Depois de…<input id="behaviorAnchor" maxlength="120" required placeholder="Ex.: tomar meu café da manhã"></label>
+        <label>Em um dia difícil, farei apenas…<input id="behaviorMinimum" maxlength="140" required placeholder="Ex.: beber um copo de água"></label>
+        <label>Se algo atrapalhar, então eu…<input id="behaviorObstacle" maxlength="180" placeholder="Ex.: tentarei novamente depois do almoço"></label>
+        <button class="primary-button" type="submit">Salvar meu plano</button>
+      </form>
+    </section>
+  </div>
+
   <div class="search-overlay" id="searchOverlay" hidden>
     <div class="search-box"><div class="search-dialog"><span>⌕</span><input id="searchInput" type="search" placeholder="Busque pessoas por nome ou @usuário..." aria-label="Buscar pessoas"><kbd>ESC</kbd></div><div class="people-results" id="peopleResults"><p>Digite pelo menos 2 caracteres para encontrar pessoas.</p></div></div>
   </div>
@@ -280,9 +300,10 @@
   <script src="js/profile.js?v=51"></script>
   <script src="js/reminders.js?v=36"></script>
   <script src="js/ranking.js?v=45"></script>
-  <script src="js/habits.js?v=36"></script>
+  <script src="js/habits.js?v=52"></script>
   <script src="script.js?v=51"></script>
   <script src="js/dashboard.js?v=48"></script>
+  <script src="js/behavior.js?v=52"></script>
   <script src="js/chat.js?v=43"></script>
 </body>
 </html>
