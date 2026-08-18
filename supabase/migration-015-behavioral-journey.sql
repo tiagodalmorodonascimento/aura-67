@@ -7,7 +7,7 @@ create table if not exists public.behavior_plans (
   action_id bigint not null references public.actions_catalog(id),
   identity_label text not null check(char_length(identity_label) between 3 and 80),
   anchor_text text not null check(char_length(anchor_text) between 3 and 120),
-  minimum_version text not null check(char_length(minimum_version) between 3 and 140),
+  minimum_version text not null check(char_length(minimum_version) between 1 and 140),
   obstacle_plan text check(char_length(obstacle_plan)<=180),
   active boolean not null default true,
   created_at timestamptz not null default now(),
