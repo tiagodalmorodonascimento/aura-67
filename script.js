@@ -27,16 +27,19 @@ navItems.forEach((item) => item.addEventListener('click', (event) => {
   const isRanking = item.dataset.view === 'ranking';
   const isHabits = item.dataset.view === 'habits';
   const isProjects = item.dataset.view === 'projects';
+  const isChat = item.dataset.view === 'chat';
   document.querySelector('#identityProfile').hidden = true;
-  document.querySelector('#dashboard').hidden = isRanking || isHabits || isProjects;
+  document.querySelector('#dashboard').hidden = isRanking || isHabits || isProjects || isChat;
   document.querySelector('#ranking').hidden = !isRanking;
   document.querySelector('#habits').hidden = !isHabits;
   document.querySelector('#projects').hidden = !isProjects;
+  document.querySelector('#chatPage').hidden = !isChat;
   if (item.dataset.page === 'Visão geral') document.querySelector('#dashboard').hidden = false;
   if (isHabits && typeof loadHabits === 'function') loadHabits();
   if (isRanking && typeof loadRealRanking === 'function') loadRealRanking();
   if (isProjects && typeof loadProjects === 'function') loadProjects();
-  if (!['Visão geral','Conversas'].includes(item.dataset.page) && !isRanking && !isHabits && !isProjects) showToast(`${item.dataset.page}: módulo pronto para você editar.`);
+  if (isChat && typeof loadChat === 'function') loadChat();
+  if (!['Visão geral','Conversas'].includes(item.dataset.page) && !isRanking && !isHabits && !isProjects && !isChat) showToast(`${item.dataset.page}: módulo pronto para você editar.`);
 }));
 
 document.querySelector('#earnPointsButton').addEventListener('click', () => {
