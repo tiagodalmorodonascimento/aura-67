@@ -1,0 +1,2 @@
+@media(max-width:760px){.notification-backdrop{top:68px;bottom:70px;height:auto;z-index:35;background:rgba(18,14,25,.36);backdrop-filter:blur(5px)}.notification-panel{top:0;bottom:0;height:auto;width:100%;padding:26px 18px 22px;border-radius:20px 20px 0 0;box-shadow:0 -8px 40px rgba(25,18,46,.16)}.notification-panel .modal-close{top:14px;right:14px}.notification-heading{padding-right:38px}.mobile-bottom-nav{z-index:40}.topbar{z-index:40}}
+@media(max-width:460px){.notification-panel{padding-top:24px}}
