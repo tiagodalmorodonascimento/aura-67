@@ -208,7 +208,7 @@ async function loadIdentityProfile() {
   const hero = document.querySelector('#identityProfile');
   hero.style.setProperty('--identity-color', color);
   hero.style.setProperty('--identity-dark', shiftColor(color, -70));
-  document.querySelector('#identityCover').style.background = profile.cover_url ? `linear-gradient(90deg,${shiftColor(color,-70)}99,${color}44),url('${mediaUrl(profile.cover_url)}') center/cover` : `linear-gradient(120deg,${shiftColor(color,-70)},${color})`;
+  document.querySelector('#identityCover').style.background = profile.cover_url ? `url('${mediaUrl(profile.cover_url)}') center/cover no-repeat` : `linear-gradient(120deg,${shiftColor(color,-70)},${color})`;
   const avatar = document.querySelector('#identityAvatar');
   avatar.style.backgroundImage = profile.avatar_url ? `url('${mediaUrl(profile.avatar_url)}')` : '';
   avatar.textContent = profile.avatar_url ? '' : initials(profile.full_name);
