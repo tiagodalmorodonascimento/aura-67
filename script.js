@@ -36,19 +36,22 @@ navItems.forEach((item) => item.addEventListener('click', (event) => {
   const isHabits = item.dataset.view === 'habits';
   const isProjects = item.dataset.view === 'projects';
   const isChat = item.dataset.view === 'chat';
+  const isPeople = item.dataset.view === 'people';
   document.querySelector('#identityProfile').hidden = true;
-  document.querySelector('#dashboard').hidden = isRanking || isHabits || isProjects || isChat;
+  document.querySelector('#dashboard').hidden = isRanking || isHabits || isProjects || isChat || isPeople;
   document.querySelector('#ranking').hidden = !isRanking;
   document.querySelector('#habits').hidden = !isHabits;
   document.querySelector('#projects').hidden = !isProjects;
   document.querySelector('#chatPage').hidden = !isChat;
+  document.querySelector('#people').hidden = !isPeople;
   if (item.dataset.page === 'Visão geral') document.querySelector('#dashboard').hidden = false;
   if (isHabits && typeof loadHabits === 'function') loadHabits();
   if (isRanking && typeof loadRealRanking === 'function') loadRealRanking();
   if (isProjects && typeof loadProjects === 'function') loadProjects();
   if (isChat && typeof loadChat === 'function') loadChat();
+  if (isPeople && typeof loadAuraPeople === 'function') loadAuraPeople();
   resetPageScroll();
-  if (!['Visão geral','Conversas'].includes(item.dataset.page) && !isRanking && !isHabits && !isProjects && !isChat) showToast(`${item.dataset.page}: módulo pronto para você editar.`);
+  if (!['Visão geral','Conversas'].includes(item.dataset.page) && !isRanking && !isHabits && !isProjects && !isChat && !isPeople) showToast(`${item.dataset.page}: módulo pronto para você editar.`);
 }));
 
 document.querySelector('#earnPointsButton').addEventListener('click', async (event) => {

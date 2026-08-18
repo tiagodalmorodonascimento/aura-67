@@ -239,7 +239,7 @@ async function loadIdentityProfile() {
 }
 
 function openOwnProfile() {
-  ['dashboard','ranking','habits','projects','chatPage'].forEach((id) => { document.querySelector(`#${id}`).hidden = true; });
+  ['dashboard','ranking','habits','projects','chatPage','people'].forEach((id) => { document.querySelector(`#${id}`).hidden = true; });
   document.querySelector('#identityProfile').hidden = false;
   document.querySelector('#pageTitle').textContent = 'Meu perfil';
   document.querySelectorAll('.nav-item').forEach((item) => item.classList.remove('active'));
