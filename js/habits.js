@@ -94,6 +94,7 @@ async function confirmHabitCompletion() {
   renderHabits();
   document.dispatchEvent(new CustomEvent('aura:action-completed',{detail:{actionId,result:data}}));
   if (typeof loadProfile==='function') await loadProfile(window.AURA_SESSION);
+  if (typeof openAuraMomentShare==='function') openAuraMomentShare('action',`${actionId}:${todaySaoPaulo()}`,`${selectedAction.icon} ${selectedAction.title}`,selectedAction.icon);
 }
 
 document.querySelector('#habitConfirmClose').addEventListener('click',closeHabitConfirmation);
