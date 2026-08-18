@@ -6,6 +6,7 @@ FILES.push('./css/chat-safety.css');
 FILES.push('./css/chat-conversation-list.css','./css/chat-unread.css','./css/community-moderation-extra.css','./css/community-moderation.css','./css/design-color-wheel.css','./css/design-palette.css','./css/destructive-actions.css','./css/habit-confirmation.css','./css/identity-layout-fix.css','./css/identity-studio.css');
 FILES.push('./js/account-delete.js','./js/color-mode.js','./js/community-moderation.js','./js/design-color-wheel.js','./js/design-palette.js','./js/identity-studio.js');
 FILES.push('./termos.html','./privacidade.html','./css/legal.css');
+FILES.push('./js/native-app.js');
 self.addEventListener('install', (event) => { self.skipWaiting(); event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(FILES))); });
 self.addEventListener('activate', (event) => event.waitUntil(Promise.all([
   caches.keys().then((keys) => Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key)))),

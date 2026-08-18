@@ -36,3 +36,9 @@ O repositório é publicado pela Vercel após o push para a branch principal. O 
 5. Confirme os fluxos mobile, tema claro/escuro, modo offline e permissões de notificações.
 
 Credenciais administrativas não devem ser registradas neste arquivo nem versionadas no Git.
+
+## Aplicativo Android
+
+O projeto Android usa Capacitor e fica em `android/`. Para preparar e gerar o APK de teste neste computador, execute `npm run mobile:apk`. O script sincroniza os arquivos web, compila com o JDK 21 isolado em `.tools/` e cria `releases/Aura67-v0.1.0-debug.apk`.
+
+O APK debug serve para instalação e testes internos. Uma publicação na Play Store exige uma chave de assinatura de produção protegida, Android App Bundle (`.aab`), política de privacidade definitiva, configuração nativa do Google OAuth e Firebase Cloud Messaging para push.
