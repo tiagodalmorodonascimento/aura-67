@@ -3,6 +3,11 @@
 .identity-avatar-frame{margin-top:-62px}
 .identity-copy{padding:20px 0 0;min-width:0}
 .identity-copy h2{overflow-wrap:anywhere}
+.identity-expression>.wide{grid-column:1/-1}
+.public-profile{max-height:92vh;overflow:auto}
+.identity-expression[data-layout="expressivo"] .identity-expression-card:first-child{background:linear-gradient(135deg,var(--theme-soft),#fff 70%);border-color:var(--identity-color)}
+.identity-expression[data-layout="jornada"]{grid-template-columns:1fr}
+.identity-expression[data-layout="jornada"] .identity-expression-card{grid-column:auto}
 
 @media(max-width:760px){
   .identity-person{transform:none;margin-bottom:0;padding:0 20px 22px}
