@@ -70,7 +70,8 @@ begin
 end;$$;
 
 -- Mantém somente as 200 mensagens mais recentes no primeiro carregamento.
-create or replace function public.get_direct_messages(p_conversation_id uuid)
+drop function if exists public.get_direct_messages(uuid);
+create function public.get_direct_messages(p_conversation_id uuid)
 returns table(id bigint,sender text,content text,created_at timestamptz,deleted boolean,attachment jsonb)
 language sql stable security definer set search_path='' as $$
  with recent as(
