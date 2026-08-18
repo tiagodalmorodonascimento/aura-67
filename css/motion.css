@@ -1,0 +1,23 @@
+html.aura-motion-full .content:not([hidden]){animation:auraPageIn .38s cubic-bezier(.2,.75,.25,1)}
+html.aura-motion-full .motion-reveal{opacity:0;transform:translateY(14px);transition:opacity .45s ease,transform .45s cubic-bezier(.2,.75,.25,1)}
+html.aura-motion-full .motion-reveal.is-visible{opacity:1;transform:none}
+html.aura-motion-full .ambient-one{animation:auraDriftOne 12s ease-in-out infinite alternate}
+html.aura-motion-full .ambient-two{animation:auraDriftTwo 15s ease-in-out infinite alternate}
+html.aura-motion-full .welcome-panel .orb-main{animation:auraFloat 5s ease-in-out infinite}
+html.aura-motion-full .welcome-panel .orb-small{animation:auraFloat 4s ease-in-out 1s infinite reverse}
+html.aura-motion-full .welcome-panel .spark{animation:auraPulse 3s ease-in-out infinite}
+html.aura-motion-full .metric-card,html.aura-motion-full .quick-card,html.aura-motion-full .habit-card,html.aura-motion-full .podium-card,html.aura-motion-full .leader-row{transition:transform .22s ease,box-shadow .22s ease,filter .22s ease}
+html.aura-motion-full .metric-card:hover,html.aura-motion-full .quick-card:hover,html.aura-motion-full .habit-card:hover,html.aura-motion-full .podium-card:hover{transform:translateY(-4px)}
+html.aura-motion-full .mobile-bottom-nav button.active>span{animation:auraNavPop .28s ease}
+html.aura-motion-full .notification-entry{animation:auraNoticeIn .3s ease both}
+html.aura-motion-full .notification-entry:nth-child(2){animation-delay:.04s}html.aura-motion-full .notification-entry:nth-child(3){animation-delay:.08s}html.aura-motion-full .notification-entry:nth-child(4){animation-delay:.12s}
+html.aura-motion-lite .metric-card,html.aura-motion-lite .quick-card,html.aura-motion-lite .habit-card,html.aura-motion-lite button{transition:background-color .18s ease,color .18s ease,border-color .18s ease}
+@keyframes auraPageIn{from{opacity:.25;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes auraDriftOne{to{transform:translate3d(-24px,18px,0) scale(1.05)}}
+@keyframes auraDriftTwo{to{transform:translate3d(20px,-16px,0) scale(.96)}}
+@keyframes auraFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes auraPulse{0%,100%{opacity:.55;transform:scale(.9)}50%{opacity:1;transform:scale(1.12)}}
+@keyframes auraNavPop{50%{transform:translateY(-2px) scale(1.12)}}
+@keyframes auraNoticeIn{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+@media(max-width:760px){html.aura-motion-full .ambient{animation:none}html.aura-motion-full .welcome-panel .orb-main{animation-duration:7s}html.aura-motion-full .motion-reveal{transform:translateY(9px);transition-duration:.32s}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.motion-reveal{opacity:1!important;transform:none!important}}
