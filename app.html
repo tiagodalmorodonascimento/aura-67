@@ -56,9 +56,11 @@
   <link rel="stylesheet" href="css/people.css?v=1">
   <link rel="stylesheet" href="css/reminders.css?v=25">
   <link rel="stylesheet" href="css/push.css?v=25">
+  <link rel="stylesheet" href="css/legal.css?v=1">
 </head>
 <body class="aura-booting">
   <div class="aura-boot" id="auraBoot" role="status" aria-live="polite"><span class="aura-boot-mark">✦</span><strong>Aura 67</strong><small>Desbloqueando sua jornada…</small><i></i></div>
+  <div class="legal-consent-backdrop" id="legalConsentBackdrop" hidden><section class="legal-consent" role="dialog" aria-modal="true" aria-labelledby="legalConsentTitle"><div class="legal-consent-mark">✦</div><span class="section-kicker">ANTES DE COMEÇAR</span><h2 id="legalConsentTitle">Sua jornada com transparência.</h2><p>Leia os documentos que explicam as regras da comunidade e como seus dados são protegidos.</p><div class="legal-consent-links"><a href="termos.html" target="_blank" rel="noopener">Termos de Uso ↗</a><a href="privacidade.html" target="_blank" rel="noopener">Privacidade ↗</a></div><label class="legal-consent-check"><input id="legalConsentCheck" type="checkbox"><span>Li e aceito os Termos de Uso e a Política de Privacidade, versão de 18/08/2026.</span></label><button class="primary-button" id="legalConsentButton" type="button" disabled>Aceitar e entrar na Aura</button><small class="legal-consent-message" id="legalConsentMessage" role="alert"></small></section></div>
   <div class="ambient ambient-one"></div>
   <div class="ambient ambient-two"></div>
 
@@ -354,7 +356,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config/environments.js?v=10"></script>
   <script src="js/supabase-client.js?v=10"></script>
-  <script src="js/app-auth.js?v=31"></script>
+  <script src="js/app-auth.js?v=32"></script>
   <script src="js/profile.js?v=58"></script>
   <script src="js/design-palette.js?v=1"></script>
   <script src="js/design-color-wheel.js?v=1"></script>

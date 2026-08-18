@@ -1,10 +1,11 @@
-const CACHE = 'aura67-v92';
+const CACHE = 'aura67-v93';
 const FILES = ['./','./index.html','./login.html','./cadastro.html','./redefinir-senha.html','./app.html','./css/landing.css','./css/auth.css','./css/confirmation.css','./css/password-reset.css','./css/profile.css','./css/profile-extra.css','./css/profile-menu-v2.css','./css/email-check.css','./css/ranking-real.css','./css/theme-v3.css','./css/progression.css','./css/progression-extra.css','./css/habits.css','./css/proof.css','./css/large-ui.css','./css/identity-profile.css','./css/reminders.css','./css/push.css','./css/app-boot.css','./css/action-feedback.css','./css/feedback-cleanup.css','./css/dashboard-live.css','./css/projects.css','./css/behavior.css','./css/chat.css','./css/chat-button.css','./css/chat-page.css','./css/chat-attachments.css','./css/chat-message-menu.css','./css/color-mode.css','./css/mobile-navigation-v2.css','./css/notification-mobile-layout.css','./css/mobile-landscape-fix.css','./css/motion.css','./css/fireworks.css','./css/moments.css','./styles.css','./js/landing.js','./js/auth.js','./js/password-reset.js','./js/supabase-client.js','./js/app-auth.js','./js/profile.js','./js/reminders.js','./js/ranking.js','./js/habits.js','./js/dashboard.js','./js/behavior.js','./js/chat.js','./js/motion.js','./js/fireworks.js','./js/moments.js','./config/environments.js','./script.js','./manifest.json','./assets/icons/icon.svg'];
 FILES.push('./css/aura-foundation.css','./js/aura-foundation.js');
 FILES.push('./css/people.css','./js/people.js');
 FILES.push('./css/chat-safety.css');
 FILES.push('./css/chat-conversation-list.css','./css/chat-unread.css','./css/community-moderation-extra.css','./css/community-moderation.css','./css/design-color-wheel.css','./css/design-palette.css','./css/destructive-actions.css','./css/habit-confirmation.css','./css/identity-layout-fix.css','./css/identity-studio.css');
 FILES.push('./js/account-delete.js','./js/color-mode.js','./js/community-moderation.js','./js/design-color-wheel.js','./js/design-palette.js','./js/identity-studio.js');
+FILES.push('./termos.html','./privacidade.html','./css/legal.css');
 self.addEventListener('install', (event) => { self.skipWaiting(); event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(FILES))); });
 self.addEventListener('activate', (event) => event.waitUntil(Promise.all([
   caches.keys().then((keys) => Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key)))),
