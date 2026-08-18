@@ -146,7 +146,7 @@ function updatePreview() {
   document.querySelector('#previewAvatar').textContent = initials(name);
   const coverUrl = draftCoverUrl || (currentProfile?.cover_url ? mediaUrl(currentProfile.cover_url) : '');
   const avatarUrl = draftAvatarUrl || (currentProfile?.avatar_url ? mediaUrl(currentProfile.avatar_url) : '');
-  document.querySelector('#previewCover').style.background = coverUrl ? `linear-gradient(90deg,${color}55,${color}22),url('${coverUrl}') center/cover` : `linear-gradient(120deg,#2d2537,${color})`;
+  document.querySelector('#previewCover').style.background = coverUrl ? `url('${coverUrl}') center/cover no-repeat` : `linear-gradient(120deg,#2d2537,${color})`;
   document.querySelector('#previewAvatar').style.backgroundImage = avatarUrl ? `url('${avatarUrl}')` : '';
   if (avatarUrl) document.querySelector('#previewAvatar').textContent = '';
 }
@@ -160,7 +160,7 @@ async function openPublicProfile(person) {
   backdrop.style.setProperty('--viewed-color', color);
   backdrop.style.setProperty('--viewed-dark', dark);
   backdrop.style.setProperty('--viewed-gradient', `linear-gradient(120deg,${dark},${color})`);
-  cover.style.background = person.cover_url ? `linear-gradient(90deg,${dark}88,${color}44),url('${mediaUrl(person.cover_url)}') center/cover` : `linear-gradient(120deg,${dark},${color})`;
+  cover.style.background = person.cover_url ? `url('${mediaUrl(person.cover_url)}') center/cover no-repeat` : `linear-gradient(120deg,${dark},${color})`;
   const avatar = document.querySelector('#publicProfileAvatar');
   avatar.style.backgroundImage = person.avatar_url ? `url('${mediaUrl(person.avatar_url)}')` : '';
   avatar.textContent = person.avatar_url ? '' : initials(person.full_name);
