@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="css/identity-profile.css?v=54">
   <link rel="stylesheet" href="css/identity-layout-fix.css?v=1">
   <link rel="stylesheet" href="css/identity-studio.css?v=1">
+  <link rel="stylesheet" href="css/destructive-actions.css?v=1">
   <link rel="stylesheet" href="css/reminders.css?v=25">
   <link rel="stylesheet" href="css/push.css?v=25">
 </head>
@@ -254,6 +255,7 @@
         <label>Status<select id="projectStatus"><option value="active">Em andamento</option><option value="paused">Pausado</option><option value="completed">Concluído</option></select></label>
       </div>
       <button class="primary-button modal-submit" id="modalSubmit" type="button">Criar projeto</button>
+      <button class="project-delete-button" id="projectDeleteButton" type="button" hidden>Excluir projeto</button>
     </div>
   </div>
 
@@ -285,6 +287,7 @@
     <button type="button" id="openRemindersButton"><span>☀</span><span><strong>Companheiro Aura</strong><small>Dicas e lembretes para o seu dia</small></span></button>
     <button type="button" id="changePasswordButton"><span>⌁</span><span><strong>Trocar senha</strong><small>Confirmar pelo e-mail cadastrado</small></span></button>
     <button class="logout-button" type="button" id="logoutButton"><span>↪</span><span><strong>Sair da conta</strong><small>Encerrar sessão</small></span></button>
+    <button class="delete-account-button" type="button" id="deleteAccountButton"><span>×</span><span><strong>Excluir conta</strong><small>Apagar permanentemente seus dados</small></span></button>
   </div>
 
   <div class="design-backdrop" id="designBackdrop" hidden><section class="design-studio theme-studio" role="dialog" aria-modal="true" aria-labelledby="designTitle"><button class="modal-close" id="designClose" type="button">×</button><span class="section-kicker">MEU DESIGN</span><h2 id="designTitle">Escolha a energia da página.</h2><p>A cor escolhida transforma botões, degradês, destaques e detalhes de todo o seu espaço.</p><form id="designForm"><fieldset class="theme-picker"><legend>Cores do tema</legend><div class="theme-swatches" id="themeSwatches"><button type="button" data-color="#7657ec" style="--swatch:#7657ec" aria-label="Violeta"></button><button type="button" data-color="#e91e63" style="--swatch:#e91e63" aria-label="Rosa"></button><button type="button" data-color="#d00028" style="--swatch:#d00028" aria-label="Vermelho"></button><button type="button" data-color="#ed6c02" style="--swatch:#ed6c02" aria-label="Laranja"></button><button type="button" data-color="#d4a800" style="--swatch:#d4a800" aria-label="Dourado"></button><button type="button" data-color="#168b62" style="--swatch:#168b62" aria-label="Verde"></button><button type="button" data-color="#087ea4" style="--swatch:#087ea4" aria-label="Azul-petróleo"></button><button type="button" data-color="#2563eb" style="--swatch:#2563eb" aria-label="Azul"></button><button type="button" data-color="#24212b" style="--swatch:#24212b" aria-label="Grafite"></button></div><label class="custom-theme-color">Ou escolha outra cor<input id="designColor" type="color" value="#7657ec"></label></fieldset><button class="primary-button design-save" type="submit">Salvar minhas cores</button><div class="form-message" id="designMessage"></div></form></section></div>
@@ -310,6 +313,7 @@
   <script src="js/app-auth.js?v=31"></script>
   <script src="js/profile.js?v=54"></script>
   <script src="js/identity-studio.js?v=1"></script>
+  <script src="js/account-delete.js?v=1"></script>
   <script src="js/reminders.js?v=36"></script>
   <script src="js/ranking.js?v=45"></script>
   <script src="js/habits.js?v=53"></script>

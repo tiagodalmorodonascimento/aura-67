@@ -11,6 +11,8 @@ alter table public.profiles add column if not exists identity_music text not nul
 alter table public.profiles add column if not exists identity_layout text not null default 'essencial';
 alter table public.profiles add column if not exists pinned_achievement_ids text[] not null default '{}';
 
+grant update (identity_manifesto,identity_values,identity_interests,identity_energy,identity_focus,identity_emblem,identity_music,identity_layout,pinned_achievement_ids,updated_at) on public.profiles to authenticated;
+
 alter table public.profiles drop constraint if exists profiles_identity_manifesto_check;
 alter table public.profiles add constraint profiles_identity_manifesto_check check(identity_manifesto is null or char_length(identity_manifesto)<=180);
 alter table public.profiles drop constraint if exists profiles_identity_focus_check;
