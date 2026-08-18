@@ -39,6 +39,7 @@
   <link rel="stylesheet" href="css/destructive-actions.css?v=1">
   <link rel="stylesheet" href="css/community-moderation.css?v=1">
   <link rel="stylesheet" href="css/community-moderation-extra.css?v=1">
+  <link rel="stylesheet" href="css/mobile-navigation-v2.css?v=1">
   <link rel="stylesheet" href="css/reminders.css?v=25">
   <link rel="stylesheet" href="css/push.css?v=25">
 </head>
@@ -103,8 +104,8 @@
           <button class="search-button" id="searchButton" type="button" aria-label="Buscar">
             <span>⌕</span><span class="search-text">Buscar...</span><kbd>⌘ K</kbd>
           </button>
-          <button class="chat-top-button" id="openChatButton" type="button" aria-label="Abrir mensagens"><span>💬</span><strong>Mensagens</strong><i id="chatNewBadge">Novo</i></button>
-          <button class="icon-button notification" id="notificationButton" type="button" aria-label="Notificações">◇<i id="notificationDot"></i></button>
+          <button class="chat-top-button" id="openChatButton" type="button" aria-label="Abrir mensagens"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18.5 3.5 21v-5A8.5 8.5 0 1 1 7 18.5Z"/><path d="M8 10h8M8 14h5"/></svg></span><strong>Mensagens</strong><i id="chatNewBadge">Novo</i></button>
+          <button class="icon-button notification" id="notificationButton" type="button" aria-label="Notificações"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 8.5h18C21 16 18 16 18 9Z"/><path d="M10 21h4"/></svg><i id="notificationDot"></i></button>
         </div>
       </header>
 
@@ -239,9 +240,9 @@
   <nav class="mobile-bottom-nav" aria-label="Navegação mobile">
     <button class="active" type="button" data-mobile-page="Visão geral"><span>⌂</span><small>Início</small></button>
     <button type="button" data-mobile-page="Ranking"><span>★</span><small>Ranking</small></button>
-    <button class="mobile-create mobile-notification" type="button" id="mobileNotificationButton" aria-label="Notificações"><span>◇</span><i></i></button>
+    <button class="mobile-create mobile-profile-center" type="button" id="mobileProfileButton" aria-label="Meu perfil"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 20c.6-4 2.8-6 6.5-6s5.9 2 6.5 6"/></svg></span><small>Perfil</small></button>
     <button type="button" data-mobile-page="Atividade"><span>↗</span><small>Jornada</small></button>
-    <button type="button" id="mobileProfileButton"><span>○</span><small>Perfil</small></button>
+    <button class="mobile-notification" type="button" id="mobileNotificationButton" aria-label="Notificações"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 8.5h18C21 16 18 16 18 9Z"/><path d="M10 21h4"/></svg></span><small>Avisos</small><i></i></button>
   </nav>
 
   <div class="modal-backdrop" id="modalBackdrop" hidden>
