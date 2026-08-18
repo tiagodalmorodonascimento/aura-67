@@ -9,6 +9,14 @@ const searchOverlay = document.querySelector('#searchOverlay');
 const searchInput = document.querySelector('#searchInput');
 const toast = document.querySelector('#toast');
 
+function resetPageScroll() {
+  const scroller = document.scrollingElement || document.documentElement;
+  scroller.scrollTop = 0;
+  document.body.scrollTop = 0;
+  document.querySelector('.main-area').scrollTop = 0;
+  requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
+}
+
 function toggleMenu(open) {
   sidebar.classList.toggle('open', open);
   sidebarOverlay.classList.toggle('show', open);
@@ -39,6 +47,7 @@ navItems.forEach((item) => item.addEventListener('click', (event) => {
   if (isRanking && typeof loadRealRanking === 'function') loadRealRanking();
   if (isProjects && typeof loadProjects === 'function') loadProjects();
   if (isChat && typeof loadChat === 'function') loadChat();
+  resetPageScroll();
   if (!['Visão geral','Conversas'].includes(item.dataset.page) && !isRanking && !isHabits && !isProjects && !isChat) showToast(`${item.dataset.page}: módulo pronto para você editar.`);
 }));
 

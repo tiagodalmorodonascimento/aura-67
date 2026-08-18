@@ -244,7 +244,8 @@ function openOwnProfile() {
   document.querySelector('#pageTitle').textContent = 'Meu perfil';
   document.querySelectorAll('.nav-item').forEach((item) => item.classList.remove('active'));
   document.querySelectorAll('[data-mobile-page],#mobileProfileButton').forEach((item) => item.classList.toggle('active', item.id === 'mobileProfileButton'));
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (typeof resetPageScroll === 'function') resetPageScroll();
+  else window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   loadIdentityProfile();
 }
 
