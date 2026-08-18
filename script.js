@@ -42,7 +42,20 @@ navItems.forEach((item) => item.addEventListener('click', (event) => {
   if (!['Visão geral','Conversas'].includes(item.dataset.page) && !isRanking && !isHabits && !isProjects && !isChat) showToast(`${item.dataset.page}: módulo pronto para você editar.`);
 }));
 
-document.querySelector('#earnPointsButton').addEventListener('click', () => {
+document.querySelector('#earnPointsButton').addEventListener('click', async (event) => {
+  if (event.currentTarget.dataset.action === 'invite') {
+    const shareData = { title: 'Aura 67', text: 'Venha evoluir comigo na Aura 67 e participe da próxima temporada.', url: `${location.origin}/` };
+    try {
+      if (navigator.share) await navigator.share(shareData);
+      else {
+        await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
+        showToast('O convite foi copiado. Agora é só enviar para quem você quiser.','success','Convite pronto');
+      }
+    } catch (error) {
+      if (error?.name !== 'AbortError') showToast('Não foi possível abrir o compartilhamento. Tente novamente.','error','Convite não enviado');
+    }
+    return;
+  }
   const activityNav = [...navItems].find((item) => item.dataset.view === 'habits');
   activityNav?.click();
   window.scrollTo({ top: 0, behavior: 'smooth' });
