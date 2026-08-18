@@ -27,7 +27,8 @@
   <link rel="stylesheet" href="css/theme-v3.css?v=10">
   <link rel="stylesheet" href="css/progression.css?v=10">
   <link rel="stylesheet" href="css/progression-extra.css?v=10">
-  <link rel="stylesheet" href="css/habits.css?v=11">
+  <link rel="stylesheet" href="css/habits.css?v=12">
+  <link rel="stylesheet" href="css/habit-confirmation.css?v=1">
   <link rel="stylesheet" href="css/proof.css?v=12">
   <link rel="stylesheet" href="css/email-check.css?v=16">
   <link rel="stylesheet" href="css/ranking-real.css?v=17">
@@ -298,6 +299,8 @@
 
   <div class="email-check-backdrop" id="emailCheckBackdrop" hidden><section class="email-check-modal" role="dialog" aria-modal="true" aria-labelledby="emailCheckTitle"><button class="email-check-close" id="emailCheckClose" type="button">×</button><div class="email-illustration"><span>✉</span><i>✓</i><b>✦</b></div><span class="email-check-kicker">LINK DE SEGURANÇA ENVIADO</span><h2 id="emailCheckTitle">Confira seu e-mail</h2><p>Enviamos um link seguro para redefinir sua senha:</p><strong class="masked-email" id="passwordMaskedEmail"></strong><div class="email-check-steps"><span>1</span><p><b>Abra sua caixa de entrada</b><small>Procure uma mensagem enviada pelo Supabase/Aura 67.</small></p><span>2</span><p><b>Toque no link de redefinição</b><small>Você voltará para uma página segura da Aura.</small></p><span>3</span><p><b>Crie sua nova senha</b><small>O link é temporário e deve ser usado somente por você.</small></p></div><a class="primary-button open-mail-button" id="openEmailProvider" href="#" target="_blank" rel="noopener">Abrir meu e-mail <span>→</span></a><button class="resend-email-button" id="resendPasswordEmail" type="button">Reenviar e-mail</button><small class="email-delivery-tip">Não encontrou? Verifique a caixa de spam ou lixo eletrônico.</small><div class="email-check-message" id="emailCheckMessage" role="status"></div></section></div>
 
+  <div class="habit-confirm-backdrop" id="habitConfirmBackdrop" hidden><section class="habit-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="habitConfirmTitle"><button class="modal-close" id="habitConfirmClose" type="button" aria-label="Fechar">×</button><span class="section-kicker">CONFIRMAR ATIVIDADE</span><div class="habit-confirm-icon" id="habitConfirmIcon">✦</div><h2 id="habitConfirmTitle">Realizar esta atividade?</h2><p id="habitConfirmDescription"></p><div class="habit-confirm-reward"><span id="habitConfirmDifficulty">Fácil</span><strong id="habitConfirmXp">+0 XP</strong></div><p class="habit-confirm-question">Você concluiu esta atividade e deseja registrá-la agora?</p><div class="habit-confirm-actions"><button id="habitConfirmCancel" type="button">Ainda não</button><button class="primary-button" id="habitConfirmSubmit" type="button">Sim, concluí</button></div></section></div>
+
   <div class="toast action-feedback" id="toast" role="status" aria-live="polite"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config/environments.js?v=10"></script>
@@ -306,7 +309,7 @@
   <script src="js/profile.js?v=54"></script>
   <script src="js/reminders.js?v=36"></script>
   <script src="js/ranking.js?v=45"></script>
-  <script src="js/habits.js?v=52"></script>
+  <script src="js/habits.js?v=53"></script>
   <script src="script.js?v=53"></script>
   <script src="js/dashboard.js?v=48"></script>
   <script src="js/behavior.js?v=52"></script>

@@ -4,6 +4,7 @@ let activeHabitCategory = 'all';
 let pendingOnly = false;
 let pendingProofIds = new Set();
 let proofAction = null;
+let habitToConfirm = null;
 const categoryNames = { all:'Todas as ações', health:'Saúde', mental:'Mental', home:'Casa e organização', finance:'Vida financeira', productivity:'Produtividade', social:'Social', special:'Missões especiais' };
 const difficultyNames = { easy:'Fácil', medium:'Média', hard:'Difícil', special:'Especial' };
 
@@ -58,9 +59,29 @@ function showXp(result) {
   document.body.appendChild(pop); setTimeout(()=>pop.remove(),1900);
 }
 
-async function completeHabit(actionId) {
+function completeHabit(actionId) {
   const selectedAction=auraActions.find((action)=>action.id===actionId);
-  if(selectedAction?.proof_mode==='photo_required'){openProofModal(selectedAction);return;}
+  if(!selectedAction||completedActionIds.has(actionId)||pendingProofIds.has(actionId))return;
+  habitToConfirm=selectedAction;
+  document.querySelector('#habitConfirmIcon').textContent=selectedAction.icon||'✦';
+  document.querySelector('#habitConfirmTitle').textContent=selectedAction.title;
+  document.querySelector('#habitConfirmDescription').textContent=selectedAction.description||'Uma pequena ação para fortalecer sua evolução.';
+  document.querySelector('#habitConfirmDifficulty').textContent=difficultyNames[selectedAction.difficulty]||'Atividade';
+  document.querySelector('#habitConfirmXp').textContent=`+${selectedAction.xp} XP`;
+  document.querySelector('#habitConfirmSubmit').textContent=selectedAction.proof_mode==='photo_required'?'Sim, enviar comprovação':'Sim, concluí';
+  document.querySelector('#habitConfirmBackdrop').hidden=false;
+  document.body.style.overflow='hidden';
+}
+
+function closeHabitConfirmation(){document.querySelector('#habitConfirmBackdrop').hidden=true;document.body.style.overflow='';habitToConfirm=null;}
+
+async function confirmHabitCompletion() {
+  const selectedAction=habitToConfirm;if(!selectedAction)return;
+  document.querySelector('#habitConfirmBackdrop').hidden=true;
+  habitToConfirm=null;
+  if(selectedAction.proof_mode==='photo_required'){openProofModal(selectedAction);return;}
+  document.body.style.overflow='';
+  const actionId=selectedAction.id;
   const card=document.querySelector(`[data-action-id="${actionId}"]`); const button=card?.querySelector('button'); if(button)button.disabled=true;
   const {data,error}=await window.auraSupabase.rpc('complete_aura_action',{p_action_id:actionId});
   if (error) { if(button)button.disabled=false; showToast(error.message.includes('já concluiu')?'Esta ação já foi concluída hoje.':'Não foi possível concluir a ação.','error'); return; }
@@ -74,6 +95,11 @@ async function completeHabit(actionId) {
   document.dispatchEvent(new CustomEvent('aura:action-completed',{detail:{actionId,result:data}}));
   if (typeof loadProfile==='function') await loadProfile(window.AURA_SESSION);
 }
+
+document.querySelector('#habitConfirmClose').addEventListener('click',closeHabitConfirmation);
+document.querySelector('#habitConfirmCancel').addEventListener('click',closeHabitConfirmation);
+document.querySelector('#habitConfirmBackdrop').addEventListener('click',(event)=>{if(event.target.id==='habitConfirmBackdrop')closeHabitConfirmation();});
+document.querySelector('#habitConfirmSubmit').addEventListener('click',confirmHabitCompletion);
 
 function openProofModal(action){proofAction=action;document.querySelector('#proofTitle').textContent=action.title;document.querySelector('#proofDescription').textContent=`Envie uma foto clara que ajude a comprovar: ${action.description}`;document.querySelector('#proofFile').value='';document.querySelector('#proofNote').value='';document.querySelector('#proofPreview').hidden=true;document.querySelector('#proofPlaceholder').hidden=false;document.querySelector('#proofMessage').textContent='';document.querySelector('#proofBackdrop').hidden=false;document.body.style.overflow='hidden';}
 function closeProofModal(){document.querySelector('#proofBackdrop').hidden=true;document.body.style.overflow='';proofAction=null;}

@@ -1,0 +1,16 @@
+.habit-confirm-backdrop{position:fixed;inset:0;z-index:96;background:rgba(17,13,24,.68);backdrop-filter:blur(10px);display:grid;place-items:center;padding:20px}
+.habit-confirm-backdrop[hidden]{display:none}
+.habit-confirm-modal{width:min(460px,100%);background:#fff;border-radius:26px;padding:32px;position:relative;text-align:center;box-shadow:0 28px 80px rgba(24,17,43,.3)}
+.habit-confirm-icon{width:70px;height:70px;border-radius:22px;background:var(--theme-soft);color:var(--purple);display:grid;place-items:center;font-size:31px;margin:18px auto 14px}
+.habit-confirm-modal h2{font:800 25px Manrope;margin:0 0 8px}
+.habit-confirm-modal>p{font-size:12px;line-height:1.55;color:var(--muted);margin:0 auto;max-width:350px}
+.habit-confirm-reward{display:flex;justify-content:center;gap:8px;margin:16px 0}
+.habit-confirm-reward span,.habit-confirm-reward strong{font-size:10px;border-radius:9px;padding:7px 10px}
+.habit-confirm-reward span{background:#f3f0f5;color:#716a77}
+.habit-confirm-reward strong{background:var(--theme-soft);color:var(--purple)}
+.habit-confirm-question{color:#29232e!important;font-weight:700}
+.habit-confirm-actions{display:grid;grid-template-columns:1fr 1.35fr;gap:10px;margin-top:24px}
+.habit-confirm-actions button{height:48px;border-radius:13px;border:1px solid var(--line);background:#fff;font-weight:800;cursor:pointer}
+.habit-confirm-actions .primary-button{background:var(--theme-dark);color:#fff;border-color:var(--theme-dark)}
+
+@media(max-width:520px){.habit-confirm-modal{padding:28px 20px}.habit-confirm-actions{grid-template-columns:1fr}.habit-confirm-actions #habitConfirmCancel{order:2}}
