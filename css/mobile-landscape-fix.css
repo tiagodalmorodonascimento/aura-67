@@ -10,6 +10,7 @@
   .menu-button{display:none}
   .topbar{height:68px;padding:0 17px}
   .topbar .primary-button{display:none}
+  .topbar .notification{display:none!important}
   .search-button{width:40px;padding:0;justify-content:center}
   .search-text,.search-button kbd{display:none}
   .mobile-bottom-nav{height:70px;padding:6px 12px max(6px,env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-around;position:fixed;z-index:40;left:0;right:0;bottom:0;background:rgba(255,255,255,.94);backdrop-filter:blur(18px);border-top:1px solid var(--line);box-shadow:0 -8px 30px rgba(34,25,56,.07)}
