@@ -24,7 +24,7 @@ with bounds as (
   select count(*) filter(where p.status='completed' and p.completed_at::date between b.starts and b.today)::integer completed_projects
   from public.user_projects p cross join bounds b where p.user_id=auth.uid()
 ), active_dates as (
-  select c.completed_on day from public.action_completions c,bounds b where c.user_id=auth.uid() and c.completed_on between b.starts and b.today
+  select c.completed_on as activity_date from public.action_completions c,bounds b where c.user_id=auth.uid() and c.completed_on between b.starts and b.today
   union
   select h.checkin_on from public.behavior_checkins h,bounds b where h.user_id=auth.uid() and h.checkin_on between b.starts and b.today
   union
