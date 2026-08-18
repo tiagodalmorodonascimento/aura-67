@@ -1,0 +1,11 @@
+/* Apenas o avatar cruza a capa; os textos permanecem legíveis abaixo dela. */
+.identity-person{align-items:flex-start;transform:none;margin-bottom:0;padding-bottom:24px}
+.identity-avatar-frame{margin-top:-62px}
+.identity-copy{padding:20px 0 0;min-width:0}
+.identity-copy h2{overflow-wrap:anywhere}
+
+@media(max-width:760px){
+  .identity-person{transform:none;margin-bottom:0;padding:0 20px 22px}
+  .identity-avatar-frame{margin-top:-52px}
+  .identity-copy{padding-top:16px}
+}
