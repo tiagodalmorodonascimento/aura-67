@@ -37,7 +37,9 @@ begin
  if p_storage_path not like v_user::text||'/%' then raise exception 'Caminho de anexo inválido';end if;
  if not exists(select 1 from storage.objects where bucket_id='chat-attachments' and name=p_storage_path and owner_id=v_user::text) then raise exception 'Upload privado não encontrado';end if;
  if p_mime_type not in('image/jpeg','image/png','image/webp','application/pdf') then raise exception 'Formato não permitido';end if;
- if p_size_bytes<1 or p_size_bytes>case when p_mime_type like 'image/%' then 10485760 else 20971520 end then raise exception 'Arquivo excede o limite permitido';end if;
+ if p_size_bytes < 1 or p_size_bytes > (case when p_mime_type like 'image/%' then 10485760 else 20971520 end) then
+  raise exception 'Arquivo excede o limite permitido';
+ end if;
  insert into public.aura_tester_messages(user_id,sender,content) values(v_user,'user',left(v_text,1000)) returning id into v_message;
  insert into public.chat_attachments(message_id,user_id,storage_path,original_name,mime_type,size_bytes) values(v_message,v_user,p_storage_path,left(trim(p_original_name),180),p_mime_type,p_size_bytes);
  insert into public.aura_tester_messages(user_id,sender,content) values(v_user,'tester','Recebi seu anexo privado. Ele fica disponível somente nesta conversa. ✦');
