@@ -197,7 +197,7 @@ function honorFrameClass(points = 0) {
   if (points >= 200) return 'honor-exemplary';
   if (points >= 75) return 'honor-elevated';
   if (points >= 20) return 'honor-recognized';
-  return '';
+  return 'honor-initial';
 }
 
 async function loadIdentityProfile() {
