@@ -12,6 +12,8 @@ try {
   if ($LASTEXITCODE -ne 0) { throw 'Falha ao preparar os arquivos web.' }
   npx cap sync android
   if ($LASTEXITCODE -ne 0) { throw 'Falha ao sincronizar o projeto Android.' }
+  $generatedKeep = Join-Path $projectRoot 'android\capacitor-cordova-android-plugins\src\main\res\.gitkeep'
+  if (Test-Path -LiteralPath $generatedKeep) { Remove-Item -LiteralPath $generatedKeep -Force }
   Push-Location (Join-Path $projectRoot 'android')
   try {
     .\gradlew.bat assembleDebug
@@ -19,6 +21,6 @@ try {
   } finally { Pop-Location }
   $releaseDir = Join-Path $projectRoot 'releases'
   New-Item -ItemType Directory -Force -Path $releaseDir | Out-Null
-  Copy-Item -LiteralPath (Join-Path $env:LOCALAPPDATA 'Aura67Build\app\outputs\apk\debug\app-debug.apk') -Destination (Join-Path $releaseDir 'Aura67-v0.1.3-debug.apk') -Force
-  Write-Host 'APK criado em releases\Aura67-v0.1.3-debug.apk'
+  Copy-Item -LiteralPath (Join-Path $env:LOCALAPPDATA 'Aura67Build\app\outputs\apk\debug\app-debug.apk') -Destination (Join-Path $releaseDir 'Aura67-v0.1.4-debug.apk') -Force
+  Write-Host 'APK criado em releases\Aura67-v0.1.4-debug.apk'
 } finally { Pop-Location }
