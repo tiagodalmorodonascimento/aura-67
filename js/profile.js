@@ -239,6 +239,7 @@ async function loadIdentityProfile() {
 }
 
 function openOwnProfile() {
+  window.history.replaceState({ ...(window.history.state || {}), auraView: '#perfil' }, '', '#perfil');
   ['dashboard','ranking','habits','projects','chatPage','people'].forEach((id) => { document.querySelector(`#${id}`).hidden = true; });
   document.querySelector('#identityProfile').hidden = false;
   document.querySelector('#pageTitle').textContent = 'Meu perfil';

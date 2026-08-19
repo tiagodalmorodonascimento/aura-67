@@ -18,6 +18,8 @@
     };
     const target = views[page];
     if (!target) return;
+    const hashes = { 'Visão geral': '#dashboard', Ranking: '#ranking', Atividade: '#habitos' };
+    history.replaceState({ ...(history.state || {}), auraView: hashes[page] }, '', hashes[page]);
     ['dashboard','ranking','habits','projects','chatPage','people','identityProfile'].forEach((id) => {
       const view = document.querySelector(`#${id}`);
       if (view) view.hidden = id !== target[0];

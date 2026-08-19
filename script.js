@@ -33,6 +33,7 @@ navItems.forEach((item) => item.addEventListener('click', (event) => {
     if (typeof setAccountMenu === 'function') setAccountMenu(true);
     return;
   }
+  window.history.replaceState({ ...(window.history.state || {}), auraView: item.getAttribute('href') }, '', item.getAttribute('href'));
   navItems.forEach((nav) => nav.classList.remove('active'));
   item.classList.add('active');
   pageTitle.textContent = item.dataset.page;
@@ -57,6 +58,15 @@ navItems.forEach((item) => item.addEventListener('click', (event) => {
   if (isPeople && typeof loadAuraPeople === 'function') loadAuraPeople();
   resetPageScroll();
 }));
+
+function restoreAuraView() {
+  const hash = window.location.hash || '#dashboard';
+  if (hash === '#perfil' && typeof openOwnProfile === 'function') { openOwnProfile(); return; }
+  const target = [...navItems].find((item) => item.getAttribute('href') === hash && item.dataset.page !== 'Configurações');
+  if (target && !target.classList.contains('active')) target.click();
+}
+document.addEventListener('aura:session-ready', restoreAuraView, { once: true });
+if (window.AURA_SESSION) restoreAuraView();
 
 document.querySelector('#earnPointsButton').addEventListener('click', async (event) => {
   if (event.currentTarget.dataset.action === 'invite') {
