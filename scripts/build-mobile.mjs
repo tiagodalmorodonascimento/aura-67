@@ -14,5 +14,13 @@ await mkdir(output, { recursive: true });
 for (const file of rootFiles) await cp(new URL(`../${file}`, import.meta.url), new URL(`../www/${file}`, import.meta.url));
 for (const folder of folders) await cp(new URL(`../${folder}`, import.meta.url), new URL(`../www/${folder}`, import.meta.url), { recursive: true });
 
+// Copy Vercel Analytics for mobile build
+await mkdir(new URL('../www/node_modules/@vercel/', import.meta.url), { recursive: true });
+await cp(
+  new URL('../node_modules/@vercel/analytics/', import.meta.url),
+  new URL('../www/node_modules/@vercel/analytics/', import.meta.url),
+  { recursive: true }
+);
+
 const copied = await readdir(output);
 console.log(`Aura 67 mobile: ${copied.length} entradas preparadas em ${join(root.pathname, 'www')}`);
