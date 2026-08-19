@@ -89,6 +89,12 @@ document.querySelector('#activitySummaryButton')?.addEventListener('click', () =
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
+document.querySelector('#momentsStartButton')?.addEventListener('click', () => {
+  const activityNav = [...navItems].find((item) => item.dataset.view === 'habits');
+  activityNav?.click();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
 function openModal() {
   modalBackdrop.hidden = false;
   document.body.style.overflow = 'hidden';
