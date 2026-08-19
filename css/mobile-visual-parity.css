@@ -4,6 +4,8 @@ html{background:#f4f2f7}html[data-color-mode="dark"]{background:#0f1218}
   body,.app-shell,.main-area{min-height:100dvh;background:#f4f2f7}
   .content{position:relative;background:transparent}
   .topbar{background:color-mix(in srgb,#f7f6f9 97%,var(--purple) 3%);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .topbar-actions{position:relative;z-index:3;pointer-events:auto}
+  .topbar-actions>button{position:relative;z-index:4;pointer-events:auto!important;touch-action:manipulation;-webkit-user-select:none;user-select:none}
   .mobile-bottom-nav{background:color-mix(in srgb,#fff 97%,var(--purple) 3%);-webkit-backdrop-filter:none;backdrop-filter:none}
   .metric-card,.panel,.quick-card{background:color-mix(in srgb,#fff 97%,var(--theme-soft) 3%)}
   .welcome-panel{background:var(--hero-gradient,linear-gradient(115deg,#e7e0ff,#f1edff 50%,#e9f7f3))}
