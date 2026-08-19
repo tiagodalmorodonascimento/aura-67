@@ -5,6 +5,8 @@
 .identity-copy h2{overflow-wrap:anywhere}
 .identity-expression>.wide{grid-column:1/-1}
 .public-profile{max-height:92vh;overflow:auto}
+.public-profile-message{position:absolute;left:138px;bottom:-31px;z-index:6;min-height:43px;padding:0 17px;border:1px solid color-mix(in srgb,var(--viewed-color) 35%,#fff);border-radius:14px;background:var(--viewed-dark);color:#fff;box-shadow:0 9px 24px color-mix(in srgb,var(--viewed-dark) 28%,transparent);display:flex;align-items:center;gap:8px;font:800 12px Manrope;cursor:pointer;transition:transform .18s ease,filter .18s ease,box-shadow .18s ease}.public-profile-message span{width:20px;height:18px;border:2px solid currentColor;border-radius:8px;display:block;position:relative;font-size:0}.public-profile-message span:after{content:"";position:absolute;left:2px;bottom:-5px;width:6px;height:6px;border-left:2px solid currentColor;transform:skewY(-35deg)}.public-profile-message:hover,.public-profile-message:focus-visible{filter:brightness(1.16);transform:translateY(-2px);box-shadow:0 12px 28px color-mix(in srgb,var(--viewed-dark) 38%,transparent)}.public-profile-message[hidden]{display:none}
+@media(max-width:760px){.public-profile-message{left:112px;bottom:-27px;min-height:40px;padding:0 14px}}
 .identity-expression[data-layout="expressivo"] .identity-expression-card:first-child{background:linear-gradient(135deg,var(--theme-soft),#fff 70%);border-color:var(--identity-color)}
 .identity-expression[data-layout="jornada"]{grid-template-columns:1fr}
 .identity-expression[data-layout="jornada"] .identity-expression-card{grid-column:auto}

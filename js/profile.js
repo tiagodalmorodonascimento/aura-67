@@ -176,10 +176,20 @@ async function openPublicProfile(person) {
   const { count } = await window.auraSupabase.from('profiles').select('id', { count: 'exact', head: true }).gt('aura_points', person.aura_points || 0);
   document.querySelector('#publicProfilePosition').textContent = count == null ? '—' : `${count + 1}º`;
   window.AURA_VIEWED_PROFILE_ID = person.id;
+  window.AURA_VIEWED_PROFILE = person;
+  document.querySelector('#publicProfileMessage').hidden = person.id === window.AURA_SESSION?.user?.id;
   document.dispatchEvent(new CustomEvent('aura:public-profile-opened', { detail: { profileId: person.id } }));
   backdrop.hidden = false;
   document.body.style.overflow = 'hidden';
 }
+
+document.querySelector('#publicProfileMessage').addEventListener('click', async () => {
+  const person = window.AURA_VIEWED_PROFILE;
+  if (!person || person.id === window.AURA_SESSION?.user?.id || typeof openDirectChat !== 'function') return;
+  document.querySelector('#publicProfileBackdrop').hidden = true;
+  document.body.style.overflow = '';
+  await openDirectChat(person);
+});
 
 async function uploadProfileFile(input, folder) {
   const file = input.files[0];
