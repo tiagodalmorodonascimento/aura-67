@@ -27,6 +27,7 @@
     if (!document.querySelector('#projects')?.hidden && typeof loadProjects === 'function') return [loadProjects()];
     if (!document.querySelector('#chatPage')?.hidden && typeof loadChat === 'function') return [loadChat()];
     if (!document.querySelector('#people')?.hidden && typeof loadAuraPeople === 'function') return [loadAuraPeople()];
+    if (!document.querySelector('#communities')?.hidden && typeof loadAuraCommunities === 'function') return [loadAuraCommunities()];
     return [
       typeof loadDashboardActivity === 'function' ? loadDashboardActivity() : null,
       typeof loadProjects === 'function' ? loadProjects() : null,

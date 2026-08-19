@@ -43,19 +43,22 @@ navItems.forEach((item) => item.addEventListener('click', (event) => {
   const isProjects = item.dataset.view === 'projects';
   const isChat = item.dataset.view === 'chat';
   const isPeople = item.dataset.view === 'people';
+  const isCommunities = item.dataset.view === 'communities';
   document.querySelector('#identityProfile').hidden = true;
-  document.querySelector('#dashboard').hidden = isRanking || isHabits || isProjects || isChat || isPeople;
+  document.querySelector('#dashboard').hidden = isRanking || isHabits || isProjects || isChat || isPeople || isCommunities;
   document.querySelector('#ranking').hidden = !isRanking;
   document.querySelector('#habits').hidden = !isHabits;
   document.querySelector('#projects').hidden = !isProjects;
   document.querySelector('#chatPage').hidden = !isChat;
   document.querySelector('#people').hidden = !isPeople;
+  document.querySelector('#communities').hidden = !isCommunities;
   if (item.dataset.page === 'Visão geral') document.querySelector('#dashboard').hidden = false;
   if (isHabits && typeof loadHabits === 'function') loadHabits();
   if (isRanking && typeof loadRealRanking === 'function') loadRealRanking();
   if (isProjects && typeof loadProjects === 'function') loadProjects();
   if (isChat && typeof loadChat === 'function') loadChat();
   if (isPeople && typeof loadAuraPeople === 'function') loadAuraPeople();
+  if (isCommunities && typeof loadAuraCommunities === 'function') loadAuraCommunities();
   resetPageScroll();
 }));
 

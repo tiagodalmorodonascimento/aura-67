@@ -48,9 +48,10 @@
   <link rel="stylesheet" href="css/destructive-actions.css?v=1">
   <link rel="stylesheet" href="css/community-moderation.css?v=1">
   <link rel="stylesheet" href="css/community-moderation-extra.css?v=1">
+  <link rel="stylesheet" href="css/communities.css?v=1">
   <link rel="stylesheet" href="css/mobile-navigation-v2.css?v=2">
   <link rel="stylesheet" href="css/mobile-landscape-fix.css?v=2">
-  <link rel="stylesheet" href="css/mobile-visual-parity.css?v=2">
+  <link rel="stylesheet" href="css/mobile-visual-parity.css?v=3">
   <link rel="stylesheet" href="css/motion.css?v=1">
   <link rel="stylesheet" href="css/fireworks.css?v=10">
   <link rel="stylesheet" href="css/moments.css?v=1">
@@ -96,6 +97,9 @@
         <p class="nav-label nav-label-spaced">Espaço</p>
         <a class="nav-item" href="#pessoas" data-page="Pessoas" data-view="people">
           <span class="nav-icon">○</span><span>Pessoas</span>
+        </a>
+        <a class="nav-item" href="#comunidades" data-page="Comunidades" data-view="communities">
+          <span class="nav-icon">◎</span><span>Comunidades</span><span class="nav-count" id="communityInviteCount" hidden>0</span>
         </a>
         <a class="nav-item" href="#configuracoes" data-page="Configurações">
           <span class="nav-icon">⚙</span><span>Configurações</span>
@@ -231,6 +235,13 @@
 
       <div class="content chat-page" id="chatPage" hidden>
         <section class="chat-shell" aria-labelledby="chatTitle"><aside class="chat-contacts" id="chatContacts"><button class="chat-contact active" type="button" data-chat-kind="tester"><span class="chat-avatar">AT</span><span><strong>Aura Tester</strong><small>Contato oficial para testes</small></span><i></i></button></aside><div class="chat-conversation"><header><button class="chat-back" id="chatClose" type="button" aria-label="Ver todas as conversas">‹</button><span class="chat-avatar" id="chatHeaderAvatar">AT</span><span><strong id="chatTitle">Aura Tester</strong><small id="chatHeaderStatus"><i></i> disponível agora</small></span></header><div class="chat-messages" id="chatMessages"><p class="dashboard-empty">Carregando conversa…</p></div><div class="chat-attachment-preview" id="chatAttachmentPreview" hidden></div><small class="chat-privacy" id="chatPrivacy">🔒 Fotos e PDFs ficam privados. Evite enviar dados sensíveis desnecessários.</small><form class="chat-composer" id="chatForm"><input id="chatFile" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" hidden><button class="chat-attach" id="chatAttachButton" type="button" aria-label="Anexar foto ou PDF">＋</button><input id="chatInput" maxlength="1000" autocomplete="off" placeholder="Escreva uma mensagem…" aria-label="Mensagem"><button type="submit" aria-label="Enviar">➤</button></form></div></section>
+      </div>
+
+      <div class="content communities-page" id="communities" hidden>
+        <section class="communities-hero"><div><span class="section-kicker">CÍRCULOS AURA</span><h2>Evoluir fica melhor<br><em>quando existe companhia.</em></h2><p>Crie um espaço público ou privado, convide pessoas pelo usuário e acompanhe trajetórias em conjunto.</p></div><button class="primary-button" id="createCommunityButton" type="button">＋ Criar comunidade</button></section>
+        <section class="community-invites" id="communityInvites" hidden><div class="community-section-head"><div><span class="section-kicker">CONVITES</span><h3>Querem você por perto</h3></div></div><div id="communityInviteList"></div></section>
+        <div class="community-tabs" role="tablist"><button class="active" data-community-tab="mine" type="button">Minhas comunidades</button><button data-community-tab="discover" type="button">Descobrir públicas</button><button data-community-tab="code" type="button">Entrar com convite</button></div>
+        <section class="community-list" id="communityList"><p class="communities-empty">Carregando comunidades…</p></section>
       </div>
 
       <div class="content ranking-page" id="ranking" hidden>
@@ -371,7 +382,7 @@
   <script src="js/ranking.js?v=47"></script>
   <script src="js/habits.js?v=55"></script>
   <script src="js/community-moderation.js?v=1"></script>
-  <script src="script.js?v=60"></script>
+  <script src="script.js?v=61"></script>
   <script src="js/dashboard.js?v=53"></script>
   <script src="js/behavior.js?v=53"></script>
   <script src="js/chat.js?v=64"></script>
@@ -381,7 +392,8 @@
   <script src="js/moments.js?v=2"></script>
   <script src="js/aura-foundation.js?v=1"></script>
   <script src="js/people.js?v=2"></script>
-  <script src="js/native-app.js?v=8"></script>
-  <script src="js/pull-refresh.js?v=1"></script>
+  <script src="js/communities.js?v=1"></script>
+  <script src="js/native-app.js?v=9"></script>
+  <script src="js/pull-refresh.js?v=2"></script>
 </body>
 </html>

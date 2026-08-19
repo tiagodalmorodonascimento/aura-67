@@ -6,6 +6,11 @@ html{background:#f4f2f7}html[data-color-mode="dark"]{background:#0f1218}
   .topbar{background:color-mix(in srgb,#f7f6f9 97%,var(--purple) 3%);-webkit-backdrop-filter:none;backdrop-filter:none}
   .topbar-actions{position:relative;z-index:3;pointer-events:auto}
   .topbar-actions>button{position:relative;z-index:4;pointer-events:auto!important;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+  .topbar-actions{display:grid;grid-auto-flow:column;grid-auto-columns:44px;align-items:center;gap:7px}
+  .topbar-actions>.search-button,.topbar-actions>.chat-top-button,.topbar-actions>.icon-button{width:44px!important;min-width:44px!important;max-width:44px!important;height:44px!important;min-height:44px!important;padding:0!important;border-radius:13px!important;display:grid!important;place-items:center!important}
+  .topbar-actions>.search-button .search-text,.topbar-actions>.chat-top-button>strong{display:none!important}
+  .topbar-actions>.chat-top-button>span,.topbar-actions>.search-button>span:first-child{display:grid!important;place-items:center!important;margin:0!important}
+  .topbar-actions>.chat-top-button>i{right:-3px;top:-5px}
   .mobile-bottom-nav{background:color-mix(in srgb,#fff 97%,var(--purple) 3%);-webkit-backdrop-filter:none;backdrop-filter:none}
   .metric-card,.panel,.quick-card{background:color-mix(in srgb,#fff 97%,var(--theme-soft) 3%)}
   .welcome-panel{background:var(--hero-gradient,linear-gradient(115deg,#e7e0ff,#f1edff 50%,#e9f7f3))}

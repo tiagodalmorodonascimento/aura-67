@@ -11,9 +11,31 @@
   if (typeof syncNativeSystemBars === 'function') {
     syncNativeSystemBars(document.documentElement.dataset.colorMode === 'dark');
   }
-  function bindNativeTopAction(selector,action){const button=document.querySelector(selector);if(!button)return;let lastActivation=0;button.style.pointerEvents='auto';const activate=(event)=>{const now=Date.now();if(now-lastActivation<450){event.preventDefault();event.stopImmediatePropagation();return}lastActivation=now;event.preventDefault();event.stopImmediatePropagation();action()};button.addEventListener('pointerup',activate,true);button.addEventListener('click',activate,true)}
-  bindNativeTopAction('#searchButton',()=>typeof toggleSearch==='function'&&toggleSearch(true));
-  bindNativeTopAction('#openChatButton',()=>typeof openChat==='function'&&openChat());
+  function openNativeSearch(){
+    if(typeof toggleSearch==='function'){toggleSearch(true);return}
+    const overlay=document.querySelector('#searchOverlay');
+    if(!overlay)return;
+    overlay.hidden=false;document.body.style.overflow='hidden';
+    setTimeout(()=>document.querySelector('#searchInput')?.focus(),80);
+  }
+  function openNativeChat(){
+    if(typeof openChat==='function'){openChat();return}
+    document.querySelector('#openChatNav')?.click();
+  }
+  function bindNativeTopAction(selector,action){
+    const button=document.querySelector(selector);if(!button)return;
+    let lastActivation=0;
+    const activate=(event)=>{
+      const now=Date.now();
+      if(now-lastActivation<500){event.preventDefault();return}
+      lastActivation=now;event.preventDefault();event.stopPropagation();action();
+    };
+    button.style.pointerEvents='auto';
+    button.addEventListener('touchend',activate,{capture:true,passive:false});
+    button.addEventListener('click',activate,true);
+  }
+  bindNativeTopAction('#searchButton',openNativeSearch);
+  bindNativeTopAction('#openChatButton',openNativeChat);
   plugins.App?.addListener?.('appStateChange',({isActive})=>{if(isActive&&typeof syncNativeSystemBars==='function')setTimeout(()=>syncNativeSystemBars(document.documentElement.dataset.colorMode==='dark'),80)});
   function openNativePage(page) {
     const views = {
@@ -25,7 +47,7 @@
     if (!target) return;
     const hashes = { 'Visão geral': '#dashboard', Ranking: '#ranking', Atividade: '#habitos' };
     history.replaceState({ ...(history.state || {}), auraView: hashes[page] }, '', hashes[page]);
-    ['dashboard','ranking','habits','projects','chatPage','people','identityProfile'].forEach((id) => {
+    ['dashboard','ranking','habits','projects','chatPage','people','communities','identityProfile'].forEach((id) => {
       const view = document.querySelector(`#${id}`);
       if (view) view.hidden = id !== target[0];
     });
@@ -58,6 +80,7 @@
     if (search) { search.hidden = true; document.body.style.overflow = ''; clearOverlayHistory(); return true; }
     const closePairs = [
       ['#dangerBackdrop','#dangerClose'],['#communityReviewBackdrop','#communityReviewClose'],['#identityStudioBackdrop','#identityStudioClose'],
+      ['#communityModalBackdrop','#communityModalClose'],
       ['#momentShareBackdrop','#momentShareCancel'],['#habitConfirmBackdrop','#habitConfirmClose'],['#proofBackdrop','#proofClose'],
       ['#emailCheckBackdrop','#emailCheckClose'],['#journeyBackdrop','#journeyClose'],['#publicProfileBackdrop','#publicProfileClose'],
       ['#reminderBackdrop','#reminderClose'],['#profileEditorBackdrop','#profileEditorClose'],['#designBackdrop','#designClose'],
