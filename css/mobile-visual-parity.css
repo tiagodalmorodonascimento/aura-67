@@ -1,0 +1,14 @@
+/* Mantém o acabamento do navegador em WebViews que não compõem blur/transparência da mesma forma. */
+html{background:#f4f2f7}html[data-color-mode="dark"]{background:#0f1218}
+@media(max-width:760px){
+  body,.app-shell,.main-area{min-height:100dvh;background:#f4f2f7}
+  .content{position:relative;background:transparent}
+  .topbar{background:color-mix(in srgb,#f7f6f9 97%,var(--purple) 3%);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .mobile-bottom-nav{background:color-mix(in srgb,#fff 97%,var(--purple) 3%);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .metric-card,.panel,.quick-card{background:color-mix(in srgb,#fff 97%,var(--theme-soft) 3%)}
+  .welcome-panel{background:var(--hero-gradient,linear-gradient(115deg,#e7e0ff,#f1edff 50%,#e9f7f3))}
+  html[data-color-mode="dark"] body,html[data-color-mode="dark"] .app-shell,html[data-color-mode="dark"] .main-area{background:#0f1218}
+  html[data-color-mode="dark"] .topbar{background:#11151c}
+  html[data-color-mode="dark"] .mobile-bottom-nav{background:#151922}
+  html[data-color-mode="dark"] .metric-card,html[data-color-mode="dark"] .panel,html[data-color-mode="dark"] .quick-card{background:#191d26}
+}

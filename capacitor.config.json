@@ -5,7 +5,7 @@
   "loggingBehavior": "debug",
   "android": {
     "allowMixedContent": false,
-    "backgroundColor": "#17131f",
+    "backgroundColor": "#f4f2f7",
     "webContentsDebuggingEnabled": true
   },
   "plugins": {
@@ -17,7 +17,7 @@
     },
     "StatusBar": {
       "style": "DARK",
-      "backgroundColor": "#17131f",
+      "backgroundColor": "#f4f2f7",
       "overlaysWebView": false
     }
   }

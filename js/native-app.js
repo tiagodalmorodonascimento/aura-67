@@ -8,8 +8,9 @@
     button.innerHTML = '<b>G</b> Google — em breve no app';
   });
   const plugins = capacitor.Plugins || {};
-  plugins.StatusBar?.setBackgroundColor?.({ color: '#17131f' }).catch(() => {});
-  plugins.StatusBar?.setStyle?.({ style: 'DARK' }).catch(() => {});
+  if (typeof syncNativeSystemBars === 'function') {
+    syncNativeSystemBars(document.documentElement.dataset.colorMode === 'dark');
+  }
   function openNativePage(page) {
     const views = {
       'Visão geral': ['dashboard', null],
