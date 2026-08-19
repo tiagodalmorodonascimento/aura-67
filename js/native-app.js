@@ -10,6 +10,32 @@
   const plugins = capacitor.Plugins || {};
   plugins.StatusBar?.setBackgroundColor?.({ color: '#17131f' }).catch(() => {});
   plugins.StatusBar?.setStyle?.({ style: 'DARK' }).catch(() => {});
+  function openNativePage(page) {
+    const views = {
+      'Visão geral': ['dashboard', null],
+      Ranking: ['ranking', 'loadRealRanking'],
+      Atividade: ['habits', 'loadHabits']
+    };
+    const target = views[page];
+    if (!target) return;
+    ['dashboard','ranking','habits','projects','chatPage','people','identityProfile'].forEach((id) => {
+      const view = document.querySelector(`#${id}`);
+      if (view) view.hidden = id !== target[0];
+    });
+    document.querySelector('#pageTitle').textContent = page;
+    document.querySelectorAll('.nav-item').forEach((item) => item.classList.toggle('active', item.dataset.page === page));
+    document.querySelectorAll('[data-mobile-page],#mobileProfileButton').forEach((item) => item.classList.toggle('active', item.dataset.mobilePage === page));
+    if (target[1] && typeof window[target[1]] === 'function') window[target[1]]();
+    document.scrollingElement.scrollTop = 0;
+    document.querySelector('.main-area')?.scrollTo({ top: 0, behavior: 'auto' });
+  }
+  document.querySelectorAll('[data-mobile-page]').forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      openNativePage(button.dataset.mobilePage);
+    }, { capture: true });
+  });
   function clearOverlayHistory() {
     if (!history.state?.auraOverlay) return;
     const state = { ...history.state };
@@ -46,8 +72,7 @@
     if (chatShell && !chatShell.classList.contains('show-contacts') && typeof showConversationList === 'function') { showConversationList(); return; }
     const dashboard = document.querySelector('#dashboard');
     if (dashboard?.hidden) {
-      const home = [...document.querySelectorAll('.nav-item')].find((item) => item.dataset.page === 'Visão geral');
-      home?.click();
+      openNativePage('Visão geral');
       return;
     }
     plugins.App.minimizeApp?.();
