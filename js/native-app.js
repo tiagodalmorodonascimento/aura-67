@@ -49,7 +49,7 @@
     const account = document.querySelector('#accountPopover:not([hidden])');
     if (account) { if (typeof setAccountMenu === 'function') setAccountMenu(false); else account.hidden = true; return true; }
     const notifications = document.querySelector('#notificationBackdrop:not([hidden])');
-    if (notifications) { notifications.hidden = true; document.body.style.overflow = ''; clearOverlayHistory(); return true; }
+    if (notifications) { notifications.hidden = true; document.body.style.overflow = ''; clearOverlayHistory(); if(typeof resetPageScroll==='function')resetPageScroll(); return true; }
     const search = document.querySelector('#searchOverlay:not([hidden])');
     if (search) { search.hidden = true; document.body.style.overflow = ''; clearOverlayHistory(); return true; }
     const closePairs = [
