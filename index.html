@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#17131f">
   <meta name="description" content="Aura 67 — transforme boas ações em evolução, reconhecimento e impacto.">
   <title>Aura 67 — Sua energia transforma</title>
-  <script>(function(){const installed=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;if(installed)window.location.replace('./app.html#dashboard')})()</script>
+  <script>(function(){const native=window.Capacitor?.isNativePlatform?.()===true;const installed=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;if(native)document.documentElement.style.visibility='hidden';if(native||installed)window.location.replace('./app.html#dashboard')})()</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
@@ -68,6 +68,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config/environments.js"></script>
   <script src="js/supabase-client.js"></script>
-  <script src="js/landing.js?v=29"></script>
+  <script src="js/landing.js?v=30"></script>
 </body>
 </html>

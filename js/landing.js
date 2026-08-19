@@ -1,7 +1,14 @@
 let installPrompt;
 const installButton = document.querySelector('#installButton');
+const isNativeApp=window.Capacitor?.isNativePlatform?.()===true;
+
+if(isNativeApp){
+  installButton.hidden=true;
+  window.location.replace('./app.html#dashboard');
+}
 
 window.addEventListener('beforeinstallprompt', (event) => {
+  if(isNativeApp)return;
   event.preventDefault();
   installPrompt = event;
   installButton.hidden = false;
