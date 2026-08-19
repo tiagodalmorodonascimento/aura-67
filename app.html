@@ -188,7 +188,7 @@
           <article class="panel activity-panel">
             <div class="panel-heading">
               <div><h3>Atividade recente</h3><p>Suas ações concluídas nos últimos 7 dias</p></div>
-              <button class="text-button" type="button">Ver relatório <span>→</span></button>
+              <button class="text-button activity-summary-button" id="activitySummaryButton" type="button">Ver atividades <span>→</span></button>
             </div>
             <div class="chart-wrap">
               <div class="chart-scale" id="activityScale"><span>0</span><span>0</span><span>0</span><span>0</span><span>0</span></div>
@@ -198,8 +198,8 @@
                   <defs><linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7559ef" stop-opacity=".28"/><stop offset="1" stop-color="#7559ef" stop-opacity="0"/></linearGradient></defs>
                   <path class="area" id="activityArea" d="M0,180 L700,180 Z"/>
                   <path class="line" id="activityLine" d="M0,180 L700,180"/>
-                  <circle id="activityDot" cx="700" cy="180" r="6" class="chart-dot"/>
                 </svg>
+                <i id="activityDot" class="chart-dot activity-chart-dot" aria-hidden="true"></i>
                 <div class="chart-days" id="activityDays"></div>
               </div>
             </div>
@@ -369,8 +369,8 @@
   <script src="js/ranking.js?v=47"></script>
   <script src="js/habits.js?v=55"></script>
   <script src="js/community-moderation.js?v=1"></script>
-  <script src="script.js?v=57"></script>
-  <script src="js/dashboard.js?v=51"></script>
+  <script src="script.js?v=58"></script>
+  <script src="js/dashboard.js?v=52"></script>
   <script src="js/behavior.js?v=53"></script>
   <script src="js/chat.js?v=63"></script>
   <script src="js/color-mode.js?v=1"></script>
