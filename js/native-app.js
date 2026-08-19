@@ -11,6 +11,10 @@
   if (typeof syncNativeSystemBars === 'function') {
     syncNativeSystemBars(document.documentElement.dataset.colorMode === 'dark');
   }
+  function bindNativeTopAction(selector,action){const button=document.querySelector(selector);if(!button)return;button.style.pointerEvents='auto';button.addEventListener('click',(event)=>{event.preventDefault();event.stopImmediatePropagation();action()},true)}
+  bindNativeTopAction('#searchButton',()=>typeof toggleSearch==='function'&&toggleSearch(true));
+  bindNativeTopAction('#openChatButton',()=>typeof openChat==='function'&&openChat());
+  plugins.App?.addListener?.('appStateChange',({isActive})=>{if(isActive&&typeof syncNativeSystemBars==='function')setTimeout(()=>syncNativeSystemBars(document.documentElement.dataset.colorMode==='dark'),80)});
   function openNativePage(page) {
     const views = {
       'Visão geral': ['dashboard', null],
