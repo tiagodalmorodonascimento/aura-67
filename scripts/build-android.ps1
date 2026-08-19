@@ -21,6 +21,6 @@ try {
   } finally { Pop-Location }
   $releaseDir = Join-Path $projectRoot 'releases'
   New-Item -ItemType Directory -Force -Path $releaseDir | Out-Null
-  Copy-Item -LiteralPath (Join-Path $env:LOCALAPPDATA 'Aura67Build\app\outputs\apk\debug\app-debug.apk') -Destination (Join-Path $releaseDir 'Aura67-v0.1.6-debug.apk') -Force
-  Write-Host 'APK criado em releases\Aura67-v0.1.6-debug.apk'
+  Copy-Item -LiteralPath (Join-Path $env:LOCALAPPDATA 'Aura67Build\app\outputs\apk\debug\app-debug.apk') -Destination (Join-Path $releaseDir 'Aura67-v0.1.7-debug.apk') -Force
+  Write-Host 'APK criado em releases\Aura67-v0.1.7-debug.apk'
 } finally { Pop-Location }
