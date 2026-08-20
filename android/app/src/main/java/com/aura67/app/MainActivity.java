@@ -12,21 +12,21 @@ public class MainActivity extends BridgeActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        applyLightSystemBars();
+        applyFixedSystemBars();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        applyLightSystemBars();
+        applyFixedSystemBars();
     }
 
-    private void applyLightSystemBars() {
-        getWindow().setStatusBarColor(Color.rgb(244, 242, 247));
-        getWindow().setNavigationBarColor(Color.rgb(244, 242, 247));
+    private void applyFixedSystemBars() {
+        getWindow().setStatusBarColor(Color.rgb(15, 18, 24));
+        getWindow().setNavigationBarColor(Color.rgb(15, 18, 24));
         WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
         WindowInsetsControllerCompat controller = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
-        controller.setAppearanceLightStatusBars(true);
-        controller.setAppearanceLightNavigationBars(true);
+        controller.setAppearanceLightStatusBars(false);
+        controller.setAppearanceLightNavigationBars(false);
     }
 }

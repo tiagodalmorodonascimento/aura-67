@@ -5,7 +5,7 @@ const root = new URL('../', import.meta.url);
 const output = new URL('../www/', import.meta.url);
 const rootFiles = [
   'index.html','login.html','cadastro.html','redefinir-senha.html','app.html','admin.html',
-  'termos.html','privacidade.html','styles.css','manifest.json','service-worker.js'
+  'termos.html','privacidade.html','styles.css','script.js','manifest.json','service-worker.js'
 ];
 const folders = ['assets','config','css','js'];
 

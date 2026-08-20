@@ -62,6 +62,21 @@ navItems.forEach((item) => item.addEventListener('click', (event) => {
   resetPageScroll();
 }));
 
+function navigateToChatPage() {
+  window.history.replaceState({ ...(window.history.state || {}), auraView: '#conversas' }, '', '#conversas');
+  ['dashboard','ranking','habits','projects','people','communities','identityProfile'].forEach((id) => {
+    const view = document.querySelector(`#${id}`);
+    if (view) view.hidden = true;
+  });
+  document.querySelector('#chatPage').hidden = false;
+  document.querySelector('#pageTitle').textContent = 'Conversas';
+  navItems.forEach((item) => item.classList.toggle('active', item.id === 'openChatNav'));
+  document.querySelectorAll('[data-mobile-page],#mobileProfileButton').forEach((item) => item.classList.remove('active'));
+  toggleMenu(false);
+  resetPageScroll();
+}
+window.navigateToChatPage = navigateToChatPage;
+
 function restoreAuraView() {
   const hash = window.location.hash || '#dashboard';
   if (hash === '#perfil' && typeof openOwnProfile === 'function') { openOwnProfile(); return; }
@@ -134,7 +149,9 @@ function toggleSearch(open, fromHistory = false) {
 window.addEventListener('popstate', () => { if (!searchOverlay.hidden) toggleSearch(false, true); });
 
 document.querySelector('#searchButton').addEventListener('click', () => toggleSearch(true));
-searchOverlay.addEventListener('pointerdown', (event) => { if (!event.target.closest('.search-box')) toggleSearch(false); });
+document.addEventListener('pointerdown', (event) => {
+  if (!searchOverlay.hidden && !event.target.closest('.search-box') && !event.target.closest('#searchButton')) toggleSearch(false);
+}, true);
 
 document.addEventListener('keydown', (event) => {
   if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {

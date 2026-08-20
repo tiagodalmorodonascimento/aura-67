@@ -19,7 +19,8 @@
     setTimeout(()=>document.querySelector('#searchInput')?.focus(),80);
   }
   function openNativeChat(){
-    if(typeof openChat==='function'){openChat();return}
+    if(typeof openChat==='function'){Promise.resolve(openChat()).catch((error)=>console.error('Não foi possível abrir as mensagens.',error));return}
+    if(typeof navigateToChatPage==='function'){navigateToChatPage();return}
     document.querySelector('#openChatNav')?.click();
   }
   function bindNativeTopAction(selector,action){
