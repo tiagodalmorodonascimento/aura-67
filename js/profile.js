@@ -202,13 +202,13 @@ async function uploadProfileFile(input, folder) {
   return path;
 }
 
-function honorFrameClass(points = 0) {
-  if (points >= 500) return 'honor-legendary';
-  if (points >= 200) return 'honor-exemplary';
-  if (points >= 75) return 'honor-elevated';
-  if (points >= 20) return 'honor-recognized';
-  return 'honor-initial';
+function honorFrameInfo(points = 0) {
+  if (points >= 500) return { className:'honor-diamond', name:'Diamante', next:null };
+  if (points >= 200) return { className:'honor-gold', name:'Ouro', next:500 };
+  if (points >= 75) return { className:'honor-iron', name:'Ferro', next:200 };
+  return { className:'honor-locked', name:'Bloqueada', next:75 };
 }
+function honorFrameClass(points = 0) { return honorFrameInfo(points).className; }
 
 async function loadIdentityProfile() {
   if (!window.AURA_SESSION) return;
@@ -226,6 +226,7 @@ async function loadIdentityProfile() {
   avatar.textContent = profile.avatar_url ? '' : initials(profile.full_name);
   const frame = document.querySelector('#identityAvatarFrame');
   frame.className = `identity-avatar-frame ${honorFrameClass(profile.honor_points || 0)}`;
+  frame.dataset.honorPoints = profile.honor_points || 0;
   document.querySelector('#identityName').textContent = profile.full_name;
   document.querySelector('#identityUsername').textContent = `@${profile.username || 'defina-seu-usuario'}`;
   document.querySelector('#identityBio').textContent = profile.bio || 'Sua evolução começa aqui.';
