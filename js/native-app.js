@@ -24,14 +24,10 @@
   }
   function bindNativeTopAction(selector,action){
     const button=document.querySelector(selector);if(!button)return;
-    let lastActivation=0;
     const activate=(event)=>{
-      const now=Date.now();
-      if(now-lastActivation<500){event.preventDefault();return}
-      lastActivation=now;event.preventDefault();event.stopPropagation();action();
+      event.preventDefault();event.stopImmediatePropagation();action();
     };
     button.style.pointerEvents='auto';
-    button.addEventListener('touchend',activate,{capture:true,passive:false});
     button.addEventListener('click',activate,true);
   }
   bindNativeTopAction('#searchButton',openNativeSearch);

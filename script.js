@@ -134,7 +134,7 @@ function toggleSearch(open, fromHistory = false) {
 window.addEventListener('popstate', () => { if (!searchOverlay.hidden) toggleSearch(false, true); });
 
 document.querySelector('#searchButton').addEventListener('click', () => toggleSearch(true));
-searchOverlay.addEventListener('click', (event) => { if (event.target === searchOverlay) toggleSearch(false); });
+searchOverlay.addEventListener('pointerdown', (event) => { if (!event.target.closest('.search-box')) toggleSearch(false); });
 
 document.addEventListener('keydown', (event) => {
   if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
