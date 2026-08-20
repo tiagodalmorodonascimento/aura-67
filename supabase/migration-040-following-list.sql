@@ -10,7 +10,7 @@ language sql stable security definer set search_path='' as $$
   p.aura_points::bigint,p.member_number,f.created_at
  from public.profile_follows f
  join public.profiles p on p.id=f.followed_id
- where f.follower_id=auth.uid()
+ where f.follower_id=auth.uid() and p.id<>auth.uid()
  order by f.created_at desc;
 $$;
 

@@ -20,7 +20,8 @@
 .identity-avatar-frame.honor-red-diamond::before,.public-profile-avatar.honor-red-diamond::before{inset:-34%;animation:honorFramePulse 2.2s ease-in-out infinite alternate}
 
 /* Antes de 75 de Honra: somente a foto, sem borda, selo ou brilho. */
-.identity-avatar-frame.honor-locked,.public-profile-avatar.honor-locked{background:none;border:0;box-shadow:none}
+.identity-avatar-frame.honor-locked{background:none;border:0;box-shadow:none}
+.public-profile-avatar.honor-locked{border:0;box-shadow:none}
 .identity-avatar-frame.honor-locked::before,.public-profile-avatar.honor-locked::before{display:none}
 
 .identity-avatar-frame:not(.honor-locked),.public-profile-avatar:not(.honor-locked){cursor:pointer;transform-style:preserve-3d;transition:transform .28s ease,filter .28s ease}

@@ -39,7 +39,7 @@ async function loadAuraPeople(){
     :await window.auraSupabase.from('profiles').select('id,full_name,username,bio,avatar_url,cover_url,theme_color,aura_points,member_number').order('created_at',{ascending:false}).limit(60);
   const{data,error}=result;
   if(error){grid.innerHTML=`<div class="people-empty">${peopleMode==='following'?'Execute a migration 040 no Supabase para visualizar quem você segue.':'Não foi possível carregar a comunidade agora.'}</div>`;return}
-  auraPeople=data||[];
+  auraPeople=(data||[]).filter(person=>peopleMode!=='following'||person.id!==window.AURA_SESSION.user.id);
   renderPeople(document.querySelector('#peopleSearch').value);
 }
 
