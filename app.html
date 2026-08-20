@@ -20,7 +20,8 @@
   <link rel="stylesheet" href="css/chat.css?v=44">
   <link rel="stylesheet" href="css/chat-button.css?v=44">
   <link rel="stylesheet" href="css/chat-page.css?v=59">
-  <link rel="stylesheet" href="css/chat-attachments.css?v=60">
+  <link rel="stylesheet" href="css/chat-attachments.css?v=61">
+  <link rel="stylesheet" href="css/chat-media-viewer.css?v=1">
   <link rel="stylesheet" href="css/chat-message-menu.css?v=59">
   <link rel="stylesheet" href="css/chat-conversation-list.css?v=1">
   <link rel="stylesheet" href="css/chat-unread.css?v=1">
@@ -373,6 +374,8 @@
 
   <div class="profile-onboarding-backdrop" id="profileOnboardingBackdrop" hidden><section class="profile-onboarding" role="dialog" aria-modal="true" aria-labelledby="profileOnboardingTitle"><span class="profile-onboarding-step">SEU PRIMEIRO PASSO</span><h2 id="profileOnboardingTitle">Crie sua identidade Aura.</h2><p>Escolha como as outras pessoas encontrarão e reconhecerão você.</p><form id="profileOnboardingForm"><label class="profile-onboarding-avatar" for="profileOnboardingFile"><span id="profileOnboardingPreview">＋</span><strong>Escolher foto</strong><small>JPG, PNG ou WebP · até 5 MB</small><input id="profileOnboardingFile" type="file" accept="image/jpeg,image/png,image/webp" required hidden></label><label class="profile-onboarding-username">Nome de usuário<span>@<input id="profileOnboardingUsername" type="text" minlength="3" maxlength="30" autocomplete="username" placeholder="seunome" required></span><small>Use letras minúsculas, números, ponto ou _.</small></label><button class="primary-button" id="profileOnboardingSubmit" type="submit">Entrar na minha Aura <span>→</span></button><p class="profile-onboarding-error" id="profileOnboardingError" role="alert"></p></form></section></div>
 
+  <div class="chat-media-backdrop" id="chatMediaBackdrop" hidden><section class="chat-media-viewer" role="dialog" aria-modal="true" aria-label="Visualização da foto"><button id="chatMediaClose" type="button" aria-label="Fechar foto">×</button><img id="chatMediaImage" alt="Foto enviada na conversa"></section></div>
+
   <div class="toast action-feedback" id="toast" role="status" aria-live="polite"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config/environments.js?v=10"></script>
@@ -395,7 +398,7 @@
   <script src="script.js?v=63"></script>
   <script src="js/dashboard.js?v=54"></script>
   <script src="js/behavior.js?v=53"></script>
-  <script src="js/chat.js?v=66"></script>
+  <script src="js/chat.js?v=67"></script>
   <script src="js/color-mode.js?v=4"></script>
   <script src="js/motion.js?v=2"></script>
   <script src="js/fireworks.js?v=9"></script>
@@ -404,7 +407,7 @@
   <script src="js/aura-foundation.js?v=1"></script>
   <script src="js/people.js?v=4"></script>
   <script src="js/communities.js?v=2"></script>
-  <script src="js/native-app.js?v=11"></script>
+  <script src="js/native-app.js?v=12"></script>
   <script src="js/pull-refresh.js?v=2"></script>
 </body>
 </html>

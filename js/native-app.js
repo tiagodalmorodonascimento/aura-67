@@ -76,7 +76,7 @@
     const search = document.querySelector('#searchOverlay:not([hidden])');
     if (search) { search.hidden = true; document.body.style.overflow = ''; clearOverlayHistory(); return true; }
     const closePairs = [
-      ['#dangerBackdrop','#dangerClose'],['#communityReviewBackdrop','#communityReviewClose'],['#identityStudioBackdrop','#identityStudioClose'],
+      ['#chatMediaBackdrop','#chatMediaClose'],['#dangerBackdrop','#dangerClose'],['#communityReviewBackdrop','#communityReviewClose'],['#identityStudioBackdrop','#identityStudioClose'],
       ['#communityModalBackdrop','#communityModalClose'],
       ['#timedChallengeBackdrop','#timedChallengeSystemClose'],
       ['#momentShareBackdrop','#momentShareCancel'],['#habitConfirmBackdrop','#habitConfirmClose'],['#proofBackdrop','#proofClose'],
