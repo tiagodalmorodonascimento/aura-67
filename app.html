@@ -61,6 +61,7 @@
   <link rel="stylesheet" href="css/moments.css?v=1">
   <link rel="stylesheet" href="css/aura-foundation.css?v=1">
   <link rel="stylesheet" href="css/people.css?v=1">
+  <link rel="stylesheet" href="css/profile-onboarding.css?v=1">
   <link rel="stylesheet" href="css/reminders.css?v=25">
   <link rel="stylesheet" href="css/push.css?v=25">
   <link rel="stylesheet" href="css/legal.css?v=1">
@@ -370,12 +371,15 @@
 
   <div class="timed-challenge-backdrop" id="timedChallengeBackdrop" hidden><section class="timed-challenge" role="dialog" aria-modal="true" aria-labelledby="timedChallengeTitle"><button id="timedChallengeSystemClose" type="button" hidden></button><div id="timedChallengeBody"></div></section></div>
 
+  <div class="profile-onboarding-backdrop" id="profileOnboardingBackdrop" hidden><section class="profile-onboarding" role="dialog" aria-modal="true" aria-labelledby="profileOnboardingTitle"><span class="profile-onboarding-step">SEU PRIMEIRO PASSO</span><h2 id="profileOnboardingTitle">Crie sua identidade Aura.</h2><p>Escolha como as outras pessoas encontrarão e reconhecerão você.</p><form id="profileOnboardingForm"><label class="profile-onboarding-avatar" for="profileOnboardingFile"><span id="profileOnboardingPreview">＋</span><strong>Escolher foto</strong><small>JPG, PNG ou WebP · até 5 MB</small><input id="profileOnboardingFile" type="file" accept="image/jpeg,image/png,image/webp" required hidden></label><label class="profile-onboarding-username">Nome de usuário<span>@<input id="profileOnboardingUsername" type="text" minlength="3" maxlength="30" autocomplete="username" placeholder="seunome" required></span><small>Use letras minúsculas, números, ponto ou _.</small></label><button class="primary-button" id="profileOnboardingSubmit" type="submit">Entrar na minha Aura <span>→</span></button><p class="profile-onboarding-error" id="profileOnboardingError" role="alert"></p></form></section></div>
+
   <div class="toast action-feedback" id="toast" role="status" aria-live="polite"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config/environments.js?v=10"></script>
   <script src="js/supabase-client.js?v=10"></script>
   <script src="js/app-auth.js?v=32"></script>
   <script src="js/profile.js?v=63"></script>
+  <script src="js/profile-onboarding.js?v=1"></script>
   <script src="js/design-palette.js?v=1"></script>
   <script src="js/design-color-wheel.js?v=1"></script>
   <script src="js/identity-studio.js?v=5"></script>
