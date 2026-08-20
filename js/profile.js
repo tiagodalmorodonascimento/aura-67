@@ -203,9 +203,20 @@ async function uploadProfileFile(input, folder) {
 }
 
 function honorFrameInfo(points = 0) {
-  if (points >= 500) return { className:'honor-diamond', name:'Diamante', next:null };
-  if (points >= 200) return { className:'honor-gold', name:'Ouro', next:500 };
-  if (points >= 75) return { className:'honor-iron', name:'Ferro', next:200 };
+  if (points >= 20000) return { className:'honor-red-diamond', name:'Diamante Vermelho', next:null };
+  if (points >= 11000) return { className:'honor-diamond', name:'Diamante', next:20000 };
+  if (points >= 8000) return { className:'honor-sapphire', name:'Safira', next:11000 };
+  if (points >= 6000) return { className:'honor-emerald', name:'Esmeralda', next:8000 };
+  if (points >= 4500) return { className:'honor-ruby', name:'Rubi', next:6000 };
+  if (points >= 3200) return { className:'honor-platinum', name:'Platina', next:4500 };
+  if (points >= 2200) return { className:'honor-gold', name:'Ouro', next:3200 };
+  if (points >= 1500) return { className:'honor-silver', name:'Prata', next:2200 };
+  if (points >= 1000) return { className:'honor-bronze', name:'Bronze', next:1500 };
+  if (points >= 650) return { className:'honor-iron', name:'Ferro', next:1000 };
+  if (points >= 400) return { className:'honor-stone', name:'Pedra', next:650 };
+  if (points >= 250) return { className:'honor-wood', name:'Madeira', next:400 };
+  if (points >= 150) return { className:'honor-cotton', name:'Algodão', next:250 };
+  if (points >= 75) return { className:'honor-paper', name:'Papel', next:150 };
   return { className:'honor-locked', name:'Bloqueada', next:75 };
 }
 function honorFrameClass(points = 0) { return honorFrameInfo(points).className; }
