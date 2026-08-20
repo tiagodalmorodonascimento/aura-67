@@ -16,7 +16,7 @@
       "showSpinner": false
     },
     "StatusBar": {
-      "style": "DARK",
+      "style": "LIGHT",
       "backgroundColor": "#f4f2f7",
       "overlaysWebView": false
     }
