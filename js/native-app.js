@@ -81,6 +81,7 @@
     const closePairs = [
       ['#dangerBackdrop','#dangerClose'],['#communityReviewBackdrop','#communityReviewClose'],['#identityStudioBackdrop','#identityStudioClose'],
       ['#communityModalBackdrop','#communityModalClose'],
+      ['#timedChallengeBackdrop','#timedChallengeSystemClose'],
       ['#momentShareBackdrop','#momentShareCancel'],['#habitConfirmBackdrop','#habitConfirmClose'],['#proofBackdrop','#proofClose'],
       ['#emailCheckBackdrop','#emailCheckClose'],['#journeyBackdrop','#journeyClose'],['#publicProfileBackdrop','#publicProfileClose'],
       ['#reminderBackdrop','#reminderClose'],['#profileEditorBackdrop','#profileEditorClose'],['#designBackdrop','#designClose'],
