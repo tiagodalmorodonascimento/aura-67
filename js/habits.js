@@ -38,18 +38,20 @@ function updateTodaySummary(completions) {
 
 async function loadHabits() {
   if (!window.auraSupabase||!window.AURA_SESSION) return;
-  const [{data:catalog,error:catalogError},{data:completions,error:completionError},{data:proofs,error:proofError}]=await Promise.all([
+  const [{data:catalog,error:catalogError},{data:completions,error:completionError},{data:proofs,error:proofError},{data:declarations,error:declarationError}]=await Promise.all([
     window.auraSupabase.from('actions_catalog').select('id,slug,category,title,description,icon,xp,difficulty,proof_mode').eq('active',true).order('category').order('xp'),
     window.auraSupabase.from('action_completions').select('action_id,base_xp,bonus_xp').eq('completed_on',todaySaoPaulo()),
-    window.auraSupabase.from('action_proofs').select('action_id,status').eq('submitted_on',todaySaoPaulo())
+    window.auraSupabase.from('action_proofs').select('action_id,status').eq('submitted_on',todaySaoPaulo()),
+    window.auraSupabase.from('action_declarations').select('action_id').eq('declared_on',todaySaoPaulo())
   ]);
   if (catalogError) { document.querySelector('#habitsGrid').innerHTML='<div class="habits-loading">O catálogo ainda precisa ser ativado no Supabase pela migration 004.</div>'; return; }
   if (completionError) console.error(completionError);
   if (proofError) console.error(proofError);
+  if (declarationError&&!/action_declarations|schema cache/i.test(declarationError.message)) console.error(declarationError);
   auraActions=catalog||[];
-  completedActionIds=new Set((completions||[]).map((item)=>item.action_id));
+  completedActionIds=new Set([...(completions||[]).map((item)=>item.action_id),...(declarations||[]).map((item)=>item.action_id)]);
   pendingProofIds=new Set((proofs||[]).filter((item)=>item.status==='pending').map((item)=>item.action_id));
-  updateTodaySummary(completions||[]);
+  updateTodaySummary([...(completions||[]),...(declarations||[]).map(item=>({...item,base_xp:0,bonus_xp:0}))]);
   renderHabits();
 }
 
@@ -85,7 +87,7 @@ async function confirmHabitCompletion() {
   const card=document.querySelector(`[data-action-id="${actionId}"]`); const button=card?.querySelector('button'); if(button)button.disabled=true;
   const {data,error}=await window.auraSupabase.rpc('complete_aura_action',{p_action_id:actionId});
   if (error) { if(button)button.disabled=false; showToast(error.message.includes('já concluiu')?'Esta ação já foi concluída hoje.':'Não foi possível concluir a ação.','error'); return; }
-  completedActionIds.add(actionId); showXp(data);
+  completedActionIds.add(actionId); showToast('A atividade entrou na sua constância, mas não acrescentou Aura nem pontos ao ranking.','success','Registro pessoal salvo');
   document.querySelector('#todayCompleted').textContent=data.today_count;
   document.querySelector('#comboCount').textContent=`${data.today_count%3}/3`;
   document.querySelector('#habitStreak').textContent=data.streak;
@@ -94,7 +96,6 @@ async function confirmHabitCompletion() {
   renderHabits();
   document.dispatchEvent(new CustomEvent('aura:action-completed',{detail:{actionId,result:data}}));
   if (typeof loadProfile==='function') await loadProfile(window.AURA_SESSION);
-  if (typeof openAuraMomentShare==='function') openAuraMomentShare('action',`${actionId}:${todaySaoPaulo()}`,`${selectedAction.icon} ${selectedAction.title}`,selectedAction.icon);
 }
 
 document.querySelector('#habitConfirmClose').addEventListener('click',closeHabitConfirmation);
