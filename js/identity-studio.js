@@ -28,7 +28,7 @@ ensureIdentityExperience();
 const baseLoadIdentityProfile=loadIdentityProfile;
 loadIdentityProfile=async function(){await baseLoadIdentityProfile();const{data,error}=await window.auraSupabase.rpc('public_profile_identity',{p_profile_id:window.AURA_SESSION.user.id});if(error){document.querySelector('#identityExpression').innerHTML='<article class="identity-expression-card"><h3>Estúdio de Identidade</h3><p>Execute a migration 018 no Supabase para ativar manifesto, valores, música e destaques.</p></article>';return}renderOwnIdentity(data)};
 const baseOpenPublicProfile=openPublicProfile;
-openPublicProfile=async function(person){stopIdentityMusic();await baseOpenPublicProfile(person);const{data}=await window.auraSupabase.rpc('public_profile_identity',{p_profile_id:person.id});if(data)renderPublicIdentity(data)};
+openPublicProfile=async function(person){stopIdentityMusic();person={...person,id:person.profile_id||person.user_id||person.id};await baseOpenPublicProfile(person);const{data}=await window.auraSupabase.rpc('public_profile_identity',{p_profile_id:person.id});if(data)renderPublicIdentity(data)};
 document.querySelector('#publicProfileClose').addEventListener('click',stopIdentityMusic);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stopIdentityMusic()});
 document.addEventListener('aura:session-ready',async()=>{const profileId=new URLSearchParams(location.search).get('profile');if(!profileId)return;const{data}=await window.auraSupabase.from('profiles').select('id,full_name,username,bio,avatar_url,cover_url,theme_color,aura_points,member_number').eq('id',profileId).maybeSingle();if(data)openPublicProfile(data)});

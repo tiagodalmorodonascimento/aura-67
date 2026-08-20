@@ -152,6 +152,8 @@ function updatePreview() {
 }
 
 async function openPublicProfile(person) {
+  const profileId = person.profile_id || person.user_id || person.id;
+  person = { ...person, id: profileId };
   if (person.lifetime_points != null) person = { ...person, aura_points: person.lifetime_points };
   const color = person.theme_color || '#7657ec';
   const dark = shiftColor(color, -65);
