@@ -4,7 +4,7 @@
 do $$
 declare v_admin uuid;v_count integer;
 begin
- select count(*),min(user_id) into v_count,v_admin
+ select count(*),(array_agg(user_id))[1] into v_count,v_admin
  from public.admin_users where active=true and role='super_admin';
  if v_count<>1 then raise exception 'Teste cancelado: esperada exatamente 1 conta super administradora ativa, encontradas %',v_count;end if;
  update public.profiles set honor_points=11000,updated_at=now() where id=v_admin;

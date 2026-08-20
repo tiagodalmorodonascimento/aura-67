@@ -4,7 +4,7 @@
 do $$
 declare v_profile uuid;v_count integer;
 begin
- select count(*),min(id) into v_count,v_profile
+ select count(*),(array_agg(id))[1] into v_count,v_profile
  from public.profiles where lower(trim(full_name))='tiago nascimento';
  if v_count<>1 then raise exception 'Teste cancelado: esperado exatamente 1 perfil Tiago Nascimento, encontrados %',v_count;end if;
  update public.profiles set honor_points=11000,updated_at=now() where id=v_profile;
