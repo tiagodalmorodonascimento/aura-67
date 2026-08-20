@@ -13,7 +13,11 @@
 .honor-platinum::before{background-image:url('../assets/honor-frames/honor-platinum.webp')}.honor-ruby::before{background-image:url('../assets/honor-frames/honor-ruby.webp')}.honor-emerald::before{background-image:url('../assets/honor-frames/honor-emerald.webp')}.honor-sapphire::before{background-image:url('../assets/honor-frames/honor-sapphire.webp')}
 .honor-diamond::before{background-image:url('../assets/honor-frames/honor-diamond.webp')}.honor-red-diamond::before{background-image:url('../assets/honor-frames/honor-red-diamond.webp')}
 
-.honor-stone::before,.honor-iron::before{inset:-18%}.honor-bronze::before,.honor-silver::before,.honor-gold::before{inset:-23%}.honor-platinum::before,.honor-ruby::before,.honor-emerald::before,.honor-sapphire::before{inset:-32%}.honor-diamond::before{inset:-60%}.honor-red-diamond::before{inset:-65%;animation:honorFramePulse 2.2s ease-in-out infinite alternate}
+.identity-avatar-frame.honor-stone::before,.public-profile-avatar.honor-stone::before,.identity-avatar-frame.honor-iron::before,.public-profile-avatar.honor-iron::before{inset:-18%}
+.identity-avatar-frame.honor-bronze::before,.public-profile-avatar.honor-bronze::before,.identity-avatar-frame.honor-silver::before,.public-profile-avatar.honor-silver::before,.identity-avatar-frame.honor-gold::before,.public-profile-avatar.honor-gold::before{inset:-23%}
+.identity-avatar-frame.honor-platinum::before,.public-profile-avatar.honor-platinum::before,.identity-avatar-frame.honor-ruby::before,.public-profile-avatar.honor-ruby::before,.identity-avatar-frame.honor-emerald::before,.public-profile-avatar.honor-emerald::before,.identity-avatar-frame.honor-sapphire::before,.public-profile-avatar.honor-sapphire::before{inset:-32%}
+.identity-avatar-frame.honor-diamond::before,.public-profile-avatar.honor-diamond::before{inset:-60%}
+.identity-avatar-frame.honor-red-diamond::before,.public-profile-avatar.honor-red-diamond::before{inset:-65%;animation:honorFramePulse 2.2s ease-in-out infinite alternate}
 
 /* Antes de 75 de Honra: somente a foto, sem borda, selo ou brilho. */
 .identity-avatar-frame.honor-locked,.public-profile-avatar.honor-locked{background:none;border:0;box-shadow:none}
