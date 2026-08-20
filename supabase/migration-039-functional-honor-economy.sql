@@ -44,18 +44,26 @@ begin
  return jsonb_build_object('honor_points',v_total,'honor_level',public.honor_level(v_total),'earned',v_points,'remaining_this_week',2-v_used);
 end;$$;
 
--- Fogos celebram; não aumentam reputação.
-update public.profile_firework_events set honor_reward=0 where received_at is null and honor_reward<>0;
+-- Fogos celebram; não aumentam reputação. O bloco é opcional para bancos sem a migration 031.
 create or replace function public.prevent_firework_honor()
 returns trigger language plpgsql set search_path='' as $$begin new.honor_reward:=0;return new;end;$$;
-drop trigger if exists profile_fireworks_do_not_award_honor on public.profile_firework_events;
-create trigger profile_fireworks_do_not_award_honor before insert or update on public.profile_firework_events for each row execute function public.prevent_firework_honor();
+do $$begin
+ if to_regclass('public.profile_firework_events') is not null then
+  execute 'update public.profile_firework_events set honor_reward=0 where received_at is null and honor_reward<>0';
+  execute 'drop trigger if exists profile_fireworks_do_not_award_honor on public.profile_firework_events';
+  execute 'create trigger profile_fireworks_do_not_award_honor before insert or update on public.profile_firework_events for each row execute function public.prevent_firework_honor()';
+ end if;
+end$$;
 
 -- Revisões alinhadas ao consenso fortalecem a reputação do revisor.
 create or replace function public.award_review_honor()
 returns trigger language plpgsql security definer set search_path='' as $$begin update public.profiles set honor_points=honor_points+2,updated_at=now()where id=new.reviewer_id;return new;end;$$;
-drop trigger if exists community_review_reward_awards_honor on public.community_review_rewards;
-create trigger community_review_reward_awards_honor after insert on public.community_review_rewards for each row execute function public.award_review_honor();
+do $$begin
+ if to_regclass('public.community_review_rewards') is not null then
+  execute 'drop trigger if exists community_review_reward_awards_honor on public.community_review_rewards';
+  execute 'create trigger community_review_reward_awards_honor after insert on public.community_review_rewards for each row execute function public.award_review_honor()';
+ end if;
+end$$;
 
 revoke all on function public.give_honor(uuid,text) from public,anon;
 grant execute on function public.give_honor(uuid,text) to authenticated;
