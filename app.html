@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="css/chat-button.css?v=44">
   <link rel="stylesheet" href="css/chat-page.css?v=59">
   <link rel="stylesheet" href="css/chat-attachments.css?v=61">
-  <link rel="stylesheet" href="css/chat-media-viewer.css?v=1">
+  <link rel="stylesheet" href="css/chat-media-viewer.css?v=2">
   <link rel="stylesheet" href="css/chat-message-menu.css?v=59">
   <link rel="stylesheet" href="css/chat-conversation-list.css?v=1">
-  <link rel="stylesheet" href="css/chat-unread.css?v=1">
+  <link rel="stylesheet" href="css/chat-unread.css?v=2">
   <link rel="stylesheet" href="css/chat-safety.css?v=2">
-  <link rel="stylesheet" href="css/color-mode.css?v=4">
+  <link rel="stylesheet" href="css/color-mode.css?v=5">
   <link rel="stylesheet" href="css/design-palette.css?v=1">
   <link rel="stylesheet" href="css/design-color-wheel.css?v=1">
   <link rel="stylesheet" href="css/notification-mobile-layout.css?v=1">
@@ -237,7 +237,7 @@
       </div>
 
       <div class="content chat-page" id="chatPage" hidden>
-        <section class="chat-shell" aria-labelledby="chatTitle"><aside class="chat-contacts" id="chatContacts"><button class="chat-contact active" type="button" data-chat-kind="tester"><span class="chat-avatar">AT</span><span><strong>Aura Tester</strong><small>Contato oficial para testes</small></span><i></i></button></aside><div class="chat-conversation"><header><button class="chat-back" id="chatClose" type="button" aria-label="Ver todas as conversas">‹</button><button class="chat-avatar chat-person-trigger" id="chatHeaderAvatar" type="button" aria-label="Opções da pessoa" aria-expanded="false">AT</button><span><strong id="chatTitle">Aura Tester</strong><small id="chatHeaderStatus"><i></i> disponível agora</small></span></header><div class="chat-messages" id="chatMessages"><p class="dashboard-empty">Carregando conversa…</p></div><div class="chat-attachment-preview" id="chatAttachmentPreview" hidden></div><small class="chat-privacy" id="chatPrivacy">🔒 Fotos e PDFs ficam privados. Evite enviar dados sensíveis desnecessários.</small><form class="chat-composer" id="chatForm"><input id="chatFile" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" hidden><button class="chat-attach" id="chatAttachButton" type="button" aria-label="Anexar foto ou PDF">＋</button><input id="chatInput" maxlength="1000" autocomplete="off" placeholder="Escreva uma mensagem…" aria-label="Mensagem"><button type="submit" aria-label="Enviar">➤</button></form></div></section>
+        <section class="chat-shell" aria-labelledby="chatTitle"><aside class="chat-contacts" id="chatContacts"><button class="chat-contact active" type="button" data-chat-kind="tester"><span class="chat-avatar">AT</span><span><strong>Aura Tester</strong><small>Contato oficial para testes</small></span><i class="chat-unread-dot" id="testerUnreadDot" hidden></i></button></aside><div class="chat-conversation"><header><button class="chat-back" id="chatClose" type="button" aria-label="Ver todas as conversas">‹</button><button class="chat-avatar chat-person-trigger" id="chatHeaderAvatar" type="button" aria-label="Opções da pessoa" aria-expanded="false">AT</button><span><strong id="chatTitle">Aura Tester</strong><small id="chatHeaderStatus"><i></i> disponível agora</small></span></header><div class="chat-messages" id="chatMessages"><p class="dashboard-empty">Carregando conversa…</p></div><div class="chat-attachment-preview" id="chatAttachmentPreview" hidden></div><small class="chat-privacy" id="chatPrivacy">🔒 Fotos e PDFs ficam privados. Evite enviar dados sensíveis desnecessários.</small><form class="chat-composer" id="chatForm"><input id="chatFile" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" hidden><button class="chat-attach" id="chatAttachButton" type="button" aria-label="Anexar foto ou PDF">＋</button><input id="chatInput" maxlength="1000" autocomplete="off" placeholder="Escreva uma mensagem…" aria-label="Mensagem"><button type="submit" aria-label="Enviar">➤</button></form></div></section>
       </div>
 
       <div class="content communities-page" id="communities" hidden>
@@ -398,7 +398,7 @@
   <script src="script.js?v=63"></script>
   <script src="js/dashboard.js?v=54"></script>
   <script src="js/behavior.js?v=53"></script>
-  <script src="js/chat.js?v=67"></script>
+  <script src="js/chat.js?v=68"></script>
   <script src="js/color-mode.js?v=4"></script>
   <script src="js/motion.js?v=2"></script>
   <script src="js/fireworks.js?v=9"></script>
