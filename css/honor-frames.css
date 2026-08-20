@@ -31,6 +31,8 @@
 
 .honor-paper{--honor-a:#d8bd8c}.honor-cotton{--honor-a:#eee9df}.honor-wood{--honor-a:#9c653d}.honor-stone{--honor-a:#85878b}.honor-iron{--honor-a:#6d7179}.honor-bronze{--honor-a:#bd7040}.honor-silver{--honor-a:#d5dbe4}.honor-gold{--honor-a:#f5b51b}.honor-platinum{--honor-a:#c9edf4}.honor-ruby{--honor-a:#e93252}.honor-emerald{--honor-a:#20c678}.honor-sapphire{--honor-a:#286ff0}.honor-diamond{--honor-a:#bceeff}.honor-red-diamond{--honor-a:#ff3157}
 
+html[data-color-mode="dark"] .public-identity-row span{background:#2b3240;color:#f4f7fb;border:1px solid #414b5b;box-shadow:0 3px 10px rgba(0,0,0,.16)}
+
 @keyframes honorFramePulse{to{filter:brightness(1.2) drop-shadow(0 8px 15px rgba(255,49,87,.58))}}
 @keyframes honorFrameReveal{0%{transform:perspective(500px) translateZ(0) scale(1)}42%{transform:perspective(500px) translateZ(95px) scale(1.22);filter:brightness(1.28) drop-shadow(0 18px 26px var(--honor-a))}100%{transform:perspective(500px) translateZ(0) scale(1)}}
 @keyframes honorLabelIn{0%{opacity:0;transform:translate(-50%,-42%) scale(.9)}18%,75%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-56%) scale(.96)}}
