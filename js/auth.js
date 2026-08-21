@@ -5,6 +5,7 @@ let pendingEmail = '';
 let pendingPassword = '';
 const recoveryLinkSignal=location.hash.includes('type=recovery')||new URLSearchParams(location.search).get('type')==='recovery';
 if(recoveryLinkSignal){sessionStorage.setItem('aura67_password_recovery','pending');window.location.replace(`redefinir-senha.html${location.search}${location.hash}`)}
+if(supabaseClient){supabaseClient.auth.onAuthStateChange((event)=>{if(event!=='PASSWORD_RECOVERY')return;sessionStorage.setItem('aura67_password_recovery','pending');window.location.replace(`redefinir-senha.html${location.search}${location.hash}`)})}
 
 const feedbackStyles = document.createElement('link');
 feedbackStyles.rel = 'stylesheet'; feedbackStyles.href = 'css/action-feedback.css?v=35'; document.head.appendChild(feedbackStyles);
