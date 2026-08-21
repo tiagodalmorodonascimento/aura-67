@@ -1,0 +1,16 @@
+.chat-message{width:fit-content;max-width:min(76%,680px)}
+.chat-message.user{margin-left:auto}
+.chat-bubble-shell,.chat-bubble{width:fit-content;max-width:100%}
+.chat-bubble:empty{display:none}
+.chat-private-image{width:fit-content;max-width:100%;min-height:0;background:transparent;line-height:0}
+.chat-private-image img{display:block;width:auto;height:auto;max-width:min(360px,100%);max-height:360px;object-fit:contain;border-radius:16px}
+.chat-composer{position:relative}
+.chat-composer .chat-emoji-toggle{width:47px;flex:0 0 47px;background:var(--theme-soft);color:var(--purple);font-size:22px;font-family:system-ui,"Segoe UI Emoji","Apple Color Emoji",sans-serif}
+.chat-emoji-picker{position:absolute;left:68px;bottom:72px;z-index:12;width:min(310px,calc(100vw - 32px));display:grid;grid-template-columns:repeat(6,1fr);gap:4px;padding:10px;border:1px solid var(--line);border-radius:16px;background:var(--surface,#fff);box-shadow:0 18px 45px rgba(20,14,37,.24)}
+.chat-emoji-picker[hidden]{display:none}
+.chat-emoji-picker button{width:42px;height:42px;border-radius:10px;background:transparent;color:inherit;font-size:23px;font-family:system-ui,"Segoe UI Emoji","Apple Color Emoji",sans-serif}
+.chat-emoji-picker button:hover,.chat-emoji-picker button:focus-visible{background:var(--theme-soft);transform:scale(1.08)}
+.mission-strip.mission-ready{box-shadow:0 0 0 2px color-mix(in srgb,var(--purple) 28%,transparent),0 14px 34px rgba(31,22,44,.1)}
+.mission-strip.mission-ready strong{font-size:14px;color:var(--ink)}
+body[data-color-mode="dark"] .chat-emoji-picker{background:#171d27;border-color:#313948}
+@media(max-width:760px){.chat-message{max-width:88%}.chat-private-image img{max-width:min(78vw,360px);max-height:300px}.chat-composer .chat-emoji-toggle{width:46px;flex-basis:46px}.chat-emoji-picker{left:58px;bottom:66px;grid-template-columns:repeat(6,1fr)}}

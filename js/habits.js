@@ -5,6 +5,7 @@ let pendingOnly = false;
 let pendingProofIds = new Set();
 let proofAction = null;
 let habitToConfirm = null;
+let surpriseAction = null;
 const categoryNames = { all:'Todas as ações', health:'Saúde', mental:'Mental', home:'Casa e organização', finance:'Vida financeira', productivity:'Produtividade', social:'Social', special:'Missões especiais' };
 const difficultyNames = { easy:'Fácil', medium:'Média', hard:'Difícil', special:'Especial' };
 
@@ -124,5 +125,17 @@ document.querySelector('#proofSubmit').addEventListener('click',async()=>{
 document.querySelectorAll('#categoryTabs button').forEach((button)=>button.addEventListener('click',()=>{ document.querySelectorAll('#categoryTabs button').forEach((item)=>item.classList.toggle('active',item===button)); activeHabitCategory=button.dataset.category; renderHabits(); }));
 document.querySelector('#habitSearch').addEventListener('input',renderHabits);
 document.querySelector('#onlyPendingButton').addEventListener('click',(event)=>{pendingOnly=!pendingOnly;event.currentTarget.classList.toggle('active',pendingOnly);event.currentTarget.textContent=pendingOnly?'Mostrando pendentes':'Mostrar pendentes';renderHabits();});
-document.querySelector('#surpriseButton').addEventListener('click',()=>{const candidates=auraActions.filter((action)=>action.category!=='special'&&!completedActionIds.has(action.id));if(!candidates.length)return;const selected=candidates[Math.floor(Math.random()*candidates.length)];document.querySelector('#surpriseTitle').textContent=`${selected.icon} ${selected.title} · +${selected.xp} XP`;activeHabitCategory='all';document.querySelector('#habitSearch').value=selected.title;document.querySelectorAll('#categoryTabs button').forEach((item)=>item.classList.toggle('active',item.dataset.category==='all'));renderHabits();});
+document.querySelector('#surpriseButton').addEventListener('click',()=>{
+  if(surpriseAction){completeHabit(surpriseAction.id);return;}
+  const candidates=auraActions.filter((action)=>action.category!=='special'&&!completedActionIds.has(action.id));
+  if(!candidates.length){showToast('Você já concluiu todas as missões disponíveis hoje.','success','Dia completo');return;}
+  surpriseAction=candidates[Math.floor(Math.random()*candidates.length)];
+  document.querySelector('#surpriseTitle').textContent=`${surpriseAction.icon} ${surpriseAction.title} · até +${surpriseAction.xp} XP`;
+  document.querySelector('#surpriseButton').textContent='Começar agora';
+  document.querySelector('.mission-strip').classList.add('mission-ready');
+  activeHabitCategory='all';
+  document.querySelector('#habitSearch').value='';
+  document.querySelectorAll('#categoryTabs button').forEach((item)=>item.classList.toggle('active',item.dataset.category==='all'));
+  renderHabits();
+});
 document.addEventListener('aura:session-ready',loadHabits); if(window.AURA_SESSION)loadHabits();
