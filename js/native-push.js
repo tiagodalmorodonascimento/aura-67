@@ -21,7 +21,7 @@
   }
 
   async function start(){
-    if(started||!isNative()||!plugin())return;started=true;
+    if(started||!isNative()||!window.AURA_CURRENT_CONFIG?.nativePushEnabled||!plugin())return;started=true;
     const api=plugin();
     await api.addListener('registration',event=>registerToken(event.value));
     await api.addListener('registrationError',event=>console.warn('Falha ao registrar push.',event));

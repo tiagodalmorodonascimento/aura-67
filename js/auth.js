@@ -3,6 +3,8 @@ const supabaseClient = window.auraSupabase;
 const environmentNote = document.querySelector('#environmentNote');
 let pendingEmail = '';
 let pendingPassword = '';
+const recoveryLinkSignal=location.hash.includes('type=recovery')||new URLSearchParams(location.search).get('type')==='recovery';
+if(recoveryLinkSignal){sessionStorage.setItem('aura67_password_recovery','pending');window.location.replace(`redefinir-senha.html${location.search}${location.hash}`)}
 
 const feedbackStyles = document.createElement('link');
 feedbackStyles.rel = 'stylesheet'; feedbackStyles.href = 'css/action-feedback.css?v=35'; document.head.appendChild(feedbackStyles);
@@ -14,6 +16,7 @@ function confirmPasswordReset(email){return new Promise((resolve)=>{const backdr
 
 async function skipEntryWhenAuthenticated() {
   if (!supabaseClient) return;
+  if(recoveryLinkSignal||sessionStorage.getItem('aura67_password_recovery')==='pending')return;
   const { data } = await supabaseClient.auth.getSession();
   if (data.session) window.location.replace(postLoginDestination());
 }
@@ -164,7 +167,7 @@ document.querySelector('#forgotLink')?.addEventListener('click', async (event) =
   if (!email.validity.valid) { fieldError(email, 'Informe seu e-mail primeiro.'); return; }
   if (!await confirmPasswordReset(email.value.trim().toLowerCase())) return;
   setMessage('Enviando link de recuperação…', true);
-  const { error } = await supabaseClient.auth.resetPasswordForEmail(email.value.trim().toLowerCase(), { redirectTo: redirectUrl('login.html') });
+  const { error } = await supabaseClient.auth.resetPasswordForEmail(email.value.trim().toLowerCase(), { redirectTo: redirectUrl('redefinir-senha.html') });
   setMessage('');
   showAuthFeedback(error?'Não foi possível enviar':'E-mail enviado',error?error.message:'Confira sua caixa de entrada e também a pasta de spam.',error?'error':'success');
 });

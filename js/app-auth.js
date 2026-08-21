@@ -62,6 +62,7 @@ async function requestLegalAcceptance(session) {
     document.querySelector('#auraBoot')?.setAttribute('hidden', '');
     return;
   }
+  if(sessionStorage.getItem('aura67_password_recovery')==='pending'){window.location.replace('redefinir-senha.html');return;}
   const { data } = await window.auraSupabase.auth.getSession();
   if (!data.session) { window.location.replace('login.html'); return; }
   await requestLegalAcceptance(data.session);
