@@ -30,4 +30,5 @@ android/app/build/
 android/build/
 *.jks
 *.keystore
+android/app/google-services.json
 releases/*.apk

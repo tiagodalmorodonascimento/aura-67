@@ -19,6 +19,9 @@
       "style": "LIGHT",
       "backgroundColor": "#0f1218",
       "overlaysWebView": false
+    },
+    "PushNotifications": {
+      "presentationOptions": ["sound", "alert", "banner", "list"]
     }
   }
 }
