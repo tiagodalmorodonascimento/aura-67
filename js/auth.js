@@ -166,11 +166,15 @@ document.querySelector('#forgotLink')?.addEventListener('click', async (event) =
   if (!supabaseClient) { setMessage('Configure o Supabase para ativar a recuperação por e-mail.'); return; }
   const email = document.querySelector('#loginEmail');
   if (!email.validity.valid) { fieldError(email, 'Informe seu e-mail primeiro.'); return; }
+  const lastRequest=Number(localStorage.getItem('aura67_last_password_reset')||0),remaining=Math.ceil((60000-(Date.now()-lastRequest))/1000);
+  if(remaining>0){showAuthFeedback('Aguarde para reenviar',`Você poderá solicitar outro e-mail em ${remaining} segundos.`,'error');return;}
   if (!await confirmPasswordReset(email.value.trim().toLowerCase())) return;
   setMessage('Enviando link de recuperação…', true);
   const { error } = await supabaseClient.auth.resetPasswordForEmail(email.value.trim().toLowerCase(), { redirectTo: redirectUrl('redefinir-senha.html') });
   setMessage('');
-  showAuthFeedback(error?'Não foi possível enviar':'E-mail enviado',error?error.message:'Confira sua caixa de entrada e também a pasta de spam.',error?'error':'success');
+  if(error){const limited=/rate limit|too many requests|429/i.test(error.message);showAuthFeedback(limited?'Limite temporário de e-mails':'Não foi possível enviar',limited?'O serviço de e-mail atingiu o limite de segurança. Aguarde um pouco antes de tentar novamente.':error.message,'error');return;}
+  localStorage.setItem('aura67_last_password_reset',String(Date.now()));
+  showAuthFeedback('E-mail enviado','Confira sua caixa de entrada e também a pasta de spam.','success');
 });
 
 document.querySelector('#confirmedButton')?.addEventListener('click', async () => {
